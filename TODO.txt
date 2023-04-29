@@ -1,0 +1,6 @@
+New API request: 
+ - When Creating a player all option to set initial rating and record (if not sent set to 1200 and 0-0-0).
+ - Retrieve list of games for a player 
+    - Request attribute:
+        - number of games
+        - Get wins/loss/both

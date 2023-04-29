@@ -1,0 +1,129 @@
+﻿@page "/"
+@using System.Net.Http
+@using System.Text.Json
+@using System.Threading.Tasks
+
+@inject HttpClient Http
+
+<h1>Players:</h1>
+
+<button @onclick="OpenDialog" class="btn btn-primary" >Register New Player</button>
+
+@if (players == null)
+{
+    <p>Loading players...</p>
+}
+else if (players.Length == 0)
+{
+    <p>No players found.</p>
+}
+else
+{
+    <ul>
+        @foreach (var player in players)
+        {
+            <li>@player.Name</li>
+        }
+    </ul>
+}
+
+
+<!-- Modal -->
+@if (isDialogOpen == true)
+{
+<div class=""  id="registerPlayerDialog" @ref="registerPlayerDialog" tabindex="-1" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register New Player</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+        <div>
+            <label for="playerName">Player Name:</label>
+            <input type="text" id="playerName" name="playerName" />
+        </div>
+        <button type="submit" @onclick="RegisterPlayer">Register</button>
+        <button type="button" @onclick="CloseDialog">Cancel</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+}
+@code {
+    private Player[] players = Array.Empty<Player>();
+    private string errorMessage = string.Empty;
+
+     private ElementReference registerPlayerDialog;
+    private bool isDialogOpen = false;
+    private string newPlayerName = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var response = await Http.GetAsync("https://lrs-chess-ratings.com/players?with_deleted=true&page_id=0");
+            response.EnsureSuccessStatusCode();
+            var content = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var result = JsonSerializer.Deserialize<PlayerResponse>(content, options);
+            players = result.Items;
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = "Error retrieving players. Please try again later.";
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            errorMessage = "Error parsing player data. Please try again later.";
+            // log or display the error message as needed
+        }
+    }
+
+    public class PlayerResponse
+    {
+        public Player[] Items { get; set; } = Array.Empty<Player>();
+    }
+
+    private void OpenDialog()
+    {
+        if (isDialogOpen){
+            isDialogOpen = false;
+        }else{
+            isDialogOpen = true;
+        }
+    }
+
+    private async Task RegisterPlayer()
+    {
+        var newPlayer = new { name = newPlayerName };
+        var json = JsonSerializer.Serialize(newPlayer);
+        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+        var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
+        response.EnsureSuccessStatusCode();
+
+        var newPlayerJson = await response.Content.ReadAsStringAsync();
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
+
+        players = players.Append(createdPlayer).ToArray();
+
+        CloseDialog();
+    }
+
+    private void CloseDialog()
+    {
+        isDialogOpen = false;
+        newPlayerName = "";
+    }
+}
