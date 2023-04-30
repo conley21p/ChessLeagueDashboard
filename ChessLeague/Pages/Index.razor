@@ -79,7 +79,7 @@ else
                     <button @onclick="(() => StartGame(player))" class="btn btn-primary" >@((gameInit ?  game.Player1 == player.ID ? "End Game" : "Player 2" : "Start Game"))</button>
                 </div>
                 <div class="col-auto float-right"  style="margin-left: auto;">
-                    <button @onclick="(() => AdvancedViewOpen(player))" class="btn btn-primary" >@((advancedView ? "Advanced View" : "Close view"))</button>
+                    <button @onclick="(() => AdvancedViewOpen(player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
                 </div>
             </div>
         }
