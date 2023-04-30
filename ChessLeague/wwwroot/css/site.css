@@ -1,7 +1,22 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.hide
+{
+    display: none;
+}
+
+.display
+{
+    display: block;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: white;
+}
+body{
+    height: 100vh;
+    background-image: linear-gradient(rgb(37, 37, 37), #000);
 }
 
 h1:focus {
@@ -67,28 +82,118 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-#registerPlayerDialog{
-    z-index:  999;
-    position: absolute;
-    top: calc(50% - 175px);
-    left: calc(50% - 125px);
-    height:  250px;
-    width:   250px;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
-    background:rgba(0, 0, 0, 0.8);
-    border-radius: 20px;
+/* Main Content */
+    /* Standings */
+    .standings-wrapper
+    {
+        height: 80vh;
+    }
+    .standings-wrapper .row
+    {
+        background: rgba(66, 66, 66, 0.178);
+        backdrop-filter: blur(5px);
+        border-radius: 10px;
+        /* border-bottom: 1px solid rgba(66, 66, 66, 0.278); */
+        margin-bottom: 3px;
+        font-size: xx-large;
+    }
+    .standings-wrapper .row:hover
+    {
+        background: rgba(114, 114, 114, 0.178);
+    }
+    .standings-wrapper .row:last-child
+    {
+        border-bottom:none;
+    }
+    .standings-wrapper .row .name-col
+    {
+        width: 250px;
+        max-width: 150px;
+        min-width: 150px;
+    }
+    .standings-wrapper .row .record-col
+    {
+        max-width: 150px;
+        text-align: center;
+    }
+    .standings-wrapper .row .rating-col
+    {
+        max-width: 150px;
+        width: 150px;
+    }
+    .standings-wrapper .row button
+    {
+        width: 120px;
+    }
+    
+
+/* Dialog styling */
+.live-game-dialog{
+    height: 70vh;
+    width:  70vw;
+    margin: 1.75rem auto;
+    text-align: center;
 }
 
-@-webkit-keyframes popUp {
-    from {  opacity: 0; 
-            box-shadow: 0.6px 1.3px 1.3px hsl(0deg 0% 0% / 0.48);}
-      to {  opacity: 1;
-            box-shadow: 6.8px 13.6px 13.6px hsl(0deg 0% 0% / 0.29);}
+.modal-content{
+    color: rgb(202, 202, 202);
+    background:rgba(70, 70, 70, 0.705);
+    border-radius: 10px;
+    border: none;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+    backdrop-filter: blur(10px);
 }
-@keyframes popUp {
-    from {  opacity: 0; 
-            box-shadow: 0.6px 1.3px 1.3px hsl(0deg 0% 0% / 0.48);}
-      to {  opacity: 1;
-            box-shadow: 6.8px 13.6px 13.6px hsl(0deg 0% 0% / 0.29);}
-}
+    /* Live Game Dialog */
+    #liveGameDisplay button.Winner-btn
+    {
+        width: 40%;
+        height: 40vh;
+        margin: 0px 10px;
+        border-radius: 10px;
+        border: none;
+        background: whtie;
+        color: black;
+        box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+        font-size: xx-large;
+    }
+    #liveGameDisplay button.Winner-btn:hover
+    {
+        box-shadow: 5.0px 10.0px 10.0px hsl(0deg 0% 0% / 0.38);
+    }
+    #liveGameDisplay button.dark
+    {
+        background: black;
+        color:      white;
+    }
+    #liveGameDisplay button.Draw-btn
+    {
+        border-radius: 10px;
+        margin-top: 10px;
+        width: 200px;
+        border: none;
+        background: whtie;
+        color: black;
+        box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+        font-size: x-large;
+    }
+
+    /* Signup Dialog */
+    #signUpForm input
+    {
+        border: 1px solid #9c9c9ca8;
+        border-radius: 5px;
+    }
+    #signUpForm div.row
+    {
+        margin: 2px 0px;
+    }
+
+    form .numberfield
+    {
+        width: 60px;
+        text-align: center;
+    }
+    form .threeDigits
+    {
+        width: 50px;
+    }

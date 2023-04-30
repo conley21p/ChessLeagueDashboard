@@ -4,3 +4,5 @@ New API request:
     - Request attribute:
         - number of games
         - Get wins/loss/both
+
+ - Use ENUM, instead of Winner and Draw field??

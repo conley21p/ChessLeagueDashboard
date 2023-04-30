@@ -5,9 +5,10 @@
 
 @inject HttpClient Http
 
-<h1>Players:</h1>
+<div class="top-row px-4">
+    <h2>Standings</h2>
+</div>
 
-<button @onclick="OpenDialog" class="btn btn-primary" >Register New Player</button>
 
 @if (players == null)
 {
@@ -19,52 +20,174 @@ else if (players.Length == 0)
 }
 else
 {
-    <ul>
+    <div class="standings-wrapper container">
+        
+            <div class="row">
+                <div class="col name-col">
+                    Player
+                </div>
+                <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    Player ID
+                </div>
+                <div class="col-auto rating-col">
+                    Rating
+                </div>
+                <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    Highest Rating
+                </div>
+                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    Win Streak
+                </div>
+                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    Highest Win Streak
+                </div>
+                <div class="col record-col">
+                    Wins
+                </div>
+                <div class="col record-col">
+                    Losses
+                </div>
+                <div class="col record-col">
+                    Draws
+                </div>
+            </div>
         @foreach (var player in players)
         {
-            <li>@player.Name</li>
+            <div class="row">
+                <div class="col name-col">
+                    @player.Name
+                </div>
+                <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    @player.ID
+                </div>
+                <div class="col-auto rating-col">
+                    @player.Rating
+                </div>
+                <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    @player.HighestRating
+                </div>
+                <div class="col record-col">
+                    @player.Wins
+                </div>
+                <div class="col record-col">
+                    @player.Losses
+                </div>
+                <div class="col record-col">
+                    @player.Draws
+                </div>
+                <div class="col-auto float-right"  style="margin-left: auto;">
+                    <button @onclick="(() => StartGame(player))" class="btn btn-primary" >@((gameInit ?  game.Player1 == player.ID ? "End Game" : "Player 2" : "Start Game"))</button>
+                </div>
+                <div class="col-auto float-right"  style="margin-left: auto;">
+                    <button @onclick="(() => AdvancedViewOpen(player))" class="btn btn-primary" >@((advancedView ? "Advanced View" : "Close view"))</button>
+                </div>
+            </div>
         }
-    </ul>
+    </div>
 }
 
-
-<!-- Modal -->
-@if (isDialogOpen == true)
-{
-<div class=""  id="registerPlayerDialog" @ref="registerPlayerDialog" tabindex="-1" >
+<button @onclick="OpenDialog" class="btn btn-primary" >Register New Player</button>
+<!-- Register a Player -->
+<div class="modal fade @((isDialogOpen ? "show" : ""))" id="registerPlayerDialog" style="display: @((isDialogOpen ? "block;" : "none;"))"  tabindex="-1" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header justify-content-center" style="border:none;">
         <h5 class="modal-title" id="exampleModalLabel">Register New Player</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body">
-        <form>
-        <div>
-            <label for="playerName">Player Name:</label>
-            <input type="text" id="playerName" name="playerName" />
-        </div>
-        <button type="submit" @onclick="RegisterPlayer">Register</button>
-        <button type="button" @onclick="CloseDialog">Cancel</button>
+      <div class="modal-body" >
+        <form class="container" id="signUpForm">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <label for="newPlayerName">Player Name:</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="newPlayerName" name="newPlayerName"  @bind-value="newPlayerName" />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <label for="newPlayerRating">Rating: </label>
+                </div>
+                <div class="col-auto">
+                    <input type="int" class="numberfield" id="newPlayerRating" name="newPlayerRating" @bind-value="newPlayerRating" />
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <label for="newPlayerLosses">Record: </label>
+                </div>
+                <div class="col-auto">
+                    <input type="int" class="numberfield threeDigits" id="newPlayerWins"    name="newPlayerWins"    @bind-value="newPlayerWins"/>
+                </div>
+                <div class="col-auto">
+                    <input type="int" class="numberfield threeDigits" id="newPlayerLosses"  name="newPlayerLosses"  @bind-value="newPlayerLosses" />
+                </div>
+                <div class="col-auto">
+                    <input type="int" class="numberfield threeDigits" id="newPlayerTies"    name="newPlayerTies"    @bind-value="newPlayerTies" />
+                </div>
+            </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer justify-content-center" style="border:none; margin: 0px;">
+        <button type="submit" class="btn btn-primary" @onclick="RegisterPlayer">Register</button>
+        <button type="button" class="btn btn-primary" @onclick="CloseDialog">Cancel</button>
       </div>
     </div>
   </div>
 </div>
-}
+
+<!-- Live Game -->
+<div class="modal fade @((gameStarted ? "show" : ""))" id="liveGameDisplay" style="display: @((gameStarted ? "block;" : "none;"))"  tabindex="-1" >
+  <div class="live-game-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center" style="border:none;">
+        <h5 class="modal-title" id="">Live Game</h5>
+      </div>
+      <div class="container" >
+        
+        <div class="row justify-content-center">
+
+                <button type="submit" class="Winner-btn @((playerOneLight ? "light" : "dark"))" @onclick="(() => FinalizeGame(game.Player1, false))" >@(game.Player1 != 0 ? getPlayerByID(game.Player1).Name : null) Wins!</button>
+
+                <button type="submit" class="Winner-btn @((playerOneLight ? "dark" : "light"))" @onclick="(() => FinalizeGame(game.Player2, false))">@(game.Player2 != 0 ? getPlayerByID(game.Player2).Name : null) Wins!</button>
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button type="submit" class="Draw-btn" @onclick="(() => FinalizeGame(0, true))" >Draw</button>
+            </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer justify-content-center" style="border:none;">
+        <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
+        <button type="button" class="btn btn-primary" @onclick="CancelGame">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @code {
-    private Player[] players = Array.Empty<Player>();
+    public Player[] players = Array.Empty<Player>();
     private string errorMessage = string.Empty;
 
-     private ElementReference registerPlayerDialog;
-    private bool isDialogOpen = false;
+    private bool advancedView   = false;
+    
+    /* Game variables*/
+    private bool gameInit       = false;
+    private bool gameStarted    = false;
+    private bool playerOneLight = true;
+    private Game game           = new Game();
+
+    /* Sign Up Variables*/
+    private bool isDialogOpen   = false;
     private string newPlayerName = "";
+
+    private int newPlayerRating = 0;
+    private int newPlayerWins   = 0;
+    private int newPlayerLosses = 0;
+    private int newPlayerTies   = 0;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -105,25 +228,134 @@ else
 
     private async Task RegisterPlayer()
     {
-        var newPlayer = new { name = newPlayerName };
-        var json = JsonSerializer.Serialize(newPlayer);
-        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        Console.WriteLine("newPlayerName: " + newPlayerName);
+        Console.WriteLine("newPlayerRating: " + newPlayerRating);
+        Console.WriteLine("newPlayerWins: " + newPlayerWins);
+        Console.WriteLine("newPlayerLosses: " + newPlayerLosses);
+        Console.WriteLine("newPlayerTies: " + newPlayerTies);
+        try{
 
-        var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
-        response.EnsureSuccessStatusCode();
+            var newPlayer = new { name = newPlayerName };
+            var json = JsonSerializer.Serialize(newPlayer);
+            Console.WriteLine(json);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-        var newPlayerJson = await response.Content.ReadAsStringAsync();
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
+            var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
+            response.EnsureSuccessStatusCode();
 
-        players = players.Append(createdPlayer).ToArray();
+            var newPlayerJson = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
+
+            players = players.Append(createdPlayer).ToArray();
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = "Error retrieving players. Please try again later.";
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            errorMessage = "Error parsing player data. Please try again later.";
+            // log or display the error message as needed
+        }
 
         CloseDialog();
     }
 
     private void CloseDialog()
     {
-        isDialogOpen = false;
-        newPlayerName = "";
+        isDialogOpen    = false;
+        newPlayerName   = "";
+        newPlayerRating = 0;
+        newPlayerWins   = 0;
+        newPlayerLosses = 0;
+        newPlayerTies   = 0;
     }
+   
+    private void CancelGame(){
+        gameInit            = false;            // Change buttons back
+        gameStarted         = false;            // Close game dialog
+        game                = new Game();       // Reset game object
+        return;
+    }
+    private void StartGame(Player player){
+        if (gameInit){
+            if (game.Player1 == player.ID){
+                game = new Game();
+                return;
+            }
+            //Game is already create, so we have player two
+            game.Player2 = player.ID;
+
+            // open Game Dialog
+            gameStarted = true;
+        }else{
+            // Initialize game object
+            game = new Game();
+
+            game.Player1 = player.ID;
+            
+            gameInit = true;
+        }
+
+    }
+    private void SwitchColors(){
+        if (gameStarted){
+            if (playerOneLight){
+                playerOneLight = false;
+            }else{
+                playerOneLight = true;
+            }
+        }
+    }
+    public async Task FinalizeGame(uint winner, bool draw)
+    {
+        game.Winner = winner;
+        game.Draw   = draw;
+
+        try{
+            var newPlayer = new { name = newPlayerName };
+
+            Console.WriteLine(JsonSerializer.Serialize(game));
+
+            var content = new StringContent(JsonSerializer.Serialize(game), System.Text.Encoding.UTF8, "application/json");
+
+            var response = await Http.PostAsync("https://lrs-chess-ratings.com/game", content);
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine(response);
+            StateHasChanged();
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = "Error retrieving players. Please try again later.";
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            errorMessage = "Error parsing player data. Please try again later.";
+            // log or display the error message as needed
+        }
+        
+        
+        // Reset variables
+        gameInit            = false;            // Change buttons back
+        gameStarted         = false;            // Close game dialog
+        game                = new Game();       // Reset game object
+    }
+
+    private Player getPlayerByID(uint ID){
+        foreach (var player in players)
+        {
+            if (player.ID == ID ){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    private void AdvancedViewOpen(Player player){
+        return;
+    }
+
 }

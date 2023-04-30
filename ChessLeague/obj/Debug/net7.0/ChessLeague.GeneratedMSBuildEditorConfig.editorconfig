@@ -24,16 +24,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/SignUp.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFNpZ25VcC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/SurveyPrompt.razor]
