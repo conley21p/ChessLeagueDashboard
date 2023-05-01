@@ -2,8 +2,8 @@
 @using System.Net.Http
 @using System.Text.Json
 @using System.Threading.Tasks
-
 @inject HttpClient Http
+
 
 <div class="top-row px-4">
     <h2>Standings</h2>
@@ -20,7 +20,7 @@ else if (players.Length == 0)
 }
 else
 {
-    <div class="standings-wrapper container">
+    <div class="standings-wrapper">
         
             <div class="row">
                 <div class="col name-col">
@@ -87,6 +87,10 @@ else
 }
 
 <button @onclick="OpenDialog" class="btn btn-primary" >Register New Player</button>
+<a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a>
+<a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a>
+
+
 <!-- Register a Player -->
 <div class="modal fade @((isDialogOpen ? "show" : ""))" id="registerPlayerDialog" style="display: @((isDialogOpen ? "block;" : "none;"))"  tabindex="-1" >
   <div class="modal-dialog" role="document">
@@ -160,12 +164,14 @@ else
         
       </div>
       <div class="modal-footer justify-content-center" style="border:none;">
+        <button type="button" class="btn btn-primary" >Roll dice for White</button>
         <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
         <button type="button" class="btn btn-primary" @onclick="CancelGame">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+
 
 @code {
     public Player[] players = Array.Empty<Player>();
@@ -303,8 +309,10 @@ else
     private void SwitchColors(){
         if (gameStarted){
             if (playerOneLight){
+                Console.WriteLine("playerOneLight = false;");
                 playerOneLight = false;
             }else{
+                Console.WriteLine("playerOneLight = true;");
                 playerOneLight = true;
             }
         }
@@ -322,7 +330,7 @@ else
             var content = new StringContent(JsonSerializer.Serialize(game), System.Text.Encoding.UTF8, "application/json");
 
             var response = await Http.PostAsync("https://lrs-chess-ratings.com/game", content);
-            response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode(); 
             Console.WriteLine(response);
             StateHasChanged();
         }

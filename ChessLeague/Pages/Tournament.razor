@@ -1,0 +1,27 @@
+@page "/Tournament"
+@using System.Net.Http
+@using System.Text.Json
+@using System.Threading.Tasks
+@inject HttpClient Http
+
+<h1>Tournament</h1>
+
+<div>
+    <!-- Display list of tournaments here -->
+</div>
+
+<div>
+    <!-- Create new tournament form here -->
+</div>
+
+<div>
+    <!-- Edit tournament form here -->
+</div>
+
+<div>
+    <!-- Delete tournament confirmation dialog here -->
+</div>
+
+@code {
+    public Player[] players = Array.Empty<Player>();
+}

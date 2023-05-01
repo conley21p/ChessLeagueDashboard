@@ -6,4 +6,5 @@ public class Game
     public uint Winner          { get; set; }   = 0;                // uint is the players ID
     public bool Draw            { get; set; }   = false;
     public String PGN           { get; set; }   = string.Empty;
+
 }
