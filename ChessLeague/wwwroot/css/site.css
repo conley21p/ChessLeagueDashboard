@@ -150,24 +150,26 @@ a, .btn-link {
     .standings-wrapper .row button
     {
         width: 140px;
+        margin-top: -5px;
     }
     
 
 /* Dialog styling */
 .live-game-dialog{
-    height: 80vh;
-    width:  80vw;
-    margin: 4rem auto;
+    height: 100vh;
+    width:  100vw;
+    /* margin: 4rem auto; */
     text-align: center;
 }
 
 .modal-content{
     color: rgb(202, 202, 202);
     background:rgba(70, 70, 70, 0.705);
-    border-radius: 10px;
     border: none;
     box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
     backdrop-filter: blur(10px);
+    height: 100vh;
+    padding-top: 10vh;
 }
     /* Live Game Dialog */
     #liveGameDisplay button.Winner-btn
@@ -191,14 +193,25 @@ a, .btn-link {
         background: black;
         color:      white;
     }
-    #liveGameDisplay button.Draw-btn
+    #liveGameDisplay button.Draw-btn,
+    #liveGameDisplay button.Create-Game-btn
     {
+        width: 40%;
         border-radius: 10px;
-        margin-top: 10px;
-        width: 200px;
+        margin: 0px 10px;
+        margin-top: 20px;
         border: none;
-        background: whtie;
-        color: black;
+        box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+        font-size: x-large;
+    }
+    #liveGameDisplay input.Desc-field
+    {
+        width: calc(80% + 20px);
+        text-align: center;
+        border-radius: 10px;
+        margin: 0px 10px;
+        margin-top: 20px;
+        border: none;
         box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
         font-size: x-large;
     }

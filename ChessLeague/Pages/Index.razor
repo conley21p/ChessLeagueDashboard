@@ -6,7 +6,7 @@
 
 
 <div class="top-row px-4">
-    <h2>Standings</h2>
+    <h2>All Time Stats</h2>
 </div>
 
 
@@ -76,7 +76,7 @@ else
                     @player.Draws
                 </div>
                 <div class="col-auto float-right"  style="margin-left: auto;">
-                    <button @onclick="(() => StartGame(player))" class="btn btn-primary" >@((gameInit ?  game.Player1 == player.ID ? "End Game" : "Player 2" : "Start Game"))</button>
+                    <button @onclick="(() => StartGame(player))" class="btn btn-primary" >@((gameInit ?  game.Light == player.ID ? "End Game" : "Player 2" : "Start Game"))</button>
                 </div>
                 <div class="col-auto float-right"  style="margin-left: auto;">
                     <button @onclick="(() => AdvancedViewOpen(player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
@@ -87,6 +87,8 @@ else
 }
 
 <button @onclick="OpenDialog" class="btn btn-primary" >Register New Player</button>
+<a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Season</a>
+<a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Season</a>
 <a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a>
 <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a>
 
@@ -143,7 +145,7 @@ else
 <!-- Live Game -->
 <div class="modal fade @((gameStarted ? "show" : ""))" id="liveGameDisplay" style="display: @((gameStarted ? "block;" : "none;"))"  tabindex="-1" >
   <div class="live-game-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content"  style="@(liveGame ? "display:blcok;" : "display:none;")">
       <div class="modal-header justify-content-center" style="border:none;">
         <h5 class="modal-title" id="">Live Game</h5>
       </div>
@@ -151,15 +153,20 @@ else
         
         <div class="row justify-content-center">
 
-                <button type="submit" class="Winner-btn @((playerOneLight ? "light" : "dark"))" @onclick="(() => FinalizeGame(game.Player1, false))" >@(game.Player1 != 0 ? getPlayerByID(game.Player1).Name : null) Wins!</button>
+                <button type="submit" class="Winner-btn @((playerOneLight ? "light" : "dark"))" @onclick="(() => CreateGame(1))" >@(game.Dark != 0 ? getPlayerByID(game.Dark).Name : null) Wins!</button>
 
-                <button type="submit" class="Winner-btn @((playerOneLight ? "dark" : "light"))" @onclick="(() => FinalizeGame(game.Player2, false))">@(game.Player2 != 0 ? getPlayerByID(game.Player2).Name : null) Wins!</button>
+                <button type="submit" class="Winner-btn @((playerOneLight ? "dark" : "light"))" @onclick="(() => CreateGame(2))">@(game.Light != 0 ? getPlayerByID(game.Light).Name : null) Wins!</button>
 
         </div>
+        
         <div class="row justify-content-center">
-            <div class="col-auto">
-                <button type="submit" class="Draw-btn" @onclick="(() => FinalizeGame(0, true))" >Draw</button>
-            </div>
+                <input tyep="text" class="Desc-field" @bind="game.Desc" placeholder="Enter games description here" />
+        </div>
+        
+        <div class="row justify-content-center">
+                <button type="submit" class="Draw-btn btn btn-primary" @onclick="(() => toggleSGDialog())" >Schedule The Game</button>
+
+                <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(1))" >Draw</button>
         </div>
         
       </div>
@@ -168,6 +175,33 @@ else
         <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
         <button type="button" class="btn btn-primary" @onclick="CancelGame">Cancel</button>
       </div>
+    </div>
+    
+
+    <div class="modal-content" style="@(liveGame ? "display:none;" : "display:block;")">
+        <div class="modal-header justify-content-center" style="border:none;">
+            <h5 class="modal-title" id="">Live Game</h5>
+        </div>
+        <div class="container" >
+            
+            
+        <div class="row justify-content-center">
+            <input type="datetime-local" @bind="dateTimeValue">
+        </div>
+            
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <button type="submit" class="Draw-btn" @onclick="(() => toggleSGDialog())" >Change to Live Game</button>
+                <button type="submit" class="Draw-btn" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
+            </div>
+        </div>
+            
+        </div>
+        <div class="modal-footer justify-content-center" style="border:none;">
+            <button type="button" class="btn btn-primary" >Roll dice for White</button>
+            <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
+            <button type="button" class="btn btn-primary" @onclick="CancelGame">Cancel</button>
+        </div>
     </div>
   </div>
 </div>
@@ -182,6 +216,8 @@ else
     /* Game variables*/
     private bool gameInit       = false;
     private bool gameStarted    = false;
+    private bool liveGame       = true;
+    private DateTime dateTimeValue = DateTime.UtcNow;
     private bool playerOneLight = true;
     private Game game           = new Game();
 
@@ -282,17 +318,18 @@ else
     private void CancelGame(){
         gameInit            = false;            // Change buttons back
         gameStarted         = false;            // Close game dialog
+        liveGame            = true;
         game                = new Game();       // Reset game object
         return;
     }
     private void StartGame(Player player){
         if (gameInit){
-            if (game.Player1 == player.ID){
-                game = new Game();
+            if (game.Light == player.ID){
+                CancelGame();
                 return;
             }
             //Game is already create, so we have player two
-            game.Player2 = player.ID;
+            game.Dark = player.ID;
 
             // open Game Dialog
             gameStarted = true;
@@ -300,11 +337,19 @@ else
             // Initialize game object
             game = new Game();
 
-            game.Player1 = player.ID;
+            game.Light = player.ID;
             
             gameInit = true;
         }
 
+    }
+    private void toggleSGDialog(){
+        if (liveGame == true){
+            liveGame = false;
+        }else{
+            liveGame = true;
+            dateTimeValue = DateTime.UtcNow;
+        }
     }
     private void SwitchColors(){
         if (gameStarted){
@@ -317,10 +362,11 @@ else
             }
         }
     }
-    public async Task FinalizeGame(uint winner, bool draw)
+    public async Task CreateGame(uint State)
     {
-        game.Winner = winner;
-        game.Draw   = draw;
+        game.State = State;
+        game.TimePlayed = dateTimeValue.ToString();
+
 
         try{
             var newPlayer = new { name = newPlayerName };

@@ -124,6 +124,43 @@
         }
       },
       {
+        "HashCode": -236507533,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Pages.CreateSeason",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "CreateSeason"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ChessLeague.Pages.CreateSeason",
+          "Common.TypeNamespace": "ChessLeague.Pages",
+          "Common.TypeNameIdentifier": "CreateSeason"
+        }
+      },
+      {
+        "HashCode": 1647150177,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Pages.CreateSeason",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ChessLeague.Pages.CreateSeason"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "ChessLeague.Pages.CreateSeason",
+          "Common.TypeNamespace": "ChessLeague.Pages",
+          "Common.TypeNameIdentifier": "CreateSeason",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -727764558,
         "Kind": "Components.Component",
         "Name": "ChessLeague.Pages.Index",
@@ -19080,6 +19117,11 @@
       "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Pages\\Error.cshtml",
       "TargetPath": "Pages\\Error.cshtml",
       "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Pages\\CreateSeason.razor",
+      "TargetPath": "Pages\\CreateSeason.razor",
+      "FileKind": "component"
     },
     {
       "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Shared\\SurveyPrompt.razor",
