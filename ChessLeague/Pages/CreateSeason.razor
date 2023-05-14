@@ -5,17 +5,15 @@
 @inject HttpClient Http
 
 <h1>Season</h1>
-@* 
 <!-- Register a Player -->
-<div class="modal fade @((isDialogOpen ? "show" : ""))" id="registerPlayerDialog" style="display: @((isDialogOpen ? "block;" : "none;"))"  tabindex="-1" >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header justify-content-center" style="border:none;">
-        <h5 class="modal-title" id="exampleModalLabel">Register New Player</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Create a New Season</h5>
       </div>
       <div class="modal-body" >
         <form class="container" id="signUpForm">
-            <div class="row justify-content-center">
+            @* <div class="row justify-content-center">
                 <div class="col-auto">
                     <label for="newPlayerName">Start Date:</label>
                 </div>
@@ -44,16 +42,15 @@
                 <div class="col-auto">
                     <input type="int" class="numberfield threeDigits" id="newPlayerTies"    name="newPlayerTies"    @bind-value="" />
                 </div>
-            </div>
+            </div> *@
         </form>
       </div>
       <div class="modal-footer justify-content-center" style="border:none; margin: 0px;">
-        <button type="submit" class="btn btn-primary" @onclick="">Create</button>
-        <a href="/" asp-page="/Tournament" class="btn btn-primary">Create Tournament</a>
+        @* <button type="submit" class="btn btn-primary" @onclick="">Create</button>
+        <a href="/" asp-page="/Tournament" class="btn btn-primary">Create Tournament</a> *@
       </div>
     </div>
   </div>
-</div> *@
 
 
 

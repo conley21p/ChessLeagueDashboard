@@ -1,0 +1,39 @@
+<div class="modal fade @((ModalStyle ? "show" : ""))" id="registerPlayerDialog" style="display: @((ModalStyle ? "block;" : "none;"))"  tabindex="-1" >
+    <div class="live-game-dialog" tabindex="-1" role="dialog" >
+        <div class="modal-content">
+            <div class="modal-header justify-content-center" style="border:none;">
+                <h5 class="modal-title" id="exampleModalLabel">Register New Player</h5>
+            </div>
+            <div class="modal-body">
+                @ChildContent
+            </div>
+            <div class="modal-footer">
+                @ModalFooter
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string ModalTitle { get; set; } = "";
+
+    [Parameter]
+    public bool ModalStyle { get; set; } = false;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment ModalFooter { get; set; }
+
+    public void Show()
+    {
+        ModalStyle = true;
+    }
+
+    public void Close()
+    {
+        ModalStyle = false;
+    }
+}

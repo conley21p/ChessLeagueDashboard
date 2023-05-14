@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CExv/qZhnTmB02fWqnVTdGJx2WHSMUADhp25VNMTRsw=",
+  "Hash": "NUmYzOdSdLJUJJelHhxa2yRNf6O6qsPZD9+aVMHFoqE=",
   "Source": "ChessLeague",
   "BasePath": "_content/ChessLeague",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\css\\modal.css",
+      "SourceId": "ChessLeague",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\",
+      "BasePath": "_content/ChessLeague",
+      "RelativePath": "css/modal.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\modal.css"
     },
     {
       "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\css\\open-iconic\\FONT-LICENSE",

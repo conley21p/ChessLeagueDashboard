@@ -1,8 +1,13 @@
 
 public class Season
 {
-    public uint Name            { get; set; }   = 0;
-    public String StartDate     { get; set; }   = string.Empty;
-    public String EndDate       { get; set; }   = string.Empty;
+    public int ID { get; set; } = 0;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? DeletedAt { get; set; } = null;
+    public string Name { get; set; } = string.Empty;
+    public DateTime StartDate { get; set; } = DateTime.UtcNow;
+    public DateTime EndDate { get; set; } = DateTime.UtcNow;
+    public int TournamentId { get; set; } = 0;
 
 }

@@ -1,0 +1,150 @@
+@using System.Net.Http
+@using System.Text.Json
+@using System.Threading.Tasks
+@inject HttpClient Http
+
+
+<div class="modal-content">
+    <div class="modal-header justify-content-center" style="border:none;">
+    <h5 class="modal-title" id="">Live Game</h5>
+    </div>
+    <div class="container" >
+    
+    <div class="row justify-content-center">
+
+        @* <button type="submit" class="Winner-btn @((playerOneLight ? "light" : "dark"))" @onclick="(() => CreateGame(1))" >@(game.Dark != 0 ? getPlayerByID(game.Dark).Name : null) Wins!</button>
+
+        <button type="submit" class="Winner-btn @((playerOneLight ? "dark" : "light"))" @onclick="(() => CreateGame(2))">@(game.Light != 0 ? getPlayerByID(game.Light).Name : null) Wins!</button> *@
+
+
+    </div>
+    
+    <div class="row justify-content-center">
+        <textarea class="Desc-field" @bind="game.Desc" placeholder="Enter games description here" />
+        <textarea class="Desc-field" @bind="game.PGN" placeholder="Paste PGN Here" />
+    </div>
+
+    <div class="row justify-content-center">
+        <button type="submit" class="Draw-btn btn btn-primary" @onclick="(() => toggleSGDialog())" >Schedule The Game</button>
+
+        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(1))" >Draw</button>
+    </div>
+    
+    </div>
+    <div class="modal-footer justify-content-center" style="border:none;">
+    <label>
+        <input type="checkbox" @bind=isExhibition />
+        Exhibition game
+    </label>
+    <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
+    </div>
+</div>
+
+
+<div class="modal-content" style="@(liveGame ? "display:none;" : "display:block;")">
+    <div class="modal-header justify-content-center" style="border:none;">
+        <h5 class="modal-title" id="">Live Game</h5>
+    </div>
+    <div class="container" >
+        
+        
+    <div class="row justify-content-center">
+        <input type="datetime-local" @bind="dateTimeValue">
+    </div>
+        
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <button type="submit" class="Draw-btn" @onclick="(() => toggleSGDialog())" >Change to Live Game</button>
+            <button type="submit" class="Draw-btn" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
+        </div>
+    </div>
+        
+    </div>
+    <div class="modal-footer justify-content-center" style="border:none;">
+        <label>
+            <input type="checkbox" @bind=isExhibition />
+            Exhibition game
+        </label>
+        @* <button type="button" class="btn btn-primary" >Roll dice for White</button> *@
+        @* <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button> *@
+        <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
+    </div>
+</div>
+
+@code {
+    
+    /* Game variables*/
+    [Parameter]
+    public Modal modal { get; set; }
+    [Parameter]
+    public string selectedSeason { get; set; } 
+    [Parameter]
+    public Game game { get; set; }
+
+
+    
+    /*  */
+    private bool liveGame = true;
+    private bool isExhibition = false;
+    private DateTime dateTimeValue = new DateTime();
+    private void toggleSGDialog(){
+        if (liveGame == true){
+            liveGame = false;
+        }else{
+            liveGame = true;
+            dateTimeValue = DateTime.UtcNow;
+        }
+    }
+    public async Task CreateGame(uint State)
+    {
+        game.State = State;
+        game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ssZ");
+        @* Console.WriteLine("Is Exhib:" + isExhibition); *@
+
+        if (isExhibition){
+            game.SeasonId = 0;
+        }else{
+            game.SeasonId = uint.Parse(selectedSeason);
+        }
+
+        try{
+            @* Console.WriteLine(JsonSerializer.Serialize(game)); *@
+            var content = new StringContent(JsonSerializer.Serialize(game), System.Text.Encoding.UTF8, "application/json");
+
+            var response = await Http.PostAsync("https://lrs-chess-ratings.com/game", content);
+            response.EnsureSuccessStatusCode(); 
+
+            response = null;
+
+            // IF not a scheduled Game Make a rquest to update ratings
+            if (!isExhibition){
+            response = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":updateRatings",
+                                new StringContent("", System.Text.Encoding.UTF8, "application/json"));
+            response.EnsureSuccessStatusCode();
+            }
+
+            StateHasChanged();
+        }
+        catch (HttpRequestException ex)
+        {
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            // log or display the error message as needed
+        }
+        game                = new Game();       // Reset game object
+        modal.Close();
+    }
+
+    @* private Player getPlayerByID(uint ID){
+        foreach (var player in players)
+        {
+            if (player.Player.Id == ID ){
+                return player.Player;
+            }
+        }
+        return null;
+    } *@
+
+}

@@ -2,11 +2,34 @@
 @using System.Net.Http
 @using System.Text.Json
 @using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components.Web
 @inject HttpClient Http
 
 
-<div class="top-row px-4">
-    <h2>All Time Stats</h2>
+<div class="row header">
+    <div class="col-auto">
+        @* <h2>All Time Stats</h2> *@
+    </div>
+    <div class="col text-center" id="season-header">
+        <select value="@selectedSeason" @onchange="getParticitpants">
+            @if (seasonsList == null)
+            {
+                <option value="loading">Loading Seasons...</option>
+            }
+            else if (seasonsList.Length == 0)
+            {
+                <p>No seasons found.</p>
+            }else{
+                @foreach (var season in seasonsList)
+                {
+                    <option value="@season.ID">@season.Name</option>
+                }
+            }
+            <option value="addSeason" id="addSeasonBtn">
+                <button class="dropdown-item btn btn-primary">Add New Season</button>
+            </option>
+        </select>
+    </div>
 </div>
 
 
@@ -55,192 +78,93 @@ else
         {
             <div class="row">
                 <div class="col name-col">
-                    @player.Name
+                    @player.Player.Name
                 </div>
                 <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    @player.ID
+                    @player.Player.Id
                 </div>
                 <div class="col-auto rating-col">
-                    @player.Rating
+                    @player.Stats.Rating
                 </div>
                 <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    @player.HighestRating
+                    @player.Stats.HighestRating
                 </div>
                 <div class="col record-col">
-                    @player.Wins
+                    @player.Stats.Wins
                 </div>
                 <div class="col record-col">
-                    @player.Losses
+                    @player.Stats.Losses
                 </div>
                 <div class="col record-col">
-                    @player.Draws
+                    @player.Stats.Draws
                 </div>
                 <div class="col-auto float-right"  style="margin-left: auto;">
-                    <button @onclick="(() => StartGame(player))" class="btn btn-primary" >@((gameInit ?  game.Light == player.ID ? "End Game" : "Player 2" : "Start Game"))</button>
+                    <button @onclick="(() => StartGame(player.Player.Id))" class="btn btn-primary" >@((game.Light != 0 ?  game.Light == player.Player.Id ? "End Game" : "Player 2" : "Start Game"))</button>
                 </div>
-                <div class="col-auto float-right"  style="margin-left: auto;">
-                    <button @onclick="(() => AdvancedViewOpen(player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
-                </div>
+                @* <div class="col-auto float-right"  style="margin-left: auto;">
+                    <button @onclick="(() => AdvancedViewOpen(player.Player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
+                </div> *@
             </div>
         }
     </div>
 }
+<button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
+<a href="/CreateSeason" asp-page="/CreateSeason" class="btn btn-primary">Create Season</a>
+@* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Season</a> *@
+@* <a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a> *@
+@* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a> *@
 
-<button @onclick="OpenDialog" class="btn btn-primary" >Register New Player</button>
-<a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Season</a>
-<a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Season</a>
-<a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a>
-<a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a>
 
-
-<!-- Register a Player -->
-<div class="modal fade @((isDialogOpen ? "show" : ""))" id="registerPlayerDialog" style="display: @((isDialogOpen ? "block;" : "none;"))"  tabindex="-1" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header justify-content-center" style="border:none;">
-        <h5 class="modal-title" id="exampleModalLabel">Register New Player</h5>
-      </div>
-      <div class="modal-body" >
-        <form class="container" id="signUpForm">
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <label for="newPlayerName">Player Name:</label>
-                </div>
-                <div class="col-auto">
-                    <input type="text" id="newPlayerName" name="newPlayerName"  @bind-value="newPlayerName" />
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <label for="newPlayerRating">Rating: </label>
-                </div>
-                <div class="col-auto">
-                    <input type="int" class="numberfield" id="newPlayerRating" name="newPlayerRating" @bind-value="newPlayerRating" />
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-auto">
-                    <label for="newPlayerLosses">Record: </label>
-                </div>
-                <div class="col-auto">
-                    <input type="int" class="numberfield threeDigits" id="newPlayerWins"    name="newPlayerWins"    @bind-value="newPlayerWins"/>
-                </div>
-                <div class="col-auto">
-                    <input type="int" class="numberfield threeDigits" id="newPlayerLosses"  name="newPlayerLosses"  @bind-value="newPlayerLosses" />
-                </div>
-                <div class="col-auto">
-                    <input type="int" class="numberfield threeDigits" id="newPlayerTies"    name="newPlayerTies"    @bind-value="newPlayerTies" />
-                </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer justify-content-center" style="border:none; margin: 0px;">
-        <button type="submit" class="btn btn-primary" @onclick="RegisterPlayer">Register</button>
-        <button type="button" class="btn btn-primary" @onclick="CloseDialog">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Register a Player --> 
+<Modal @ref="modalPlayer" ModalTitle="Register a Player" >
+    <RegisterPlayer modal="@modalPlayer">
+    </RegisterPlayer>
+</Modal>
+<!-- Game a Player --> 
+<Modal @ref="modalGame" ModalTitle="Register Game" >
+    <RegisterGame modal="@modalGame" selectedSeason="@selectedSeason" game="game">
+    </RegisterGame>
+</Modal>
 
 <!-- Live Game -->
-<div class="modal fade @((gameStarted ? "show" : ""))" id="liveGameDisplay" style="display: @((gameStarted ? "block;" : "none;"))"  tabindex="-1" >
-  <div class="live-game-dialog" role="document">
-    <div class="modal-content"  style="@(liveGame ? "display:blcok;" : "display:none;")">
-      <div class="modal-header justify-content-center" style="border:none;">
-        <h5 class="modal-title" id="">Live Game</h5>
-      </div>
-      <div class="container" >
-        
-        <div class="row justify-content-center">
-
-                <button type="submit" class="Winner-btn @((playerOneLight ? "light" : "dark"))" @onclick="(() => CreateGame(1))" >@(game.Dark != 0 ? getPlayerByID(game.Dark).Name : null) Wins!</button>
-
-                <button type="submit" class="Winner-btn @((playerOneLight ? "dark" : "light"))" @onclick="(() => CreateGame(2))">@(game.Light != 0 ? getPlayerByID(game.Light).Name : null) Wins!</button>
-
-        </div>
-        
-        <div class="row justify-content-center">
-                <input tyep="text" class="Desc-field" @bind="game.Desc" placeholder="Enter games description here" />
-        </div>
-        
-        <div class="row justify-content-center">
-                <button type="submit" class="Draw-btn btn btn-primary" @onclick="(() => toggleSGDialog())" >Schedule The Game</button>
-
-                <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(1))" >Draw</button>
-        </div>
-        
-      </div>
-      <div class="modal-footer justify-content-center" style="border:none;">
-        <button type="button" class="btn btn-primary" >Roll dice for White</button>
-        <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
-        <button type="button" class="btn btn-primary" @onclick="CancelGame">Cancel</button>
-      </div>
-    </div>
-    
-
-    <div class="modal-content" style="@(liveGame ? "display:none;" : "display:block;")">
-        <div class="modal-header justify-content-center" style="border:none;">
-            <h5 class="modal-title" id="">Live Game</h5>
-        </div>
-        <div class="container" >
-            
-            
-        <div class="row justify-content-center">
-            <input type="datetime-local" @bind="dateTimeValue">
-        </div>
-            
-        <div class="row justify-content-center">
-            <div class="col-auto">
-                <button type="submit" class="Draw-btn" @onclick="(() => toggleSGDialog())" >Change to Live Game</button>
-                <button type="submit" class="Draw-btn" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
-            </div>
-        </div>
-            
-        </div>
-        <div class="modal-footer justify-content-center" style="border:none;">
-            <button type="button" class="btn btn-primary" >Roll dice for White</button>
-            <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
-            <button type="button" class="btn btn-primary" @onclick="CancelGame">Cancel</button>
-        </div>
-    </div>
-  </div>
-</div>
-
 
 @code {
-    public Player[] players = Array.Empty<Player>();
+    // List of players for standings
+    public PlayerStats[]? players = null;
+    public Season[]? seasonsList = null;
+    public string selectedSeason = "loading";
+    private Game game = new Game();
+    // Season the screen is displaying
     private string errorMessage = string.Empty;
-
     private bool advancedView   = false;
-    
-    /* Game variables*/
-    private bool gameInit       = false;
-    private bool gameStarted    = false;
-    private bool liveGame       = true;
-    private DateTime dateTimeValue = DateTime.UtcNow;
-    private bool playerOneLight = true;
-    private Game game           = new Game();
-
     /* Sign Up Variables*/
-    private bool isDialogOpen   = false;
-    private string newPlayerName = "";
-
-    private int newPlayerRating = 0;
-    private int newPlayerWins   = 0;
-    private int newPlayerLosses = 0;
-    private int newPlayerTies   = 0;
-
+    private Modal modalPlayer = new Modal();
+    private Modal modalGame = new Modal();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var response = await Http.GetAsync("https://lrs-chess-ratings.com/players?with_deleted=true&page_id=0");
+            // Get list of seasons
+            var response = await Http.GetAsync("https://lrs-chess-ratings.com/seasons?with_deleted=false&page_id=0");
             response.EnsureSuccessStatusCode();
-            var content = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var result = JsonSerializer.Deserialize<PlayerResponse>(content, options);
-            players = result.Items;
+            seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await response.Content.ReadAsStringAsync(),
+                                                                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items;
+
+            selectedSeason = seasonsList[seasonsList.Length-1].ID.ToString();
+
+            // If there are seasons get the list of players for the season
+            if (seasonsList.Length != 0 && seasonsList != null)
+            {
+
+            var response2 = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":getParticipants", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
+            response2.EnsureSuccessStatusCode();
+
+            players = JsonSerializer.Deserialize<PlayerStats[]>(await response2.Content.ReadAsStringAsync(),
+                                                                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            } 
+            
         }
         catch (HttpRequestException ex)
         {
@@ -252,133 +176,56 @@ else
             errorMessage = "Error parsing player data. Please try again later.";
             // log or display the error message as needed
         }
+        
     }
-
+    public class SeasonsResponse
+    {
+        public Season[] Items { get; set; }
+        public int NextPage { get; set; }
+    }
     public class PlayerResponse
     {
-        public Player[] Items { get; set; } = Array.Empty<Player>();
+        public PlayerStats[] Items { get; set; } = Array.Empty<PlayerStats>();
     }
 
-    private void OpenDialog()
-    {
-        if (isDialogOpen){
-            isDialogOpen = false;
-        }else{
-            isDialogOpen = true;
+    private void StartGame(uint PlayerID){
+        // Player has been click twice, then close end game
+        if (game.Light == PlayerID){
+            game.Light = 0;
+        }else
+        // First Player has not been chosen
+        if (game.Light == 0){
+            game.Light = PlayerID;
+        }else {
+            game.Dark = PlayerID;
+            modalGame.Show();
         }
+
     }
 
-    private async Task RegisterPlayer()
-    {
-        Console.WriteLine("newPlayerName: " + newPlayerName);
-        Console.WriteLine("newPlayerRating: " + newPlayerRating);
-        Console.WriteLine("newPlayerWins: " + newPlayerWins);
-        Console.WriteLine("newPlayerLosses: " + newPlayerLosses);
-        Console.WriteLine("newPlayerTies: " + newPlayerTies);
-        try{
-
-            var newPlayer = new { name = newPlayerName };
-            var json = JsonSerializer.Serialize(newPlayer);
-            Console.WriteLine(json);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
+    public async void getParticitpants(){
+        try
+        {
+            // Get list of seasons
+            var response = await Http.GetAsync("https://lrs-chess-ratings.com/seasons?with_deleted=false&page_id=0");
             response.EnsureSuccessStatusCode();
+            seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await response.Content.ReadAsStringAsync(),
+                                                                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items;
 
-            var newPlayerJson = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
+            selectedSeason = seasonsList[seasonsList.Length-1].ID.ToString();
 
-            players = players.Append(createdPlayer).ToArray();
-        }
-        catch (HttpRequestException ex)
-        {
-            errorMessage = "Error retrieving players. Please try again later.";
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            errorMessage = "Error parsing player data. Please try again later.";
-            // log or display the error message as needed
-        }
+            // If there are seasons get the list of players for the season
+            if (seasonsList.Length != 0 && seasonsList != null)
+            {
 
-        CloseDialog();
-    }
+            var response2 = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":getParticipants", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
+            response2.EnsureSuccessStatusCode();
 
-    private void CloseDialog()
-    {
-        isDialogOpen    = false;
-        newPlayerName   = "";
-        newPlayerRating = 0;
-        newPlayerWins   = 0;
-        newPlayerLosses = 0;
-        newPlayerTies   = 0;
-    }
-   
-    private void CancelGame(){
-        gameInit            = false;            // Change buttons back
-        gameStarted         = false;            // Close game dialog
-        liveGame            = true;
-        game                = new Game();       // Reset game object
-        return;
-    }
-    private void StartGame(Player player){
-        if (gameInit){
-            if (game.Light == player.ID){
-                CancelGame();
-                return;
-            }
-            //Game is already create, so we have player two
-            game.Dark = player.ID;
+            players = JsonSerializer.Deserialize<PlayerStats[]>(await response2.Content.ReadAsStringAsync(),
+                                                                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            // open Game Dialog
-            gameStarted = true;
-        }else{
-            // Initialize game object
-            game = new Game();
-
-            game.Light = player.ID;
+            } 
             
-            gameInit = true;
-        }
-
-    }
-    private void toggleSGDialog(){
-        if (liveGame == true){
-            liveGame = false;
-        }else{
-            liveGame = true;
-            dateTimeValue = DateTime.UtcNow;
-        }
-    }
-    private void SwitchColors(){
-        if (gameStarted){
-            if (playerOneLight){
-                Console.WriteLine("playerOneLight = false;");
-                playerOneLight = false;
-            }else{
-                Console.WriteLine("playerOneLight = true;");
-                playerOneLight = true;
-            }
-        }
-    }
-    public async Task CreateGame(uint State)
-    {
-        game.State = State;
-        game.TimePlayed = dateTimeValue.ToString();
-
-
-        try{
-            var newPlayer = new { name = newPlayerName };
-
-            Console.WriteLine(JsonSerializer.Serialize(game));
-
-            var content = new StringContent(JsonSerializer.Serialize(game), System.Text.Encoding.UTF8, "application/json");
-
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/game", content);
-            response.EnsureSuccessStatusCode(); 
-            Console.WriteLine(response);
-            StateHasChanged();
         }
         catch (HttpRequestException ex)
         {
@@ -390,26 +237,7 @@ else
             errorMessage = "Error parsing player data. Please try again later.";
             // log or display the error message as needed
         }
-        
-        
-        // Reset variables
-        gameInit            = false;            // Change buttons back
-        gameStarted         = false;            // Close game dialog
-        game                = new Game();       // Reset game object
     }
-
-    private Player getPlayerByID(uint ID){
-        foreach (var player in players)
-        {
-            if (player.ID == ID ){
-                return player;
-            }
-        }
-        return null;
-    }
-
-    private void AdvancedViewOpen(Player player){
-        return;
-    }
+    
 
 }

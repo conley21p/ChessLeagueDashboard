@@ -1,10 +1,19 @@
+using System.Text.Json.Serialization;
+
 public class Player
 {
-    public uint ID { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public int Rating { get; set; }
-    public int HighestRating { get; set; }
-    public int Wins { get; set; }
-    public int Losses { get; set; }
-    public int Draws { get; set; }
+    [JsonPropertyName("ID")]
+    public uint Id { get; set; }
+
+    [JsonPropertyName("CreatedAt")]
+    public string CreatedAt { get; set; }
+
+    [JsonPropertyName("UpdatedAt")]
+    public string UpdatedAt { get; set; }
+
+    [JsonPropertyName("DeletedAt")]
+    public string DeletedAt { get; set; }
+
+    [JsonPropertyName("Name")]
+    public string Name { get; set; }
 }

@@ -1,0 +1,82 @@
+@using System.Net.Http
+@using System.Text.Json
+@inject HttpClient Http
+
+<!-- Register a Player -->
+<form class="container" id="signUpForm">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <label for="newPlayerName">Player Name:</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="newPlayerName" name="newPlayerName"  @bind-value="newPlayerName" />
+        </div>
+    </div>
+    @* Rating and Record fields that we may possible add in the future *@
+    @* <div class="row justify-content-center">
+        <div class="col-auto">
+            <label for="newPlayerRating">Rating: </label>
+        </div>
+        <div class="col-auto">
+            <input type="int" class="numberfield" id="newPlayerRating" name="newPlayerRating" @bind-value="newPlayerRating" />
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <label for="newPlayerLosses">Record: </label>
+        </div>
+        <div class="col-auto">
+            <input type="int" class="numberfield threeDigits" id="newPlayerWins"    name="newPlayerWins"    @bind-value="newPlayerWins"/>
+        </div>
+        <div class="col-auto">
+            <input type="int" class="numberfield threeDigits" id="newPlayerLosses"  name="newPlayerLosses"  @bind-value="newPlayerLosses" />
+        </div>
+        <div class="col-auto">
+            <input type="int" class="numberfield threeDigits" id="newPlayerTies"    name="newPlayerTies"    @bind-value="newPlayerTies" />
+        </div>
+    </div> *@
+    
+    <div class="modal-footer justify-content-center" style="border:none; margin: 0px;">
+        <button type="submit" class="btn btn-primary" @onclick="registerPlayer">Register</button>
+        <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
+    </div>
+</form>
+
+@code{
+
+    [Parameter]
+    public Modal modal { get; set; }
+   
+    public string newPlayerName = "";
+
+
+    private async Task registerPlayer()
+    {
+        try{
+;
+            var json = JsonSerializer.Serialize(newPlayerName);
+            Console.WriteLine(json);
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
+            response.EnsureSuccessStatusCode();
+
+            var newPlayerJson = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
+
+        }
+        catch (HttpRequestException ex)
+        {
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            // log or display the error message as needed
+        }
+
+         modal.Close();
+    }
+    
+    
+}
