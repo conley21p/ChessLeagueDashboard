@@ -177,4 +177,15 @@ a, .btn-link {
         width: 140px;
         margin-top: -5px;
     }
-    
+    #add-player-to-season 
+    {
+        background: none;
+        border: none;
+        color: white;
+    }
+    #addPlayerToSeasonBtn
+    {
+        background: none;
+        border: none;
+        color: black;
+    }

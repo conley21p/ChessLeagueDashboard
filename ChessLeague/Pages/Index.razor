@@ -11,7 +11,7 @@
         @* <h2>All Time Stats</h2> *@
     </div>
     <div class="col text-center" id="season-header">
-        <select value="@selectedSeason" @onchange="getParticitpants">
+        <select value="@selectedSeason" @onchange="getParticitpants" >
             @if (seasonsList == null)
             {
                 <option value="loading">Loading Seasons...</option>
@@ -32,48 +32,48 @@
     </div>
 </div>
 
+<div class="standings-wrapper">
+    
+    <div class="row">
+        <div class="col name-col">
+            Player
+        </div>
+        <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
+            Player ID
+        </div>
+        <div class="col-auto rating-col">
+            Rating
+        </div>
+        <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+            Highest Rating
+        </div>
+        <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+            Win Streak
+        </div>
+        <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+            Highest Win Streak
+        </div>
+        <div class="col record-col">
+            Wins
+        </div>
+        <div class="col record-col">
+            Losses
+        </div>
+        <div class="col record-col">
+            Draws
+        </div>
+    </div>
 
-@if (players == null)
-{
-    <p>Loading players...</p>
-}
-else if (players.Length == 0)
-{
-    <p>No players found.</p>
-}
-else
-{
-    <div class="standings-wrapper">
-        
-            <div class="row">
-                <div class="col name-col">
-                    Player
-                </div>
-                <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    Player ID
-                </div>
-                <div class="col-auto rating-col">
-                    Rating
-                </div>
-                <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    Highest Rating
-                </div>
-                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    Win Streak
-                </div>
-                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    Highest Win Streak
-                </div>
-                <div class="col record-col">
-                    Wins
-                </div>
-                <div class="col record-col">
-                    Losses
-                </div>
-                <div class="col record-col">
-                    Draws
-                </div>
+    @if (players == null || players.Length == 0)
+    {
+        <option value="addSeason" id="addSeasonBtn">
+            <div class="col name-col">
+                No Players Found
             </div>
+        </option>
+    }
+    else
+    {
         @foreach (var player in players)
         {
             <div class="row">
@@ -106,8 +106,28 @@ else
                 </div> *@
             </div>
         }
+    }
+    <div class="row">
+        <div class="col-auto"  style="margin-left: auto;">
+            <select value="none" id="add-player-to-season" @onchange="getParticitpants">
+                <option value="none" selected disabled hidden>Add Player to Season</option>
+                @if (allPlayers == null )
+                {
+                    <option value="addSeason" id="addPlayerToSeasonBtn">
+                        <p>NO Players Found</p>
+                    </option>
+                }else{
+                    @foreach (var player in allPlayers)
+                    {
+                        <option value="addSeason" id="addPlayerToSeasonBtn">
+                            <button class="dropdown-item btn btn-primary" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
+                        </option>
+                    }
+                }
+            </select>
+        </div>
     </div>
-}
+</div>
 <button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
 <a href="/CreateSeason" asp-page="/CreateSeason" class="btn btn-primary">Create Season</a>
 @* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Season</a> *@
@@ -141,6 +161,9 @@ else
     private Modal modalPlayer = new Modal();
     private Modal modalGame = new Modal();
 
+    // List of all players, for add player to season list
+    private List<Player> allPlayers = null;
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -162,8 +185,19 @@ else
 
             players = JsonSerializer.Deserialize<PlayerStats[]>(await response2.Content.ReadAsStringAsync(),
                                                                  new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            foreach (var player in players){
+                Console.WriteLine("PLayer: " + player.Player.Name);
+            }
 
-            } 
+            var response3 = await Http.GetAsync("https://lrs-chess-ratings.com/players");
+            response3.EnsureSuccessStatusCode();
+            allPlayers = JsonSerializer.Deserialize<allPlayersResponse>(await response3.Content.ReadAsStringAsync(),
+                                                                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items.ToList();
+
+            foreach (var player in allPlayers){
+                Console.WriteLine("AllPLayer: " + player.Name);
+            }
+            }
             
         }
         catch (HttpRequestException ex)
@@ -177,16 +211,21 @@ else
             // log or display the error message as needed
         }
         
+        StateHasChanged(); 
+        
     }
     public class SeasonsResponse
     {
         public Season[] Items { get; set; }
         public int NextPage { get; set; }
     }
-    public class PlayerResponse
+    
+    public class allPlayersResponse
     {
-        public PlayerStats[] Items { get; set; } = Array.Empty<PlayerStats>();
+        public Player[] Items { get; set; }
+        public int NextPage { get; set; }
     }
+
 
     private void StartGame(uint PlayerID){
         // Player has been click twice, then close end game
@@ -202,30 +241,75 @@ else
         }
 
     }
-
-    public async void getParticitpants(){
+    public async void addPlayerToSeason(MouseEventArgs e, uint playerId){
         try
         {
-            // Get list of seasons
-            var response = await Http.GetAsync("https://lrs-chess-ratings.com/seasons?with_deleted=false&page_id=0");
-            response.EnsureSuccessStatusCode();
-            seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await response.Content.ReadAsStringAsync(),
-                                                                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items;
-
-            selectedSeason = seasonsList[seasonsList.Length-1].ID.ToString();
-
+            @* e.PreventDefault(); *@
             // If there are seasons get the list of players for the season
-            if (seasonsList.Length != 0 && seasonsList != null)
-            {
+            var response = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":addPlayer?player_id=" + playerId , new StringContent("", System.Text.Encoding.UTF8, "application/json"));
+            response.EnsureSuccessStatusCode();
 
+            players = JsonSerializer.Deserialize<PlayerStats[]>(await response.Content.ReadAsStringAsync(),
+                                                                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            //Remove Player from all Players list
+            foreach (var player in allPlayers){
+                if (player.Id.ToString().CompareTo(playerId) == 0){
+                    allPlayers.Remove(player);
+                }
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = "Error retrieving players. Please try again later.";
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            errorMessage = "Error parsing player data. Please try again later.";
+            // log or display the error message as needed
+        }
+        StateHasChanged();
+    }
+    public async void getParticitpants(ChangeEventArgs e){
+        try
+        {
+            selectedSeason = e.Value.ToString();
+            // If there are seasons get the list of players for the season
             var response2 = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":getParticipants", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
             response2.EnsureSuccessStatusCode();
 
             players = JsonSerializer.Deserialize<PlayerStats[]>(await response2.Content.ReadAsStringAsync(),
                                                                  new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = "Error retrieving players. Please try again later.";
+            // log or display the error message as needed
+        }
+        catch (JsonException ex)
+        {
+            errorMessage = "Error parsing player data. Please try again later.";
+            // log or display the error message as needed
+        }
+        StateHasChanged();
+    }
+    public async void getAllPlayersList(){
+        try
+        {
+            // Get list of seasons
+            var response = await Http.GetAsync("https://lrs-chess-ratings.com/players");
+            response.EnsureSuccessStatusCode();
+            allPlayers = JsonSerializer.Deserialize<allPlayersResponse>(await response.Content.ReadAsStringAsync(),
+                                                                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items.ToList();
 
-            } 
-            
+            foreach (var p1 in allPlayers){
+                foreach (var p2 in players){
+                    if (p1.Id == p2.Player.Id){
+                        allPlayers.Remove(p1);
+                    }
+                }
+            }         
         }
         catch (HttpRequestException ex)
         {
@@ -238,6 +322,5 @@ else
             // log or display the error message as needed
         }
     }
-    
 
 }
