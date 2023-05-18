@@ -6,38 +6,31 @@
 <form class="container" id="signUpForm">
     <div class="row justify-content-center">
         <div class="col-auto">
-            <label for="newPlayerName">Player Name:</label>
+            <label for="newSeasonName">Season Name:</label>
         </div>
         <div class="col-auto">
-            <input type="text" id="newPlayerName" name="newPlayerName"  @bind-value="newPlayerName" />
-        </div>
-    </div>
-    @* Rating and Record fields that we may possible add in the future *@
-    @* <div class="row justify-content-center">
-        <div class="col-auto">
-            <label for="newPlayerRating">Rating: </label>
-        </div>
-        <div class="col-auto">
-            <input type="int" class="numberfield" id="newPlayerRating" name="newPlayerRating" @bind-value="newPlayerRating" />
+            <input type="text" id="newSeasonName" name="newSeasonName"  @bind-value="newSeason.Name" />
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-auto">
-            <label for="newPlayerLosses">Record: </label>
+            <label for="newSeasonName">Start Date:</label>
         </div>
         <div class="col-auto">
-            <input type="int" class="numberfield threeDigits" id="newPlayerWins"    name="newPlayerWins"    @bind-value="newPlayerWins"/>
+            <input type="datetime-local" @bind="newSeason.StartDate">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <label for="newSeasonName">End Date:</label>
         </div>
         <div class="col-auto">
-            <input type="int" class="numberfield threeDigits" id="newPlayerLosses"  name="newPlayerLosses"  @bind-value="newPlayerLosses" />
+            <input type="datetime-local" @bind="newSeason.EndDate">
         </div>
-        <div class="col-auto">
-            <input type="int" class="numberfield threeDigits" id="newPlayerTies"    name="newPlayerTies"    @bind-value="newPlayerTies" />
-        </div>
-    </div> *@
+    </div>
     
     <div class="modal-footer justify-content-center" style="border:none; margin: 0px;">
-        <button type="submit" class="btn btn-primary" @onclick="registerPlayer">Register</button>
+        <button type="submit" class="btn btn-primary" @onclick="createSeason">Create New Season</button>
         <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
     </div>
 </form>
@@ -47,18 +40,22 @@
     [Parameter]
     public Modal modal { get; set; }
    
-    public string newPlayerName = "";
+    public Season newSeason = new Season();
 
-
-    private async Task registerPlayer()
+    private async Task createSeason()
     {
         try{
-;
-            var json = JsonSerializer.Serialize(newPlayerName);
-            Console.WriteLine("post player json:"+json);
+            SeasonCreate seasonReq = new SeasonCreate();
+            seasonReq.Name = newSeason.Name;
+            seasonReq.StartDate = newSeason.StartDate.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";
+            seasonReq.EndDate = newSeason.EndDate.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";
+
+
+            var json = JsonSerializer.Serialize(newSeason);
+            Console.WriteLine(json);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
+            var response = await Http.PostAsync("https://lrs-chess-ratings.com/season", content);
             response.EnsureSuccessStatusCode();
 
             var newPlayerJson = await response.Content.ReadAsStringAsync();
@@ -75,7 +72,8 @@
             // log or display the error message as needed
         }
 
-         modal.Close();
+        modal.Close();
+        OnInitializedAsync();
     }
     
     

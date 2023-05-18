@@ -4,7 +4,8 @@
 @inject HttpClient Http
 
 
-<div class="modal-content">
+<div class="" style="@(liveGame ? "display:block;" : "display:none;")">
+        
     <div class="modal-header justify-content-center" style="border:none;">
     <h5 class="modal-title" id="">Live Game</h5>
     </div>
@@ -12,9 +13,9 @@
     
     <div class="row justify-content-center">
 
-        @* <button type="submit" class="Winner-btn @((playerOneLight ? "light" : "dark"))" @onclick="(() => CreateGame(1))" >@(game.Dark != 0 ? getPlayerByID(game.Dark).Name : null) Wins!</button>
+        <button type="submit" class="Winner-btn @((game.Light == p1.Id ? "light" : "dark"))" @onclick="(() => CreateGame(1))" >@p1.Name Wins!</button>
 
-        <button type="submit" class="Winner-btn @((playerOneLight ? "dark" : "light"))" @onclick="(() => CreateGame(2))">@(game.Light != 0 ? getPlayerByID(game.Light).Name : null) Wins!</button> *@
+        <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(2))">@p2.Name  Wins!</button>
 
 
     </div>
@@ -25,48 +26,22 @@
     </div>
 
     <div class="row justify-content-center">
-        <button type="submit" class="Draw-btn btn btn-primary" @onclick="(() => toggleSGDialog())" >Schedule The Game</button>
 
         <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(1))" >Draw</button>
     </div>
     
-    </div>
-    <div class="modal-footer justify-content-center" style="border:none;">
-    <label>
-        <input type="checkbox" @bind=isExhibition />
-        Exhibition game
-    </label>
-    <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
-    </div>
-</div>
-
-
-<div class="modal-content" style="@(liveGame ? "display:none;" : "display:block;")">
-    <div class="modal-header justify-content-center" style="border:none;">
-        <h5 class="modal-title" id="">Live Game</h5>
-    </div>
-    <div class="container" >
-        
-        
     <div class="row justify-content-center">
-        <input type="datetime-local" @bind="dateTimeValue">
+        <input class="datetime-local" type="datetime-local" @bind="dateTimeValue">
+        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(0))" >Submit Scheduled Game</button>
     </div>
-        
-    <div class="row justify-content-center">
-        <div class="col-auto">
-            <button type="submit" class="Draw-btn" @onclick="(() => toggleSGDialog())" >Change to Live Game</button>
-            <button type="submit" class="Draw-btn" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
-        </div>
-    </div>
-        
+    
     </div>
     <div class="modal-footer justify-content-center" style="border:none;">
         <label>
             <input type="checkbox" @bind=isExhibition />
             Exhibition game
         </label>
-        @* <button type="button" class="btn btn-primary" >Roll dice for White</button> *@
-        @* <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button> *@
+        <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
         <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
     </div>
 </div>
@@ -80,35 +55,40 @@
     public string selectedSeason { get; set; } 
     [Parameter]
     public Game game { get; set; }
+    [Parameter]
+    public Player? p1 {get; set;}
+    [Parameter]
+    public Player? p2 {get; set;}
+
 
 
     
     /*  */
     private bool liveGame = true;
     private bool isExhibition = false;
-    private DateTime dateTimeValue = new DateTime();
-    private void toggleSGDialog(){
-        if (liveGame == true){
-            liveGame = false;
-        }else{
-            liveGame = true;
-            dateTimeValue = DateTime.UtcNow;
-        }
-    }
+    private DateTime dateTimeValue = DateTime.UtcNow.AddHours(-5.0);
+
     public async Task CreateGame(uint State)
     {
         game.State = State;
-        game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ssZ");
-        @* Console.WriteLine("Is Exhib:" + isExhibition); *@
 
+        
         if (isExhibition){
             game.SeasonId = 0;
         }else{
             game.SeasonId = uint.Parse(selectedSeason);
         }
+        dateTimeValue.AddHours(5.0);
+        game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
+        @* Console.WriteLine("game.TimePlayed:" + game.TimePlayed);
+        Console.WriteLine("game.State:" + game.State);
+        Console.WriteLine("game.SeasonID:" + game.SeasonId);
+        Console.WriteLine("game.Desc:" + game.Desc);
+        Console.WriteLine("game.Light:" + game.Light);
+        Console.WriteLine("game.Dark:" + game.Dark); *@
+
 
         try{
-            @* Console.WriteLine(JsonSerializer.Serialize(game)); *@
             var content = new StringContent(JsonSerializer.Serialize(game), System.Text.Encoding.UTF8, "application/json");
 
             var response = await Http.PostAsync("https://lrs-chess-ratings.com/game", content);
@@ -133,18 +113,14 @@
         {
             // log or display the error message as needed
         }
+        game = null;
         game                = new Game();       // Reset game object
-        modal.Close();
+        this.modal.Close();
     }
 
-    @* private Player getPlayerByID(uint ID){
-        foreach (var player in players)
-        {
-            if (player.Player.Id == ID ){
-                return player.Player;
-            }
-        }
-        return null;
-    } *@
-
+    private void SwitchColors(){
+        uint temp  = game.Light;
+        game.Light = game.Dark;
+        game.Dark  = temp;
+    }
 }

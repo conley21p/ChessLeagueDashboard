@@ -1,0 +1,33 @@
+#add-player-to-season 
+{
+    background: none;
+    border: none;
+    color: white;
+}
+
+.dropdown-toggle
+{
+    color: white;
+}
+
+.dropdown-menu
+{
+    background:rgba(124, 124, 124, 0.705);
+    border-radius: 5px;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+    backdrop-filter: blur(10px);
+}
+.dropdown-menu:hover
+{  
+    background:rgba(187, 187, 187, 0.705);
+    backdrop-filter: blur(10px);
+}
+.dropdown-item
+{
+    color:white;
+}
+.dropdown-item:hover
+{
+    background: none;
+    color:rgb(39, 93, 255);
+}

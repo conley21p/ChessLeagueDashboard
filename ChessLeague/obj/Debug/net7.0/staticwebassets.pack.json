@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\css\\dropdown.css",
+      "PackagePath": "staticwebassets\\css\\dropdown.css"
+    },
+    {
       "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\css\\modal.css",
       "PackagePath": "staticwebassets\\css\\modal.css"
     },

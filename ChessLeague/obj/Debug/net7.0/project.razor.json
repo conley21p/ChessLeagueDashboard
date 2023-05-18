@@ -87,80 +87,6 @@
         }
       },
       {
-        "HashCode": -2078318302,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Pages.CreateTournament",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "CreateTournament"
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Pages.CreateTournament",
-          "Common.TypeNameIdentifier": "CreateTournament",
-          "Common.TypeNamespace": "ChessLeague.Pages",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
-        "HashCode": -123075005,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Pages.CreateTournament",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ChessLeague.Pages.CreateTournament"
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Pages.CreateTournament",
-          "Common.TypeNameIdentifier": "CreateTournament",
-          "Common.TypeNamespace": "ChessLeague.Pages",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
-        "HashCode": 1313512952,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Pages.CreateSeason",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "CreateSeason"
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Pages.CreateSeason",
-          "Common.TypeNameIdentifier": "CreateSeason",
-          "Common.TypeNamespace": "ChessLeague.Pages",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
-        "HashCode": 424509857,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Pages.CreateSeason",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ChessLeague.Pages.CreateSeason"
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Pages.CreateSeason",
-          "Common.TypeNameIdentifier": "CreateSeason",
-          "Common.TypeNamespace": "ChessLeague.Pages",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
         "HashCode": -1252508756,
         "Kind": "Components.Component",
         "Name": "ChessLeague.Pages.Index",
@@ -400,6 +326,65 @@
         }
       },
       {
+        "HashCode": 1448561262,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Shared.RegisterPlayer",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "RegisterPlayer"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "modal",
+            "TypeName": "ChessLeague.Shared.Modal",
+            "Metadata": {
+              "Common.PropertyName": "modal",
+              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
+            }
+          }
+        ],
+        "Metadata": {
+          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
+          "Common.TypeNameIdentifier": "RegisterPlayer",
+          "Common.TypeNamespace": "ChessLeague.Shared",
+          "Runtime.Name": "Components.IComponent"
+        }
+      },
+      {
+        "HashCode": -247115242,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Shared.RegisterPlayer",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ChessLeague.Shared.RegisterPlayer"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "modal",
+            "TypeName": "ChessLeague.Shared.Modal",
+            "Metadata": {
+              "Common.PropertyName": "modal",
+              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
+            }
+          }
+        ],
+        "Metadata": {
+          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
+          "Common.TypeNameIdentifier": "RegisterPlayer",
+          "Common.TypeNamespace": "ChessLeague.Shared",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
+          "Runtime.Name": "Components.IComponent"
+        }
+      },
+      {
         "HashCode": -903600403,
         "Kind": "Components.Component",
         "Name": "ChessLeague.Shared.Modal",
@@ -599,7 +584,7 @@
         }
       },
       {
-        "HashCode": -7577996,
+        "HashCode": -580081476,
         "Kind": "Components.Component",
         "Name": "ChessLeague.Shared.RegisterGame",
         "AssemblyName": "ChessLeague",
@@ -636,6 +621,24 @@
               "Common.PropertyName": "game",
               "Common.GloballyQualifiedTypeName": "global::Game"
             }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p1",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p1",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p2",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p2",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
           }
         ],
         "Metadata": {
@@ -646,7 +649,7 @@
         }
       },
       {
-        "HashCode": -33468329,
+        "HashCode": 1004080832,
         "Kind": "Components.Component",
         "Name": "ChessLeague.Shared.RegisterGame",
         "AssemblyName": "ChessLeague",
@@ -683,6 +686,24 @@
               "Common.PropertyName": "game",
               "Common.GloballyQualifiedTypeName": "global::Game"
             }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p1",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p1",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p2",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p2",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
           }
         ],
         "Metadata": {
@@ -694,14 +715,14 @@
         }
       },
       {
-        "HashCode": 1448561262,
+        "HashCode": 1947539094,
         "Kind": "Components.Component",
-        "Name": "ChessLeague.Shared.RegisterPlayer",
+        "Name": "ChessLeague.Shared.CreateSeason",
         "AssemblyName": "ChessLeague",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "RegisterPlayer"
+            "TagName": "CreateSeason"
           }
         ],
         "BoundAttributes": [
@@ -716,21 +737,21 @@
           }
         ],
         "Metadata": {
-          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
-          "Common.TypeNameIdentifier": "RegisterPlayer",
+          "Common.TypeName": "ChessLeague.Shared.CreateSeason",
+          "Common.TypeNameIdentifier": "CreateSeason",
           "Common.TypeNamespace": "ChessLeague.Shared",
           "Runtime.Name": "Components.IComponent"
         }
       },
       {
-        "HashCode": -247115242,
+        "HashCode": 574017363,
         "Kind": "Components.Component",
-        "Name": "ChessLeague.Shared.RegisterPlayer",
+        "Name": "ChessLeague.Shared.CreateSeason",
         "AssemblyName": "ChessLeague",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ChessLeague.Shared.RegisterPlayer"
+            "TagName": "ChessLeague.Shared.CreateSeason"
           }
         ],
         "BoundAttributes": [
@@ -745,8 +766,8 @@
           }
         ],
         "Metadata": {
-          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
-          "Common.TypeNameIdentifier": "RegisterPlayer",
+          "Common.TypeName": "ChessLeague.Shared.CreateSeason",
+          "Common.TypeNameIdentifier": "CreateSeason",
           "Common.TypeNamespace": "ChessLeague.Shared",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch",
           "Runtime.Name": "Components.IComponent"
@@ -19422,11 +19443,6 @@
   "RootNamespace": "ChessLeague",
   "Documents": [
     {
-      "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Pages\\CreateSeason.razor",
-      "TargetPath": "Pages\\CreateSeason.razor",
-      "FileKind": "component"
-    },
-    {
       "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Pages\\Tournament.razor",
       "TargetPath": "Pages\\Tournament.razor",
       "FileKind": "component"
@@ -19434,6 +19450,11 @@
     {
       "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Shared\\RegisterGame.razor",
       "TargetPath": "Shared\\RegisterGame.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Shared\\CreateSeason.razor",
+      "TargetPath": "Shared\\CreateSeason.razor",
       "FileKind": "component"
     },
     {
@@ -19474,11 +19495,6 @@
     {
       "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\App.razor",
       "TargetPath": "App.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\Pages\\CreateTournament.razor",
-      "TargetPath": "Pages\\CreateTournament.razor",
       "FileKind": "component"
     },
     {

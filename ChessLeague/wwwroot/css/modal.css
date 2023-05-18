@@ -18,7 +18,7 @@
     padding-top: 5vh;
 }
     /* Live Game Dialog */
-    #liveGameDisplay button.Winner-btn
+    button.Winner-btn
     {
         width: 40%;
         height: 40vh;
@@ -30,17 +30,18 @@
         box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
         font-size: xx-large;
     }
-    #liveGameDisplay button.Winner-btn:hover
+    button.Winner-btn:hover
     {
         box-shadow: 5.0px 10.0px 10.0px hsl(0deg 0% 0% / 0.38);
     }
-    #liveGameDisplay button.dark
+    button.dark
     {
         background: black;
         color:      white;
     }
-    #liveGameDisplay button.Draw-btn,
-    #liveGameDisplay button.Create-Game-btn
+    button.Draw-btn,
+    button.Create-Game-btn,
+    input.datetime-local
     {
         width: 40%;
         border-radius: 10px;
@@ -50,7 +51,7 @@
         box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
         font-size: x-large;
     }
-    #liveGameDisplay textarea.Desc-field
+    textarea.Desc-field
     {
         width: 40%;
         min-height: 10vh;

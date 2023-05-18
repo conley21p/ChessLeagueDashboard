@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NUmYzOdSdLJUJJelHhxa2yRNf6O6qsPZD9+aVMHFoqE=",
+  "Hash": "fxu0msXQXfN7Ge7gbuL2jOPYsv8xl3/szDD5gtNMCNQ=",
   "Source": "ChessLeague",
   "BasePath": "_content/ChessLeague",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\css\\dropdown.css",
+      "SourceId": "ChessLeague",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\",
+      "BasePath": "_content/ChessLeague",
+      "RelativePath": "css/dropdown.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\dropdown.css"
     },
     {
       "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\css\\modal.css",

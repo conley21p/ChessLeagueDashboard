@@ -172,20 +172,8 @@ a, .btn-link {
         max-width: 150px;
         width: 150px;
     }
-    .standings-wrapper .row button
+    .standings-wrapper .row button.btn
     {
         width: 140px;
         margin-top: -5px;
-    }
-    #add-player-to-season 
-    {
-        background: none;
-        border: none;
-        color: white;
-    }
-    #addPlayerToSeasonBtn
-    {
-        background: none;
-        border: none;
-        color: black;
     }
