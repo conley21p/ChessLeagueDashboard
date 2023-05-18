@@ -17,7 +17,21 @@
     box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
     backdrop-filter: blur(10px);
 }
+#season-header .dropdown-menu
+{
+    width: 500px;
+    left: calc(50vw - 250px);
+}
 .dropdown-menu:hover
+{  
+    /* background:rgba(187, 187, 187, 0.705);
+    backdrop-filter: blur(10px); */
+}
+.dropdown-menu button
+{  
+    padding: 5px 15px;
+}
+.dropdown-menu button:hover
 {  
     background:rgba(187, 187, 187, 0.705);
     backdrop-filter: blur(10px);
@@ -29,5 +43,11 @@
 .dropdown-item:hover
 {
     background: none;
-    color:rgb(39, 93, 255);
+}
+.dropdown button#header-dropdown
+{
+    background: none;
+    border:none;
+    margin-bottom: 20px;
+    font-size: x-large;
 }

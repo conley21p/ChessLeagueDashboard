@@ -5,17 +5,14 @@
 
 
 <div class="" style="@(liveGame ? "display:block;" : "display:none;")">
-        
-    <div class="modal-header justify-content-center" style="border:none;">
-    <h5 class="modal-title" id="">Live Game</h5>
-    </div>
+
     <div class="container" >
     
     <div class="row justify-content-center">
 
-        <button type="submit" class="Winner-btn @((game.Light == p1.Id ? "light" : "dark"))" @onclick="(() => CreateGame(1))" >@p1.Name Wins!</button>
+        <button type="submit" class="Winner-btn @((game.Light == p1.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@p1.Name Wins!</button>
 
-        <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(2))">@p2.Name  Wins!</button>
+        <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))">@p2.Name  Wins!</button>
 
 
     </div>
@@ -27,12 +24,12 @@
 
     <div class="row justify-content-center">
 
-        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(1))" >Draw</button>
+        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(3))" >Draw</button>
     </div>
     
     <div class="row justify-content-center">
         <input class="datetime-local" type="datetime-local" @bind="dateTimeValue">
-        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(0))" >Submit Scheduled Game</button>
+        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
     </div>
     
     </div>
@@ -42,6 +39,7 @@
             Exhibition game
         </label>
         <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
+        @* <button type="button" class="btn btn-primary" @onclick="RandomColors">Random Colors</button> *@
         <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
     </div>
 </div>
@@ -113,12 +111,15 @@
         {
             // log or display the error message as needed
         }
-        game = null;
-        game                = new Game();       // Reset game object
-        this.modal.Close();
+        modal.Close();
     }
 
     private void SwitchColors(){
+        uint temp  = game.Light;
+        game.Light = game.Dark;
+        game.Dark  = temp;
+    }
+    private void RandomColors(){
         uint temp  = game.Light;
         game.Light = game.Dark;
         game.Dark  = temp;

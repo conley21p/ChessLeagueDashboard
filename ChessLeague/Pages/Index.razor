@@ -14,12 +14,12 @@
     <div class="col text-center" id="season-header">
             @if (seasonsList == null || seasonsList.Length == 0)
             {
-                <div class="dropdown">
-                    <button class="dropdown-item btn btn-primary" style="margin-bottom:20px;" @onclick="modalCreateSeason.Show">Add New Season</button>
+                <div class="dropdown"  id="header-dropdown" >
+                    <button class="dropdown-item rbtn btn-primay dropdown-toggle" style="margin-bottom:20px;" @onclick="modalCreateSeason.Show">Add New Season</button>
                 </div>
             }else{
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" @onclick="toggleSeasonList" style="width:auto">
+                    <button class="btn btn-secondary dropdown-toggle" id="header-dropdown" @onclick="toggleSeasonList" style="width:auto">
                         @getSeasonByID( Convert.ToUInt32(selectedSeason)).Name
                     </button>
                     <div class="dropdown-menu @displaySeasonList" aria-labelledby="dropdownMenuButton">
@@ -54,7 +54,7 @@
         <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
             Player ID
         </div>
-        <div class="col-auto rating-col">
+        <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
             Rating
         </div>
         <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
@@ -96,7 +96,7 @@
                 <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
                     @player.Player.Id
                 </div>
-                <div class="col-auto rating-col">
+                <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
                     @player.Stats.Rating
                 </div>
                 <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
@@ -246,7 +246,6 @@
             errorMessage = "No Seasons";
             // log or display the error message as needed
         }
-        
         StateHasChanged(); 
         
     }
@@ -343,7 +342,8 @@
             errorMessage = "Error parsing player data. Please try again later.";
             // log or display the error message as needed
         }
-    
+        getSeasonByID( Convert.ToUInt32(selectedSeason));
+        OnInitializedAsync();
         StateHasChanged();
     }
     public async void getParticitpants(uint selectedSeason){

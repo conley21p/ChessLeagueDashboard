@@ -53,17 +53,10 @@
     private async Task registerPlayer()
     {
         try{
-;
-            var json = JsonSerializer.Serialize(newPlayerName);
-            Console.WriteLine("post player json:"+json);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonSerializer.Serialize(newPlayerName), System.Text.Encoding.UTF8, "application/json");
 
             var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
             response.EnsureSuccessStatusCode();
-
-            var newPlayerJson = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
 
         }
         catch (HttpRequestException ex)
