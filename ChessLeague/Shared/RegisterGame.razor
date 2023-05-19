@@ -12,7 +12,7 @@
 
         <button type="submit" class="Winner-btn @((game.Light == p1.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@p1.Name Wins!</button>
 
-        <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))">@p2.Name  Wins!</button>
+        <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p2.Id ? (uint)1 : (uint)2))">@p2.Name  Wins!</button>
 
 
     </div>
@@ -48,11 +48,11 @@
     
     /* Game variables*/
     [Parameter]
-    public Modal modal { get; set; }
+    public Modal? modal { get; set; }
     [Parameter]
-    public string selectedSeason { get; set; } 
+    public Season? season { get; set; } 
     [Parameter]
-    public Game game { get; set; }
+    public Game? game { get; set; }
     [Parameter]
     public Player? p1 {get; set;}
     [Parameter]
@@ -69,9 +69,12 @@
     public async Task CreateGame(uint State)
     {
         dateTimeValue.AddHours(5.0);
-        if (date){
-
-            dateTimeValue.AddHours(-5.0);
+        if ((dateTimeValue.CompareTo(season?.StartDate) <= 0
+        ||  dateTimeValue.CompareTo(season?.EndDate) >= 0)
+        &&  !isExhibition)
+        {
+            @* modal.ModalTitle = "***Game Date must be within Season start and end Date***"; *@
+            dateTimeValue = DateTime.UtcNow.AddHours(-5.0);
         }else {
             game.State = State;
 
@@ -79,10 +82,12 @@
             if (isExhibition){
                 game.SeasonId = 0;
             }else{
-                game.SeasonId = uint.Parse(selectedSeason);
+                game.SeasonId = season.ID;
             }
             dateTimeValue.AddHours(5.0);
             game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
+            Console.WriteLine("p1.Name:"+p1.Name);
+            Console.WriteLine("p2.Name:"+p2.Name);
             @* Console.WriteLine("game.TimePlayed:" + game.TimePlayed);
             Console.WriteLine("game.State:" + game.State);
             Console.WriteLine("game.SeasonID:" + game.SeasonId);
@@ -93,7 +98,7 @@
             Task<string> temp = Request.SendPostRequest("game", JsonSerializer.Serialize(game));
             // IF not a scheduled Game Make a rquest to update ratings
             if (!isExhibition){
-                Request.SendPostRequest("season/" + selectedSeason + ":updateRatings", "");
+                Request.SendPostRequest("season/" + season.ID.ToString() + ":updateRatings", "");
             }
 
             modal.Close();
@@ -105,10 +110,29 @@
         uint temp  = game.Light;
         game.Light = game.Dark;
         game.Dark  = temp;
+        
+        @* Player tempPlayer  = p1;
+        p1 = p2;
+        p2 = tempPlayer; *@
     }
-    private void RandomColors(){
-        uint temp  = game.Light;
-        game.Light = game.Dark;
-        game.Dark  = temp;
-    }
+    @* private void RandomColors(){
+        Random random = new Random();
+        int duration = random.Next(3000, 5000); // Generate a random duration between 3000ms and 5000ms
+
+        DateTime startTime = DateTime.Now;
+
+        for (int i = 0; ; i++)
+        {
+            // Perform loop operations here
+
+            if ((DateTime.Now - startTime).TotalMilliseconds >= duration)
+                break;
+
+            // Optionally, you can add a delay between loop iterations
+            // to avoid high CPU usage. Adjust the value as needed.
+            Thread.Sleep(i+400);
+            SwitchColors();
+            StateHasChanged();
+        }
+    } *@
 }

@@ -20,7 +20,7 @@
             }else{
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" id="header-dropdown" @onclick="toggleSeasonList" style="width:auto">
-                        @getSeasonByID( Convert.ToUInt32(selectedSeason)).Name
+                        @selectedSeason.Name
                     </button>
                     <div class="dropdown-menu @displaySeasonList" aria-labelledby="dropdownMenuButton">
                         
@@ -161,7 +161,7 @@
 </Modal>
 <!-- Game a Player --> 
 <Modal @ref="modalGame" ModalTitle="Register Game" >
-    <RegisterGame modal="@modalGame" selectedSeason="@selectedSeason" game="game" p1="@p1" p2="@p2">
+    <RegisterGame modal="@modalGame" game="game" p1="@p1" p2="@p2" season="selectedSeason">
     </RegisterGame>
 </Modal>
 
@@ -176,8 +176,8 @@
 @code {
     // List of players for standings
     public PlayerStats[]? players = null;
-    public Season[]? seasonsList = null;
-    public string selectedSeason = "loading"; 
+    public Season[]? seasonsList =  null;
+    public Season selectedSeason = new Season(); 
     private Game game = new Game();
 
     public Player p1 = new Player() ;
@@ -198,21 +198,19 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("OnInitializedAsync");
         try
         {
             seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await Request.SendGetRequest("seasons?with_deleted=false&page_id=0"),
                                                                      new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items;
 
-            selectedSeason = seasonsList[seasonsList.Length-1].ID.ToString();
-
+            selectedSeason = seasonsList[seasonsList.Length-1];
             // If there are seasons get the list of players for the season
             if (seasonsList.Length != 0 && seasonsList != null)
             {
-
-                await getParticitpants(seasonsList[seasonsList.Length-1].ID);
+                await getParticitpants(selectedSeason.ID);
 
                 await getAllPlayersList();
-
             }
             
         }
@@ -275,21 +273,20 @@
         }
         return false;
     }
-    private Season getSeasonByID(uint ID){
-        if (seasonsList != null){
-            foreach (var season in seasonsList)
+    private Season getSeasonByID(uint ID, Season[] seasonList){
+        if (seasonList != null){
+            foreach (var season in seasonList)
             {
                 if (season.ID == ID ){
                     return season;
                 }
             }
         }
-        
         return null;
     }
     public async void addPlayerToSeason(MouseEventArgs e, uint playerId){
-        await Request.SendPostRequest("season/" + selectedSeason + ":addPlayer?player_id=" + playerId, "");    
-        await getParticitpants(Convert.ToUInt32(selectedSeason));
+        await Request.SendPostRequest("season/" + selectedSeason.ID + ":addPlayer?player_id=" + playerId, "");    
+        await getParticitpants(selectedSeason.ID);
         if (displayAddPlayerList == "show")
         {
             displayAddPlayerList = "";
@@ -297,7 +294,10 @@
         StateHasChanged();
     }
     public async Task<string> getParticitpants(uint newSeasonId){
-        selectedSeason = newSeasonId.ToString();
+        
+        if (selectedSeason.ID != newSeasonId){
+            selectedSeason = getSeasonByID(newSeasonId, seasonsList);
+        }
         players = JsonSerializer.Deserialize<PlayerStats[]>(await Request.SendPostRequest("season/" + newSeasonId + ":getParticipants", ""),
                                                             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         if (displaySeasonList == "show")
@@ -320,7 +320,6 @@
                 }
             }
         }
-
         StateHasChanged();
         return "Success";
     }
