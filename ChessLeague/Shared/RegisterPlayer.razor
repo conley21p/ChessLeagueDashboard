@@ -9,7 +9,7 @@
             <label for="newPlayerName">Player Name:</label>
         </div>
         <div class="col-auto">
-            <input type="text" id="newPlayerName" name="newPlayerName"  @bind-value="newPlayerName" />
+            <input type="text" id="newPlayerName" name="newPlayerName"  @bind-value="newPlayerName.Name" />
         </div>
     </div>
     @* Rating and Record fields that we may possible add in the future *@
@@ -46,30 +46,20 @@
 
     [Parameter]
     public Modal modal { get; set; }
-   
-    public string newPlayerName = "";
+
+    public class PlayerName 
+    {
+        public string Name { get; set; } = "";
+    }
+
+    public PlayerName newPlayerName = new PlayerName();
 
 
     private async Task registerPlayer()
     {
-        try{
-            var content = new StringContent(JsonSerializer.Serialize(newPlayerName), System.Text.Encoding.UTF8, "application/json");
-
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/player", content);
-            response.EnsureSuccessStatusCode();
-
-        }
-        catch (HttpRequestException ex)
-        {
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            // log or display the error message as needed
-        }
-
-         modal.Close();
+        
+        await Request.SendPostRequest("player",JsonSerializer.Serialize(newPlayerName)  );
+        modal.Close();
     }
-    
-    
+
 }

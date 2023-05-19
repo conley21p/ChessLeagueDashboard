@@ -150,8 +150,6 @@
     </div>
 </div>
 <button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
-<a href="/CreateSeason" asp-page="/CreateSeason" class="btn btn-primary">Create Season</a>
-@* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Season</a> *@
 @* <a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a> *@
 @* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a> *@
 
@@ -202,10 +200,7 @@
     {
         try
         {
-            // Get list of seasons
-            var response = await Http.GetAsync("https://lrs-chess-ratings.com/seasons?with_deleted=false&page_id=0");
-            response.EnsureSuccessStatusCode();
-            seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await response.Content.ReadAsStringAsync(),
+            seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await Request.SendGetRequest("seasons?with_deleted=false&page_id=0"),
                                                                      new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items;
 
             selectedSeason = seasonsList[seasonsList.Length-1].ID.ToString();
@@ -214,19 +209,9 @@
             if (seasonsList.Length != 0 && seasonsList != null)
             {
 
-                var response2 = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":getParticipants", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
-                response2.EnsureSuccessStatusCode();
+                await getParticitpants(seasonsList[seasonsList.Length-1].ID);
 
-                players = JsonSerializer.Deserialize<PlayerStats[]>(await response2.Content.ReadAsStringAsync(),
-                                                                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                foreach (var player in players){
-                    Console.WriteLine("PLayer: " + player.Player.Name);
-                }
-
-                var response3 = await Http.GetAsync("https://lrs-chess-ratings.com/players");
-                response3.EnsureSuccessStatusCode();
-                allPlayers = JsonSerializer.Deserialize<allPlayersResponse>(await response3.Content.ReadAsStringAsync(),
-                                                                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items.ToList();
+                await getAllPlayersList();
 
             }
             
@@ -290,18 +275,6 @@
         }
         return false;
     }
-    private Player getPlayerByID(uint ID){
-        if (players != null){
-            foreach (var player in players)
-            {
-                if (player.Player.Id == ID ){
-                    return player.Player;
-                }
-            }
-        }
-        
-        return null;
-    }
     private Season getSeasonByID(uint ID){
         if (seasonsList != null){
             foreach (var season in seasonsList)
@@ -315,87 +288,43 @@
         return null;
     }
     public async void addPlayerToSeason(MouseEventArgs e, uint playerId){
-        try
+        await Request.SendPostRequest("season/" + selectedSeason + ":addPlayer?player_id=" + playerId, "");    
+        await getParticitpants(Convert.ToUInt32(selectedSeason));
+        if (displayAddPlayerList == "show")
         {
-            @* e.PreventDefault(); *@
-            // If there are seasons get the list of players for the season
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":addPlayer?player_id=" + playerId , new StringContent("", System.Text.Encoding.UTF8, "application/json"));
-            response.EnsureSuccessStatusCode();
-
-            players = JsonSerializer.Deserialize<PlayerStats[]>(await response.Content.ReadAsStringAsync(),
-                                                                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-            //Remove Player from all Players list
-            @* foreach (var player in allPlayers){
-                if (player.Id.ToString().CompareTo(playerId) == 0){
-                    allPlayers.Remove(player);
-                }
-            } *@
-        }
-        catch (HttpRequestException ex)
-        {
-            errorMessage = "Error retrieving players. Please try again later.";
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            errorMessage = "Error parsing player data. Please try again later.";
-            // log or display the error message as needed
-        }
-        getSeasonByID( Convert.ToUInt32(selectedSeason));
-        OnInitializedAsync();
-        StateHasChanged();
-    }
-    public async void getParticitpants(uint selectedSeason){
-        try
-        {
-            // If there are seasons get the list of players for the season
-            var response2 = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason.ToString() + ":getParticipants", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
-            response2.EnsureSuccessStatusCode();
-
-            players = JsonSerializer.Deserialize<PlayerStats[]>(await response2.Content.ReadAsStringAsync(),
-                                                                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        }
-        catch (HttpRequestException ex)
-        {
-            errorMessage = "Error retrieving players. Please try again later.";
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            errorMessage = "Error parsing player data. Please try again later.";
-            // log or display the error message as needed
+            displayAddPlayerList = "";
         }
         StateHasChanged();
     }
-    public async void getAllPlayersList(){
-        try
+    public async Task<string> getParticitpants(uint newSeasonId){
+        selectedSeason = newSeasonId.ToString();
+        players = JsonSerializer.Deserialize<PlayerStats[]>(await Request.SendPostRequest("season/" + newSeasonId + ":getParticipants", ""),
+                                                            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        if (displaySeasonList == "show")
         {
-            // Get list of seasons
-            var response = await Http.GetAsync("https://lrs-chess-ratings.com/players");
-            response.EnsureSuccessStatusCode();
-            allPlayers = JsonSerializer.Deserialize<allPlayersResponse>(await response.Content.ReadAsStringAsync(),
-                                                                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items.ToList();
-
-            foreach (var p1 in allPlayers){
-                foreach (var p2 in players){
-                    if (p1.Id == p2.Player.Id){
-                        allPlayers.Remove(p1);
-                    }
-                }
-            }         
+            displaySeasonList = "";
         }
-        catch (HttpRequestException ex)
-        {
-            errorMessage = "Error retrieving players. Please try again later.";
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            errorMessage = "Error parsing player data. Please try again later.";
-            // log or display the error message as needed
-        }
+        StateHasChanged();
+        return "Success";
     }
+    public async Task<string> getAllPlayersList(){
+        allPlayers = JsonSerializer.Deserialize<allPlayersResponse>(await Request.SendGetRequest("players?with_deleted=false&page_id=0"),
+                                                                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items.ToList();
+
+        for (int i = allPlayers.Count - 1; i >= 0; i--)
+        {
+            foreach (PlayerStats p2 in players)
+            {
+                if (p2.Player.Id == allPlayers[i].Id){
+                    allPlayers.Remove(allPlayers[i]);
+                }
+            }
+        }
+
+        StateHasChanged();
+        return "Success";
+    }
+    
     private void toggleAddPlayerList(){
         if (displayAddPlayerList == "")
         {
@@ -414,5 +343,4 @@
             displaySeasonList = "";
         }
     }
-
 }

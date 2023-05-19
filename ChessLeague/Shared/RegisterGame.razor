@@ -68,50 +68,37 @@
 
     public async Task CreateGame(uint State)
     {
-        game.State = State;
-
-        
-        if (isExhibition){
-            game.SeasonId = 0;
-        }else{
-            game.SeasonId = uint.Parse(selectedSeason);
-        }
         dateTimeValue.AddHours(5.0);
-        game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
-        @* Console.WriteLine("game.TimePlayed:" + game.TimePlayed);
-        Console.WriteLine("game.State:" + game.State);
-        Console.WriteLine("game.SeasonID:" + game.SeasonId);
-        Console.WriteLine("game.Desc:" + game.Desc);
-        Console.WriteLine("game.Light:" + game.Light);
-        Console.WriteLine("game.Dark:" + game.Dark); *@
+        if (date){
 
+            dateTimeValue.AddHours(-5.0);
+        }else {
+            game.State = State;
 
-        try{
-            var content = new StringContent(JsonSerializer.Serialize(game), System.Text.Encoding.UTF8, "application/json");
+            
+            if (isExhibition){
+                game.SeasonId = 0;
+            }else{
+                game.SeasonId = uint.Parse(selectedSeason);
+            }
+            dateTimeValue.AddHours(5.0);
+            game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
+            @* Console.WriteLine("game.TimePlayed:" + game.TimePlayed);
+            Console.WriteLine("game.State:" + game.State);
+            Console.WriteLine("game.SeasonID:" + game.SeasonId);
+            Console.WriteLine("game.Desc:" + game.Desc);
+            Console.WriteLine("game.Light:" + game.Light);
+            Console.WriteLine("game.Dark:" + game.Dark); *@
 
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/game", content);
-            response.EnsureSuccessStatusCode(); 
-
-            response = null;
-
+            Task<string> temp = Request.SendPostRequest("game", JsonSerializer.Serialize(game));
             // IF not a scheduled Game Make a rquest to update ratings
             if (!isExhibition){
-            response = await Http.PostAsync("https://lrs-chess-ratings.com/season/" + selectedSeason + ":updateRatings",
-                                new StringContent("", System.Text.Encoding.UTF8, "application/json"));
-            response.EnsureSuccessStatusCode();
+                Request.SendPostRequest("season/" + selectedSeason + ":updateRatings", "");
             }
 
-            StateHasChanged();
+            modal.Close();
         }
-        catch (HttpRequestException ex)
-        {
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            // log or display the error message as needed
-        }
-        modal.Close();
+        
     }
 
     private void SwitchColors(){

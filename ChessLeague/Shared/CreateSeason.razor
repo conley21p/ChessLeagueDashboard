@@ -44,33 +44,13 @@
 
     private async Task createSeason()
     {
-        try{
-            SeasonCreate seasonReq = new SeasonCreate();
-            seasonReq.Name = newSeason.Name;
-            seasonReq.StartDate = newSeason.StartDate.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";
-            seasonReq.EndDate = newSeason.EndDate.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";
+        SeasonCreate seasonReq = new SeasonCreate();
+        seasonReq.Name = newSeason.Name;
+        seasonReq.StartDate = newSeason.StartDate.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";
+        seasonReq.EndDate = newSeason.EndDate.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";
 
 
-            var json = JsonSerializer.Serialize(newSeason);
-            Console.WriteLine(json);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-
-            var response = await Http.PostAsync("https://lrs-chess-ratings.com/season", content);
-            response.EnsureSuccessStatusCode();
-
-            var newPlayerJson = await response.Content.ReadAsStringAsync();
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            var createdPlayer = JsonSerializer.Deserialize<Player>(newPlayerJson, options);
-
-        }
-        catch (HttpRequestException ex)
-        {
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            // log or display the error message as needed
-        }
+        await Request.SendPostRequest("season",JsonSerializer.Serialize(seasonReq));
 
         modal.Close();
         OnInitializedAsync();
