@@ -65,6 +65,22 @@
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
+      "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\images\\background-fight-BW.jpg",
+      "PackagePath": "staticwebassets\\images\\background-fight-BW.jpg"
+    },
+    {
+      "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\images\\background-fight.jpg",
+      "PackagePath": "staticwebassets\\images\\background-fight.jpg"
+    },
+    {
+      "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\images\\background-stand-alone-BW.jpg",
+      "PackagePath": "staticwebassets\\images\\background-stand-alone-BW.jpg"
+    },
+    {
+      "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\images\\background-stand-alone.jpg",
+      "PackagePath": "staticwebassets\\images\\background-stand-alone.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.ChessLeague.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

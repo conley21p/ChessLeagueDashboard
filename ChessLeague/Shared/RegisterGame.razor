@@ -86,8 +86,7 @@
             }
             dateTimeValue.AddHours(5.0);
             game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
-            Console.WriteLine("p1.Name:"+p1.Name);
-            Console.WriteLine("p2.Name:"+p2.Name);
+
             @* Console.WriteLine("game.TimePlayed:" + game.TimePlayed);
             Console.WriteLine("game.State:" + game.State);
             Console.WriteLine("game.SeasonID:" + game.SeasonId);
@@ -98,9 +97,14 @@
             Task<string> temp = Request.SendPostRequest("game", JsonSerializer.Serialize(game));
             // IF not a scheduled Game Make a rquest to update ratings
             if (!isExhibition){
+                // Update Season Request
+                Console.WriteLine("Updating Ratings");
                 Request.SendPostRequest("season/" + season.ID.ToString() + ":updateRatings", "");
             }
-
+            game = new Game();
+            p1 = new Player();
+            p2 = new Player();
+            
             modal.Close();
         }
         

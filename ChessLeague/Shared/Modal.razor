@@ -25,16 +25,19 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public RenderFragment ModalFooter { get; set; }
+    public RenderFragment ModalFooter { get; set; }    
+    [Parameter]
+    public EventCallback<bool> OnOkCacncelClick {get; set;}
+
 
     public void Show()
     {
         ModalStyle = true;
     }
 
-    public void Close()
+    public async void Close()
     {
         ModalStyle = false;
-        StateHasChanged();
+        await OnOkCacncelClick.InvokeAsync(true);
     }
 }

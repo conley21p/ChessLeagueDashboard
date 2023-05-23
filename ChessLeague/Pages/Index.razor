@@ -26,7 +26,7 @@
                         
                         @foreach (var season in seasonsList)
                         {
-                            <button class="dropdown-item" value="@season.ID" @onclick="(() => getParticitpants(season.ID))"  >@season.Name</button>
+                            <button class="dropdown-item" value="@season.ID" @onclick="(() => changeSeason(season.ID))"  >@season.Name</button>
                         }
                         <button class="dropdown-item btn btn-primary" @onclick="modalCreateSeason.Show">Add New Season</button>
                     </div>
@@ -37,136 +37,157 @@
     </div>
 </div>
 
-@* <div class="row">
-    <div class="col">
-
-    </div>
-    <div class="col">
-
-    </div>
-</div> *@
-<div class="standings-wrapper">
-    
-    <div class="row">
-        <div class="col name-col">
-            Player
-        </div>
-        <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
-            Player ID
-        </div>
-        <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
-            Rating
-        </div>
-        <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-            Highest Rating
-        </div>
-        <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-            Win Streak
-        </div>
-        <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-            Highest Win Streak
-        </div>
-        <div class="col record-col">
-            Wins
-        </div>
-        <div class="col record-col">
-            Losses
-        </div>
-        <div class="col record-col">
-            Draws
-        </div>
-    </div>
-
-    @if (players == null || players.Length == 0)
-    {
-        <div class="row">
-            <div class="col">
-                No Players Found
-            </div>
-        </div>
-    }
-    else
-    {
-        @foreach (var player in players)
-        {
-            <div class="row">
+<div class="row">
+    <div class="col stadnings-view">
+        <div class="standings-wrapper">
+            <div class="row table-heading">
                 <div class="col name-col">
-                    @player.Player.Name
+                    Player
                 </div>
                 <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    @player.Player.Id
+                    Player ID
                 </div>
                 <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
-                    @player.Stats.Rating
+                    Rating
                 </div>
                 <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    @player.Stats.HighestRating
+                    Highest Rating
+                </div>
+                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    Win Streak
+                </div>
+                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                    Highest Win Streak
                 </div>
                 <div class="col record-col">
-                    @player.Stats.Wins
+                    Wins
                 </div>
                 <div class="col record-col">
-                    @player.Stats.Losses
+                    Losses
                 </div>
                 <div class="col record-col">
-                    @player.Stats.Draws
+                    Draws
                 </div>
-                <div class="col-auto float-right"  style="margin-left: auto;">
-                    <button @onclick="(() => StartGame(player.Player))" class="btn btn-primary" >@((game.Light != 0 ?  game.Light == player.Player.Id ? "End Game" : "Player 2" : "Start Game"))</button>
-                </div>
-                @* <div class="col-auto float-right"  style="margin-left: auto;">
-                    <button @onclick="(() => AdvancedViewOpen(player.Player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
-                </div> *@
             </div>
-        }
-    }
-    <div class="row">
-        <div class="col-auto"  style="margin-left: auto;">
-            
-                @if (allPlayers == null )
-                {
-                    
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle"  style="width:auto">
-                            No Players Found
-                        </button>
+
+            @if (players == null || players.Length == 0)
+            {
+                <div class="row">
+                    <div class="col">
+                        No Players Found
                     </div>
-                }else{
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" @onclick="toggleAddPlayerList" style="width:auto">
-                            Add Player to Season
-                        </button>
-                        <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton">
-                            @foreach (var player in allPlayers)
-                            {
-                                if (!containsPlayerId(players, player.Id)){
-                                    <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
-                                }
-                            }
+                </div>
+            }
+            else
+            {
+                @foreach (var player in players)
+                {
+                    <div class="row">
+                        <div class="col name-col">
+                            @player.Player.Name
+                        </div>
+                        <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                            @player.Player.Id
+                        </div>
+                        <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
+                            @player.Stats.Rating
+                        </div>
+                        <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                            @player.Stats.HighestRating
+                        </div>
+                        <div class="col record-col">
+                            @player.Stats.Wins
+                        </div>
+                        <div class="col record-col">
+                            @player.Stats.Losses
+                        </div>
+                        <div class="col record-col">
+                            @player.Stats.Draws
+                        </div>
+                        <div class="col-auto float-right"  style="margin-left: auto;">
+                            <button @onclick="(() => StartGame(player.Player))" class="btn btn-primary" >@((game.Light != 0 ?  game.Light == player.Player.Id ? "End Game" : "Player 2" : "Start Game"))</button>
+                        </div>
+                        @* <div class="col-auto float-right"  style="margin-left: auto;">
+                            <button @onclick="(() => AdvancedViewOpen(player.Player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
+                        </div> *@
+                    </div>
+                }
+            }
+            <div class="row">
+                <div class="col-auto"  style="margin-left: auto;">
+                    
+                        @if (allPlayers == null )
+                        {
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle"  style="width:auto">
+                                    No Players Found
+                                </button>
+                            </div>
+                        }else{
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" @onclick="toggleAddPlayerList" style="width:auto">
+                                    Add Player to Season
+                                </button>
+                                <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton">
+                                    @foreach (var player in allPlayers)
+                                    {
+                                        if (!containsPlayerId(players, player.Id)){
+                                            <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col games-view" style="display: @(displayGamesView ? "block" : "none")">
+       @if (seasonalGames == null || seasonalGames.Length == 0)
+            {
+                <div class="row">
+                    <div class="col">
+                        No Games Found
+                    </div>
+                </div>
+            }
+            else
+            {
+                @foreach (var game in seasonalGames)
+                {
+                    <div class="row row-games-list">
+                        <div class="col-auto col-game-light" id="@(game.State == 1 ? "winner" : "")">
+                            @getPlayerByID(players, game.Light).Name
+                        </div>
+                        <div class="col-auto col-game-dark float-right" id="@(game.State == 2 ? "winner" : "")"  style="margin-left: auto;">
+                            @getPlayerByID(players, game.Dark).Name
                         </div>
                     </div>
                 }
-        </div>
+            }
     </div>
 </div>
+
 <button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
+<button class="btn btn-primary" @onclick="toggleGameView">Open Game</button>
+@* <button class="btn btn-primary" @onclick="Request.postUpdateRatings(selectedSeason.ID)">Update Ratings</button> *@
 @* <a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a> *@
 @* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a> *@
 
 
 <!-- Register a Player --> 
-<Modal @ref="modalPlayer" ModalTitle="Register a Player" >
+<Modal @ref="modalPlayer" ModalTitle="Register a Player" OnOkCacncelClick="refreshPage">
     <RegisterPlayer modal="@modalPlayer">
     </RegisterPlayer>
 </Modal>
 <!-- Game a Player --> 
-<Modal @ref="modalGame" ModalTitle="Register Game" >
+<Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshPage">
     <RegisterGame modal="@modalGame" game="game" p1="@p1" p2="@p2" season="selectedSeason">
     </RegisterGame>
 </Modal>
 
 <!-- Game a Player --> 
-<Modal @ref="modalCreateSeason" ModalTitle="Create Season" >
+<Modal @ref="modalCreateSeason" ModalTitle="Create Season" OnOkCacncelClick="refreshPage">
     <CreateSeason modal="@modalCreateSeason" >
     </CreateSeason>
 </Modal>
@@ -178,6 +199,7 @@
     public PlayerStats[]? players = null;
     public Season[]? seasonsList =  null;
     public Season selectedSeason = new Season(); 
+    public Game[] seasonalGames ; 
     private Game game = new Game();
 
     public Player p1 = new Player() ;
@@ -196,21 +218,24 @@
     // List of all players, for add player to season list
     private List<Player> allPlayers = null;
 
+    private bool displayGamesView = false;
+
     protected override async Task OnInitializedAsync()
     {
         Console.WriteLine("OnInitializedAsync");
         try
         {
-            seasonsList = JsonSerializer.Deserialize<SeasonsResponse>(await Request.SendGetRequest("seasons?with_deleted=false&page_id=0"),
-                                                                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items;
+            seasonsList = await Request.getSeasonsList();
 
             selectedSeason = seasonsList[seasonsList.Length-1];
             // If there are seasons get the list of players for the season
             if (seasonsList.Length != 0 && seasonsList != null)
             {
-                await getParticitpants(selectedSeason.ID);
+                players =    await Request.postParticitpants(selectedSeason.ID);
 
-                await getAllPlayersList();
+                allPlayers = await Request.getAllPlayersList();
+            
+                seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
             }
             
         }
@@ -232,19 +257,24 @@
         StateHasChanged(); 
         
     }
-    public class SeasonsResponse
-    {
-        public Season[] Items { get; set; }
-        public int NextPage { get; set; }
-    }
-    
-    public class allPlayersResponse
-    {
-        public Player[] Items { get; set; }
-        public int NextPage { get; set; }
-    }
 
+    private async void changeSeason(uint seasonId){
+        
+        players = null;
+        @* seasonalGames = null; *@
+        players = await Request.postParticitpants(seasonId);
+        selectedSeason = getSeasonByID(seasonId, seasonsList);
 
+        if(displayGamesView){
+            seasonalGames = await Request.getSeasonGames(seasonId);
+        }
+
+        StateHasChanged();
+    }
+    private void openGame(){
+        //Open Game view
+
+    }
     private void StartGame(Player player){
         // Player has been click twice, then close end game
         if (game.Light == player.Id){
@@ -256,22 +286,34 @@
             p1 = player;
         }else {
             p2 = player;
-            Console.WriteLine("p1:" + p1.Name);
-            Console.WriteLine("p2:" + p2.Name);
             game.Dark = player.Id;
             modalGame.Show();
         }
 
     }
     private bool containsPlayerId(PlayerStats[] playerList, uint id){
-        foreach (PlayerStats ps in playerList)
-        {
-            if (ps.Player.Id == id)
+        if (playerList != null ){   
+            foreach (PlayerStats ps in playerList)
             {
-                return true;
+                if (ps.Player.Id == id)
+                {
+                    return true;
+                }
             }
         }
         return false;
+    }
+    private Player getPlayerByID(PlayerStats[] playerList, uint id){
+        if (playerList != null ){   
+            foreach (PlayerStats ps in playerList)
+            {
+                if (ps.Player.Id == id)
+                {
+                    return ps.Player;
+                }
+            }
+        }
+        return null;
     }
     private Season getSeasonByID(uint ID, Season[] seasonList){
         if (seasonList != null){
@@ -285,45 +327,25 @@
         return null;
     }
     public async void addPlayerToSeason(MouseEventArgs e, uint playerId){
+        // Send request to add player to season
         await Request.SendPostRequest("season/" + selectedSeason.ID + ":addPlayer?player_id=" + playerId, "");    
-        await getParticitpants(selectedSeason.ID);
+        // Hide the add player to season drop down
         if (displayAddPlayerList == "show")
         {
             displayAddPlayerList = "";
         }
+        // Update standings list
+        await Request.postParticitpants(selectedSeason.ID);
         StateHasChanged();
-    }
-    public async Task<string> getParticitpants(uint newSeasonId){
-        
-        if (selectedSeason.ID != newSeasonId){
-            selectedSeason = getSeasonByID(newSeasonId, seasonsList);
-        }
-        players = JsonSerializer.Deserialize<PlayerStats[]>(await Request.SendPostRequest("season/" + newSeasonId + ":getParticipants", ""),
-                                                            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        if (displaySeasonList == "show")
-        {
-            displaySeasonList = "";
-        }
-        StateHasChanged();
-        return "Success";
-    }
-    public async Task<string> getAllPlayersList(){
-        allPlayers = JsonSerializer.Deserialize<allPlayersResponse>(await Request.SendGetRequest("players?with_deleted=false&page_id=0"),
-                                                                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).Items.ToList();
-
-        for (int i = allPlayers.Count - 1; i >= 0; i--)
-        {
-            foreach (PlayerStats p2 in players)
-            {
-                if (p2.Player.Id == allPlayers[i].Id){
-                    allPlayers.Remove(allPlayers[i]);
-                }
-            }
-        }
-        StateHasChanged();
-        return "Success";
     }
     
+    private async void toggleGameView(){
+        displayGamesView = displayGamesView ? false : true;
+        if (displayGamesView 
+        && seasonalGames == null){
+            seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
+        }
+    }
     private void toggleAddPlayerList(){
         if (displayAddPlayerList == "")
         {
@@ -341,5 +363,8 @@
         {
             displaySeasonList = "";
         }
+    }
+    public void refreshPage(){
+        StateHasChanged();
     }
 }

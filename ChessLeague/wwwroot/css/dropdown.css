@@ -22,6 +22,14 @@
     width: 500px;
     left: calc(50vw - 250px);
 }
+#season-header .dropdown-toggle::after
+{
+    color: #fff0;
+}
+#season-header .dropdown:hover .dropdown-toggle::after
+{
+    color: white;
+}
 .dropdown-menu:hover
 {  
     /* background:rgba(187, 187, 187, 0.705);
@@ -48,6 +56,6 @@
 {
     background: none;
     border:none;
-    margin-bottom: 20px;
-    font-size: x-large;
+    margin-bottom: 0px;
+    font-size: xx-large;
 }
