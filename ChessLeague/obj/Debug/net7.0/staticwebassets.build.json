@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "03dgkgMDy7bPywW8B19v1yry6uuWoQ46s1N5K9wI7xI=",
+  "Hash": "FtLW6u5bnUtOp3cj3UO1GDpQIPeaSh3Z5SW2v9uIX68=",
   "Source": "ChessLeague",
   "BasePath": "_content/ChessLeague",
   "Mode": "Default",
@@ -372,6 +372,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\background-stand-alone.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown.svg",
+      "SourceId": "ChessLeague",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\",
+      "BasePath": "_content/ChessLeague",
+      "RelativePath": "svg/crown.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\svg\\crown.svg"
     }
   ]
 }

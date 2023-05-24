@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 public class Request
 {
-    public static bool test = true;
+    public static bool test = false;
     public static async Task<string> SendPostRequest(string url, string content)
     {
         using (HttpClient client = new HttpClient())

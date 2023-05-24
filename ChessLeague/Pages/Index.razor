@@ -142,8 +142,10 @@
             </div>
         </div>
     </div>
-    <div class="col games-view" style="display: @(displayGamesView ? "block" : "none")">
-       @if (seasonalGames == null || seasonalGames.Length == 0)
+    <div class="col games-view" style="display: @(displayGamesView ? "none" : "block")">
+        
+        <div class="games-view-wrapper">
+        @if (seasonalGames == null || seasonalGames.Length == 0)
             {
                 <div class="row">
                     <div class="col">
@@ -153,23 +155,46 @@
             }
             else
             {
-                @foreach (var game in seasonalGames)
+                <div class="row table-heading">
+                    <div class="col" style="text-align:center;">
+                        Games List
+                    </div>
+                </div>
+                @for (int i = seasonalGames.Length - 1; i >= 0; i--)
                 {
-                    <div class="row row-games-list">
-                        <div class="col-auto col-game-light" id="@(game.State == 1 ? "winner" : "")">
-                            @getPlayerByID(players, game.Light).Name
+                    @* @if (seasonalGames.Length - 1  == i)
+                    {
+                        @if(seasonalGames[i].State    == 4)
+                        {
+                        <div class="row row-games-list title">
+                            Scheduled Games
                         </div>
-                        <div class="col-auto col-game-dark float-right" id="@(game.State == 2 ? "winner" : "")"  style="margin-left: auto;">
-                            @getPlayerByID(players, game.Dark).Name
+                        }else{
+                        <div class="row row-games-list title">
+                            Recent Games
+                        </div>  
+                        }
+                    } *@
+                    <div class="row row-games-list">
+                        <div class="col-auto col-game-light" id="@(seasonalGames[i].State == 1 ? "winner" : "")">
+                            <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
+                            @getPlayerByID(players, seasonalGames[i].Light).Name
+                        </div><div class="col-auto col-game-date" >
+                            @seasonalGames[i].TimePlayed.Substring(5,5)
+                        </div>
+                        <div class="col-auto col-game-dark float-right" id="@(seasonalGames[i].State == 2 ? "winner" : "")">
+                            <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
+                            @getPlayerByID(players, seasonalGames[i].Dark).Name
                         </div>
                     </div>
                 }
             }
+        </div>
     </div>
 </div>
 
 <button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
-<button class="btn btn-primary" @onclick="toggleGameView">Open Game</button>
+<button class="btn btn-primary" @onclick="toggleGameView">Toggle Game</button>
 @* <button class="btn btn-primary" @onclick="Request.postUpdateRatings(selectedSeason.ID)">Update Ratings</button> *@
 @* <a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a> *@
 @* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a> *@
@@ -236,6 +261,7 @@
                 allPlayers = await Request.getAllPlayersList();
             
                 seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
+                Array.Sort(seasonalGames, (game2, game1) => game2.TimePlayed.CompareTo(game1.TimePlayed));
             }
             
         }
@@ -289,7 +315,10 @@
             game.Dark = player.Id;
             modalGame.Show();
         }
-
+    }
+    private async void StartGame(Game gameParam){
+        game = gameParam;
+        modalGame.Show();
     }
     private bool containsPlayerId(PlayerStats[] playerList, uint id){
         if (playerList != null ){   

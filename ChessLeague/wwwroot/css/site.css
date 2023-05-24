@@ -140,12 +140,19 @@ a, .btn-link {
 
 /* Main Content */
     /* Standings */
+    .standing-view,
+    .games-view
+    {
+        overflow: overlay;
+        height: 80vh;
+    }
     .standings-wrapper 
     {
         height: 80vh;
         overflow: auto;
     }
     .standings-wrapper .row,
+    .games-view-wrapper .row,
     .row-games-list
     {
         padding: 4px 10px;
@@ -156,10 +163,14 @@ a, .btn-link {
         /* border-bottom: 1px solid rgba(66, 66, 66, 0.278); */
         font-size: xx-large;
     }
+
     .standings-wrapper .row:hover
     {
         background: rgba(114, 114, 114, 0.178);
     }
+
+    .games-view-wrapper .table-heading,
+    .games-view-wrapper .table-heading:hover,
     .standings-wrapper .table-heading,
     .standings-wrapper .table-heading:hover
     {
@@ -195,8 +206,12 @@ a, .btn-link {
     .games-view
     {
         width:      33vw;
-        max-width: 33vw;
-        padding-top: 56px;
+        max-width:  40vw;
+    }
+    
+    .games-view .row-games-list:hover
+    {
+        background: #fff7;
     }
     
     .row-games-list .col-auto
@@ -205,10 +220,18 @@ a, .btn-link {
         border-radius: 10px;
         margin: 5px 0px;
         padding: 5px 15px;
+        width: 180px;
+    }
+    .row-games-list .col-game-date
+    {
+        width: 80px;
+        font-size: medium;
+        margin:auto;
+        text-align: center;
     }
     .row-games-list .col-game-light
     {
-        background:#ffffffc2;
+        background:#ffffffee;
         color:black;
     }
     .row-games-list .col-game-dark
@@ -217,5 +240,17 @@ a, .btn-link {
     }
     .row-games-list #winner
     {
-        box-shadow: 0px 0px 4px 5px hsla(50, 68%, 37%, 0.38);
+        /* box-shadow: 0px 0px 4px 5px hsl(50deg 100% 50% / 48%); */
     }
+    
+    .row-games-list #crown
+    {
+        display: none;
+        float: right;
+    }
+
+    .row-games-list #winner #crown
+    {
+        display: inline-block;
+    }
+    
