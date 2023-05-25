@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 public class Request
 {
-    public static bool test = false;
+    public static bool test = true;
     public static async Task<string> SendPostRequest(string url, string content)
     {
         using (HttpClient client = new HttpClient())
@@ -41,6 +41,25 @@ public class Request
             else
             {
                 throw new Exception($"HTTP **GET** request failed with status code: {response.StatusCode}");
+            }
+        }
+    }
+    public static async Task<string> SendUpdateRequest(string url, string content)
+    {
+        using (HttpClient client = new HttpClient())
+        {
+            Console.WriteLine("Making Put Request: " + "https://lrs-chess-ratings.com/" + url + (url.Contains('?') ? "&" : '?') + (test ? "test=true" : "")  + "\nContent:\n" + content);
+            var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var response = await client.PutAsync("https://lrs-chess-ratings.com/" + url + (url.Contains('?') ? "&" : '?') + (test ? "test=true" : "") , httpContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                return responseContent;
+            }
+            else
+            {
+                throw new Exception($"HTTP **POST** request failed with status code: {response.StatusCode}");
             }
         }
     }

@@ -81,6 +81,10 @@
       "PackagePath": "staticwebassets\\images\\background-stand-alone.jpg"
     },
     {
+      "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\js\\scroll.js",
+      "PackagePath": "staticwebassets\\js\\scroll.js"
+    },
+    {
       "Id": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown.svg",
       "PackagePath": "staticwebassets\\svg\\crown.svg"
     },

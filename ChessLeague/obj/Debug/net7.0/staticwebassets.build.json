@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FtLW6u5bnUtOp3cj3UO1GDpQIPeaSh3Z5SW2v9uIX68=",
+  "Hash": "xnmVd2GuE+hP8koEWRW6axwcc1ex9eIrMuv6ooojs2o=",
   "Source": "ChessLeague",
   "BasePath": "_content/ChessLeague",
   "Mode": "Default",
@@ -372,6 +372,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\background-stand-alone.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\js\\scroll.js",
+      "SourceId": "ChessLeague",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\",
+      "BasePath": "_content/ChessLeague",
+      "RelativePath": "js/scroll.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\scroll.js"
     },
     {
       "Identity": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown.svg",

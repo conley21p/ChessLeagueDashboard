@@ -4,6 +4,7 @@
 @using System.Threading.Tasks
 @using Microsoft.AspNetCore.Components.Web
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
 
 
 
@@ -144,7 +145,7 @@
     </div>
     <div class="col games-view" style="display: @(displayGamesView ? "none" : "block")">
         
-        <div class="games-view-wrapper">
+        <div class="games-view-wrapper" id="scrollableDiv">
         @if (seasonalGames == null || seasonalGames.Length == 0)
             {
                 <div class="row">
@@ -160,33 +161,21 @@
                         Games List
                     </div>
                 </div>
-                @for (int i = seasonalGames.Length - 1; i >= 0; i--)
+                @foreach (var game in seasonalGames)
                 {
-                    @* @if (seasonalGames.Length - 1  == i)
-                    {
-                        @if(seasonalGames[i].State    == 4)
-                        {
-                        <div class="row row-games-list title">
-                            Scheduled Games
-                        </div>
-                        }else{
-                        <div class="row row-games-list title">
-                            Recent Games
-                        </div>  
-                        }
-                    } *@
-                    <div class="row row-games-list">
-                        <div class="col-auto col-game-light" id="@(seasonalGames[i].State == 1 ? "winner" : "")">
+                    <a class="row row-games-list" @onclick="@(()=>StartGame(@game))">
+                        <div class="col-auto col-game-light" id="@(game.State == 1 ? "winner" : "")">
                             <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
-                            @getPlayerByID(players, seasonalGames[i].Light).Name
-                        </div><div class="col-auto col-game-date" >
-                            @seasonalGames[i].TimePlayed.Substring(5,5)
+                            @getPlayerByID(players, game.Light).Name
                         </div>
-                        <div class="col-auto col-game-dark float-right" id="@(seasonalGames[i].State == 2 ? "winner" : "")">
+                        <div class="col-auto col-game-date" >
+                            @game.TimePlayed.Substring(5,5)<br>@game.TimePlayed.Substring(11,5)
+                        </div>
+                        <div class="col-auto col-game-dark float-right" id="@(game.State == 2 ? "winner" : "")">
                             <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
-                            @getPlayerByID(players, seasonalGames[i].Dark).Name
+                            @getPlayerByID(players, game.Dark).Name
                         </div>
-                    </div>
+                    </a>
                 }
             }
         </div>
@@ -207,7 +196,7 @@
 </Modal>
 <!-- Game a Player --> 
 <Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshPage">
-    <RegisterGame modal="@modalGame" game="game" p1="@p1" p2="@p2" season="selectedSeason">
+    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" dateTimeValue="@DateTime.Parse(game.TimePlayed).AddHours(5.0)" season="selectedSeason">
     </RegisterGame>
 </Modal>
 
@@ -247,47 +236,57 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("OnInitializedAsync");
-        try
-        {
-            seasonsList = await Request.getSeasonsList();
-
-            selectedSeason = seasonsList[seasonsList.Length-1];
-            // If there are seasons get the list of players for the season
-            if (seasonsList.Length != 0 && seasonsList != null)
-            {
-                players =    await Request.postParticitpants(selectedSeason.ID);
-
-                allPlayers = await Request.getAllPlayersList();
-            
-                seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
-                Array.Sort(seasonalGames, (game2, game1) => game2.TimePlayed.CompareTo(game1.TimePlayed));
-            }
-            
-        }
-        catch (HttpRequestException ex)
-        {
-            errorMessage = "Error retrieving players. Please try again later.";
-            // log or display the error message as needed
-        }
-        catch (JsonException ex)
-        {
-            errorMessage = "Error parsing player data. Please try again later.";
-            // log or display the error message as needed
-        }
-        catch (IndexOutOfRangeException ex)
-        {
-            errorMessage = "No Seasons";
-            // log or display the error message as needed
-        }
-        StateHasChanged(); 
         
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        
+        
+        @* StateHasChanged();  *@
+        if (firstRender)
+        {
+            Console.WriteLine("OnInitializedAsync");
+            try
+            {
+                seasonsList = await Request.getSeasonsList();
+
+                selectedSeason = seasonsList[seasonsList.Length-1];
+                // If there are seasons get the list of players for the season
+                if (seasonsList.Length != 0 && seasonsList != null)
+                {
+                    players =    await Request.postParticitpants(selectedSeason.ID);
+
+                    allPlayers = await Request.getAllPlayersList();
+                
+                    seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
+                    Array.Sort(seasonalGames, (game1,game2) => game2.TimePlayed.CompareTo(game1.TimePlayed));
+                }
+                
+            }
+            catch (HttpRequestException ex)
+            {
+                errorMessage = "Error retrieving players. Please try again later.";
+                // log or display the error message as needed
+            }
+            catch (JsonException ex)
+            {
+                errorMessage = "Error parsing player data. Please try again later.";
+                // log or display the error message as needed
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                errorMessage = "No Seasons";
+                // log or display the error message as needed
+            }
+            StateHasChanged();
+            @* await JSRuntime.InvokeVoidAsync("eval", "import('/js/scroll.js')");
+            await JSRuntime.InvokeVoidAsync("addMouseIdleEventListener"); *@
+        }
     }
 
     private async void changeSeason(uint seasonId){
         
         players = null;
-        @* seasonalGames = null; *@
         players = await Request.postParticitpants(seasonId);
         selectedSeason = getSeasonByID(seasonId, seasonsList);
 
@@ -295,7 +294,7 @@
             seasonalGames = await Request.getSeasonGames(seasonId);
         }
 
-        StateHasChanged();
+        @* StateHasChanged(); *@
     }
     private void openGame(){
         //Open Game view
@@ -318,6 +317,9 @@
     }
     private async void StartGame(Game gameParam){
         game = gameParam;
+        p1 = getPlayerByID(players, game.Light);
+        p2 = getPlayerByID(players, game.Dark);
+        Console.WriteLine("**timePlayed: " + gameParam.TimePlayed);
         modalGame.Show();
     }
     private bool containsPlayerId(PlayerStats[] playerList, uint id){

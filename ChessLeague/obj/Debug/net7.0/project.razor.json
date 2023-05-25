@@ -439,196 +439,6 @@
         }
       },
       {
-        "HashCode": -1863135345,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Shared.RegisterGame",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "RegisterGame"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "modal",
-            "TypeName": "ChessLeague.Shared.Modal",
-            "Metadata": {
-              "Common.PropertyName": "modal",
-              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "season",
-            "TypeName": "Season",
-            "Metadata": {
-              "Common.PropertyName": "season",
-              "Common.GloballyQualifiedTypeName": "global::Season"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "game",
-            "TypeName": "Game",
-            "Metadata": {
-              "Common.PropertyName": "game",
-              "Common.GloballyQualifiedTypeName": "global::Game"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "p1",
-            "TypeName": "Player",
-            "Metadata": {
-              "Common.PropertyName": "p1",
-              "Common.GloballyQualifiedTypeName": "global::Player"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "p2",
-            "TypeName": "Player",
-            "Metadata": {
-              "Common.PropertyName": "p2",
-              "Common.GloballyQualifiedTypeName": "global::Player"
-            }
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Shared.RegisterGame",
-          "Common.TypeNameIdentifier": "RegisterGame",
-          "Common.TypeNamespace": "ChessLeague.Shared",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
-        "HashCode": -519806420,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Shared.RegisterGame",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ChessLeague.Shared.RegisterGame"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "modal",
-            "TypeName": "ChessLeague.Shared.Modal",
-            "Metadata": {
-              "Common.PropertyName": "modal",
-              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "season",
-            "TypeName": "Season",
-            "Metadata": {
-              "Common.PropertyName": "season",
-              "Common.GloballyQualifiedTypeName": "global::Season"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "game",
-            "TypeName": "Game",
-            "Metadata": {
-              "Common.PropertyName": "game",
-              "Common.GloballyQualifiedTypeName": "global::Game"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "p1",
-            "TypeName": "Player",
-            "Metadata": {
-              "Common.PropertyName": "p1",
-              "Common.GloballyQualifiedTypeName": "global::Player"
-            }
-          },
-          {
-            "Kind": "Components.Component",
-            "Name": "p2",
-            "TypeName": "Player",
-            "Metadata": {
-              "Common.PropertyName": "p2",
-              "Common.GloballyQualifiedTypeName": "global::Player"
-            }
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Shared.RegisterGame",
-          "Common.TypeNameIdentifier": "RegisterGame",
-          "Common.TypeNamespace": "ChessLeague.Shared",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
-        "HashCode": -854417396,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Shared.RegisterPlayer",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "RegisterPlayer"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "modal",
-            "TypeName": "ChessLeague.Shared.Modal",
-            "Metadata": {
-              "Common.PropertyName": "modal",
-              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
-            }
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
-          "Common.TypeNameIdentifier": "RegisterPlayer",
-          "Common.TypeNamespace": "ChessLeague.Shared",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
-        "HashCode": -1658799919,
-        "Kind": "Components.Component",
-        "Name": "ChessLeague.Shared.RegisterPlayer",
-        "AssemblyName": "ChessLeague",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "ChessLeague.Shared.RegisterPlayer"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "modal",
-            "TypeName": "ChessLeague.Shared.Modal",
-            "Metadata": {
-              "Common.PropertyName": "modal",
-              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
-            }
-          }
-        ],
-        "Metadata": {
-          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
-          "Common.TypeNameIdentifier": "RegisterPlayer",
-          "Common.TypeNamespace": "ChessLeague.Shared",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
-          "Runtime.Name": "Components.IComponent"
-        }
-      },
-      {
         "HashCode": 2104819110,
         "Kind": "Components.Component",
         "Name": "ChessLeague.Shared.SurveyPrompt",
@@ -825,6 +635,214 @@
         "Metadata": {
           "Common.TypeName": "ChessLeague.Shared.NavMenu",
           "Common.TypeNameIdentifier": "NavMenu",
+          "Common.TypeNamespace": "ChessLeague.Shared",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
+          "Runtime.Name": "Components.IComponent"
+        }
+      },
+      {
+        "HashCode": -854417396,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Shared.RegisterPlayer",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "RegisterPlayer"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "modal",
+            "TypeName": "ChessLeague.Shared.Modal",
+            "Metadata": {
+              "Common.PropertyName": "modal",
+              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
+            }
+          }
+        ],
+        "Metadata": {
+          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
+          "Common.TypeNameIdentifier": "RegisterPlayer",
+          "Common.TypeNamespace": "ChessLeague.Shared",
+          "Runtime.Name": "Components.IComponent"
+        }
+      },
+      {
+        "HashCode": -1658799919,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Shared.RegisterPlayer",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ChessLeague.Shared.RegisterPlayer"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "modal",
+            "TypeName": "ChessLeague.Shared.Modal",
+            "Metadata": {
+              "Common.PropertyName": "modal",
+              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
+            }
+          }
+        ],
+        "Metadata": {
+          "Common.TypeName": "ChessLeague.Shared.RegisterPlayer",
+          "Common.TypeNameIdentifier": "RegisterPlayer",
+          "Common.TypeNamespace": "ChessLeague.Shared",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch",
+          "Runtime.Name": "Components.IComponent"
+        }
+      },
+      {
+        "HashCode": 2019897570,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Shared.RegisterGame",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "RegisterGame"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "modal",
+            "TypeName": "ChessLeague.Shared.Modal",
+            "Metadata": {
+              "Common.PropertyName": "modal",
+              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "season",
+            "TypeName": "Season",
+            "Metadata": {
+              "Common.PropertyName": "season",
+              "Common.GloballyQualifiedTypeName": "global::Season"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "game",
+            "TypeName": "Game",
+            "Metadata": {
+              "Common.PropertyName": "game",
+              "Common.GloballyQualifiedTypeName": "global::Game"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p1",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p1",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p2",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p2",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "dateTimeValue",
+            "TypeName": "System.DateTime",
+            "Metadata": {
+              "Common.PropertyName": "dateTimeValue",
+              "Common.GloballyQualifiedTypeName": "global::System.DateTime"
+            }
+          }
+        ],
+        "Metadata": {
+          "Common.TypeName": "ChessLeague.Shared.RegisterGame",
+          "Common.TypeNameIdentifier": "RegisterGame",
+          "Common.TypeNamespace": "ChessLeague.Shared",
+          "Runtime.Name": "Components.IComponent"
+        }
+      },
+      {
+        "HashCode": 440232453,
+        "Kind": "Components.Component",
+        "Name": "ChessLeague.Shared.RegisterGame",
+        "AssemblyName": "ChessLeague",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ChessLeague.Shared.RegisterGame"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "modal",
+            "TypeName": "ChessLeague.Shared.Modal",
+            "Metadata": {
+              "Common.PropertyName": "modal",
+              "Common.GloballyQualifiedTypeName": "global::ChessLeague.Shared.Modal"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "season",
+            "TypeName": "Season",
+            "Metadata": {
+              "Common.PropertyName": "season",
+              "Common.GloballyQualifiedTypeName": "global::Season"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "game",
+            "TypeName": "Game",
+            "Metadata": {
+              "Common.PropertyName": "game",
+              "Common.GloballyQualifiedTypeName": "global::Game"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p1",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p1",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "p2",
+            "TypeName": "Player",
+            "Metadata": {
+              "Common.PropertyName": "p2",
+              "Common.GloballyQualifiedTypeName": "global::Player"
+            }
+          },
+          {
+            "Kind": "Components.Component",
+            "Name": "dateTimeValue",
+            "TypeName": "System.DateTime",
+            "Metadata": {
+              "Common.PropertyName": "dateTimeValue",
+              "Common.GloballyQualifiedTypeName": "global::System.DateTime"
+            }
+          }
+        ],
+        "Metadata": {
+          "Common.TypeName": "ChessLeague.Shared.RegisterGame",
+          "Common.TypeNameIdentifier": "RegisterGame",
           "Common.TypeNamespace": "ChessLeague.Shared",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch",
           "Runtime.Name": "Components.IComponent"

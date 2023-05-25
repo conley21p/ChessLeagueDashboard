@@ -56,8 +56,7 @@
 
 
     private async Task registerPlayer()
-    {
-        
+    {        
         await Request.SendPostRequest("player",JsonSerializer.Serialize(newPlayerName)  );
         modal.Close();
     }

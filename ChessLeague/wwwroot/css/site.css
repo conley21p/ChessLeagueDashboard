@@ -162,6 +162,8 @@ a, .btn-link {
         border-radius: 10px;
         /* border-bottom: 1px solid rgba(66, 66, 66, 0.278); */
         font-size: xx-large;
+        text-decoration: none;
+        color:white;
     }
 
     .standings-wrapper .row:hover

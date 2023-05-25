@@ -57,14 +57,13 @@
     public Player? p1 {get; set;}
     [Parameter]
     public Player? p2 {get; set;}
+    [Parameter]
+    public DateTime dateTimeValue {get; set;}
 
 
-
-    
     /*  */
     private bool liveGame = true;
     private bool isExhibition = false;
-    private DateTime dateTimeValue = DateTime.UtcNow.AddHours(-5.0);
 
     public async Task CreateGame(uint State)
     {
@@ -84,17 +83,14 @@
             }else{
                 game.SeasonId = season.ID;
             }
-            dateTimeValue.AddHours(5.0);
-            game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-05:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
+            game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-00:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
+Console.WriteLine("gameID:" + game.ID);
+            if(game.ID == 0){
+                Task<string> temp = Request.SendPostRequest("game", JsonSerializer.Serialize(game));
+            }else{
+                Task<string> temp = Request.SendUpdateRequest("/game/" + game.ID, JsonSerializer.Serialize(game));
+            }
 
-            @* Console.WriteLine("game.TimePlayed:" + game.TimePlayed);
-            Console.WriteLine("game.State:" + game.State);
-            Console.WriteLine("game.SeasonID:" + game.SeasonId);
-            Console.WriteLine("game.Desc:" + game.Desc);
-            Console.WriteLine("game.Light:" + game.Light);
-            Console.WriteLine("game.Dark:" + game.Dark); *@
-
-            Task<string> temp = Request.SendPostRequest("game", JsonSerializer.Serialize(game));
             // IF not a scheduled Game Make a rquest to update ratings
             if (!isExhibition){
                 // Update Season Request
