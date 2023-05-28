@@ -3,6 +3,7 @@
 @using System.Text.Json
 @using System.Threading.Tasks
 @using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop;
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 
@@ -20,7 +21,7 @@
                 </div>
             }else{
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" id="header-dropdown" @onclick="toggleSeasonList" style="width:auto">
+                    <button class="btn-secondary dropdown-toggle" id="header-dropdown" @onclick="toggleSeasonList" style="width:auto">
                         @selectedSeason.Name
                     </button>
                     <div class="dropdown-menu @displaySeasonList" aria-labelledby="dropdownMenuButton">
@@ -29,7 +30,7 @@
                         {
                             <button class="dropdown-item" value="@season.ID" @onclick="(() => changeSeason(season.ID))"  >@season.Name</button>
                         }
-                        <button class="dropdown-item btn btn-primary" @onclick="modalCreateSeason.Show">Add New Season</button>
+                        <button class="dropdown-item btn-primary" @onclick="modalCreateSeason.Show">Add New Season</button>
                     </div>
                     
                 </div>
@@ -105,42 +106,12 @@
                         <div class="col record-col">
                             @player.Stats.Draws
                         </div>
-                        <div class="col-auto float-right"  style="margin-left: auto;">
+                        @* <div class="col-auto float-right"  style="margin-left: auto;" id="start-game-btn">
                             <button @onclick="(() => StartGame(player.Player))" class="btn btn-primary" >@((game.Light != 0 ?  game.Light == player.Player.Id ? "End Game" : "Player 2" : "Start Game"))</button>
-                        </div>
-                        @* <div class="col-auto float-right"  style="margin-left: auto;">
-                            <button @onclick="(() => AdvancedViewOpen(player.Player))" class="btn btn-primary" >@((advancedView ? "Close View" : "Advanced view"))</button>
                         </div> *@
                     </div>
                 }
             }
-            <div class="row">
-                <div class="col-auto"  style="margin-left: auto;">
-                    
-                        @if (allPlayers == null )
-                        {
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle"  style="width:auto">
-                                    No Players Found
-                                </button>
-                            </div>
-                        }else{
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" @onclick="toggleAddPlayerList" style="width:auto">
-                                    Add Player to Season
-                                </button>
-                                <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton">
-                                    @foreach (var player in allPlayers)
-                                    {
-                                        if (!containsPlayerId(players, player.Id)){
-                                            <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        }
-                </div>
-            </div>
         </div>
     </div>
     <div class="col games-view" style="display: @(displayGamesView ? "none" : "block")">
@@ -161,33 +132,71 @@
                         Games List
                     </div>
                 </div>
-                @foreach (var game in seasonalGames)
+                @if (seasonalGames.Length > 0 && players != null)
                 {
-                    <a class="row row-games-list" @onclick="@(()=>StartGame(@game))">
-                        <div class="col-auto col-game-light" id="@(game.State == 1 ? "winner" : "")">
-                            <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
-                            @getPlayerByID(players, game.Light).Name
-                        </div>
-                        <div class="col-auto col-game-date" >
-                            @game.TimePlayed.Substring(5,5)<br>@game.TimePlayed.Substring(11,5)
-                        </div>
-                        <div class="col-auto col-game-dark float-right" id="@(game.State == 2 ? "winner" : "")">
-                            <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
-                            @getPlayerByID(players, game.Dark).Name
-                        </div>
-                    </a>
+                    @foreach (var game in seasonalGames)
+                    {
+                        <a class="row row-games-list" @onclick="@(()=>StartGame(@game))">
+                            <div class="col-auto col-game-light" id="@(game.State == 1 ? "winner" : "")">
+                                <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
+                                @getPlayerByID(players, game.Light).Name
+                            </div>
+                            <div class="col-auto col-game-date" >
+                                @game.TimePlayed.Substring(5,5)<br>@game.TimePlayed.Substring(11,5)
+                            </div>
+                            <div class="col-auto col-game-dark float-right" id="@(game.State == 2 ? "winner" : "")">
+                                <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
+                                @getPlayerByID(players, game.Dark).Name
+                            </div>
+                        </a>
+                    }
+
                 }
             }
         </div>
     </div>
 </div>
 
-<button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
-<button class="btn btn-primary" @onclick="toggleGameView">Toggle Game</button>
-@* <button class="btn btn-primary" @onclick="Request.postUpdateRatings(selectedSeason.ID)">Update Ratings</button> *@
-@* <a href="/CreateTournament" asp-page="/CreateTournament" class="btn btn-primary">Create Tournament</a> *@
-@* <a href="/Tournament" asp-page="/Tournament" class="btn btn-primary">Go to Tournament Page</a> *@
+<div class="row" id="buttons-menu">
+    @* Register Player button *@
+    <div class="col-auto">
+        <button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
+    </div>
 
+    @* Add Player to season button *@
+    <div class="col-auto">
+        @if (allPlayers == null )
+        {
+            <div class="dropdown">
+                <button class="btn dropdown-toggle"  style="width:auto">
+                    No Players Found
+                </button>
+            </div>
+        }else{
+            <div class="dropdown">
+                <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton">
+                    @foreach (var player in allPlayers)
+                    {
+                        if (!containsPlayerId(players, player.Id)){
+                            <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
+                        }
+                    }
+                </div>
+                <button class="btn btn-secondary dropdown-toggle" @onclick="toggleAddPlayerList" style="width:auto">
+                    Add Player to Season
+                </button>
+            </div>
+        }
+    </div>
+
+    @* Toggle Game list display *@
+    <div class="col-auto">
+        <button class="btn btn-primary" @onclick="toggleGameView">Toggle Game</button>
+    </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" @onclick="modalGame.Show">Start Game</button>
+    </div>
+</div>
 
 <!-- Register a Player --> 
 <Modal @ref="modalPlayer" ModalTitle="Register a Player" OnOkCacncelClick="refreshPage">
@@ -234,6 +243,7 @@
 
     private bool displayGamesView = false;
 
+
     protected override async Task OnInitializedAsync()
     {
         
@@ -245,7 +255,9 @@
         @* StateHasChanged();  *@
         if (firstRender)
         {
-            Console.WriteLine("OnInitializedAsync");
+            
+            await JSRuntime.InvokeVoidAsync("handleMouseIdle");
+
             try
             {
                 seasonsList = await Request.getSeasonsList();
@@ -294,7 +306,8 @@
             seasonalGames = await Request.getSeasonGames(seasonId);
         }
 
-        @* StateHasChanged(); *@
+
+        toggleSeasonList();
     }
     private void openGame(){
         //Open Game view

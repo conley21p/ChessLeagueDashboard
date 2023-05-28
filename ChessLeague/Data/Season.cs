@@ -14,7 +14,7 @@ public class Season
 public class SeasonCreate
 {
     public string Name { get; set; } = "";
-    public string StartDate { get; set; }
-    public string EndDate { get; set; } 
+    public string? StartDate { get; set; }
+    public string? EndDate { get; set; } 
 
 }

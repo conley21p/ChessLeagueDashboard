@@ -1,5 +1,5 @@
 is_global = true
-build_property.TargetFramework = net7.0
+build_property.TargetFramework = net6.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
@@ -9,65 +9,65 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ChessLeague
 build_property.RootNamespace = ChessLeague
-build_property.ProjectDir = c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\
-build_property.RazorLangVersion = 7.0
+build_property.ProjectDir = C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\
+build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague
+build_property.MSBuildProjectDirectory = C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague
 build_property._RazorSourceGeneratorDebug = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/App.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Counter.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Index.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Tournament.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Tournament.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVG91cm5hbWVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/CreateSeason.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/CreateSeason.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENyZWF0ZVNlYXNvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/Modal.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/Modal.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1vZGFsLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/RegisterGame.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/RegisterGame.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFJlZ2lzdGVyR2FtZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/RegisterPlayer.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/RegisterPlayer.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFJlZ2lzdGVyUGxheWVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/SurveyPrompt.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/_Imports.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/MainLayout.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-c2ommturjk
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/NavMenu.razor]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-ugcuj79b3b
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Error.cshtml]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/_Host.cshtml]
+[C:/Users/conle/Documents/Software/ChessLeagueDashboard/ChessLeague/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

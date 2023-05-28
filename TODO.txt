@@ -1,13 +1,8 @@
 New API request: 
- - When Creating a player all option to set initial rating and record (if not sent set to 1200 and 0-0-0).
- - Retrieve list of games for a player 
-    - Request attribute:
-        - number of games
-        - Get wins/loss/both
+ - Finish Mouse Idle hide buttons
+    - Scroll games list when mouse idle detected
 
- - Post create Game, if Draw is true is the winner field Ignored?
- - Can UpdateRatings automatically run when a new game is created?
-    - I cannot get UpdateRatings to work. It looks like I can create a game fine, but I don't see the players records change.
+ - Move add Player to season to top of page, since drop down extends below dropdown button
 
  - Tournament DB object 
     public class Tournament

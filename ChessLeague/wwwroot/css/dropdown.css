@@ -20,7 +20,7 @@
 #season-header .dropdown-menu
 {
     width: 500px;
-    left: calc(50vw - 250px);
+    left: calc(50vw - 300px);
 }
 #season-header .dropdown-toggle::after
 {

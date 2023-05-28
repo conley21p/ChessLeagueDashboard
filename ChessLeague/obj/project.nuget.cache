@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "Ty4UpaYp5RbXduRKBR0T7opPoqaUvPdnBKU/X/HjFSE6633l0wf54SZgVvVmYjl7bveDasdmO9RjuLsQMWKwow==",
+  "dgSpecHash": "JrORXsbCK7q3zBH2LTI7bx2nNIAKq91+wS09NjYhdGxnOceiKcxPPhVRE3yBh16FmXbDgTnbVxxe8BnW3g6Clw==",
   "success": true,
   "projectFilePath": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\conle\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.16\\microsoft.netcore.app.ref.6.0.16.nupkg.sha512",
+    "C:\\Users\\conle\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.16\\microsoft.windowsdesktop.app.ref.6.0.16.nupkg.sha512",
+    "C:\\Users\\conle\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.16\\microsoft.aspnetcore.app.ref.6.0.16.nupkg.sha512",
+    "C:\\Users\\conle\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.16\\microsoft.netcore.app.host.win-x64.6.0.16.nupkg.sha512"
+  ],
   "logs": []
 }

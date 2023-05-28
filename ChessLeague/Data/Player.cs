@@ -6,14 +6,14 @@ public class Player
     public uint Id { get; set; }
 
     [JsonPropertyName("CreatedAt")]
-    public string CreatedAt { get; set; }
+    public string? CreatedAt { get; set; }
 
     [JsonPropertyName("UpdatedAt")]
-    public string UpdatedAt { get; set; }
+    public string? UpdatedAt { get; set; }
 
     [JsonPropertyName("DeletedAt")]
-    public string DeletedAt { get; set; }
+    public string? DeletedAt { get; set; }
 
     [JsonPropertyName("Name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

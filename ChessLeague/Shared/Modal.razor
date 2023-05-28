@@ -22,10 +22,10 @@
     public bool ModalStyle { get; set; } = false;
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public RenderFragment ModalFooter { get; set; }    
+    public RenderFragment? ModalFooter { get; set; }    
     [Parameter]
     public EventCallback<bool> OnOkCacncelClick {get; set;}
 

@@ -140,11 +140,19 @@ a, .btn-link {
 
 /* Main Content */
     /* Standings */
-    .standing-view,
+    .stadnings-view,
     .games-view
     {
         overflow: overlay;
         height: 80vh;
+    }
+    .stadnings-view
+    {
+        min-width: 720px;
+    }
+    .games-view
+    {
+        min-width: 450px;
     }
     .standings-wrapper 
     {
@@ -184,13 +192,13 @@ a, .btn-link {
     }
     .standings-wrapper .row .name-col
     {
-        width: 250px;
-        max-width: 250px;
-        min-width: 150px;
+        max-width: 160px;
+        min-width: 160px;
     }
     .standings-wrapper .row .record-col
     {
-        max-width: 150px;
+        max-width: 120px;
+        min-width: 120px;
         text-align: center;
     }
     .standings-wrapper .row .rating-col

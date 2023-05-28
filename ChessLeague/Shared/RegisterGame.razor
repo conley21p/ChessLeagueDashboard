@@ -86,16 +86,16 @@
             game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-00:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
 Console.WriteLine("gameID:" + game.ID);
             if(game.ID == 0){
-                Task<string> temp = Request.SendPostRequest("game", JsonSerializer.Serialize(game));
+                string temp =await Request.SendPostRequest("game", JsonSerializer.Serialize(game));
             }else{
-                Task<string> temp = Request.SendUpdateRequest("/game/" + game.ID, JsonSerializer.Serialize(game));
+                string temp =await Request.SendUpdateRequest("/game/" + game.ID, JsonSerializer.Serialize(game));
             }
 
             // IF not a scheduled Game Make a rquest to update ratings
             if (!isExhibition){
                 // Update Season Request
                 Console.WriteLine("Updating Ratings");
-                Request.SendPostRequest("season/" + season.ID.ToString() + ":updateRatings", "");
+                await Request.SendPostRequest("season/" + season.ID.ToString() + ":updateRatings", "");
             }
             game = new Game();
             p1 = new Player();

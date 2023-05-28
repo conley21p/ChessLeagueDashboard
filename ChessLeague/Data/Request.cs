@@ -72,11 +72,14 @@ public class Request
         while (true)
         {
             string responseContent = await SendGetRequest($"seasons?with_deleted=false&page_id={nextPage}&page_size=999" );
-            SeasonsResponse response = JsonSerializer.Deserialize<SeasonsResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            SeasonsResponse? response = JsonSerializer.Deserialize<SeasonsResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+            if (response == null)
+            {
+                break;
+            }
             if (response.Items == null
-            ||  response.Items.Length == 0
-            ||  response == null)
+            ||  response.Items.Length == 0)
             {
                 break;
             }
@@ -101,11 +104,14 @@ public class Request
         while (true)
         {
             string responseContent = await SendGetRequest($"players?with_deleted=false&page_id={nextPage}&page_size=999");
-            allPlayersResponse response = JsonSerializer.Deserialize<allPlayersResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            allPlayersResponse? response = JsonSerializer.Deserialize<allPlayersResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
+            if (response == null)
+            {
+                break;
+            }
             if (response.Items == null
-            ||  response.Items.Length == 0
-            ||  response == null)
+            ||  response.Items.Length == 0)
             {
                 break;
             }
@@ -130,7 +136,7 @@ public class Request
         return JsonSerializer.Deserialize<Game[]>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
-    public static async Task<PlayerStats[]> postParticitpants(uint seasonId)
+    public static async Task<PlayerStats[]>? postParticitpants(uint seasonId)
     {
         List<Season> seasonList = new List<Season>();
 
