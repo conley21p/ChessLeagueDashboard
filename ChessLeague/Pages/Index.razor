@@ -132,7 +132,7 @@
                         Games List
                     </div>
                 </div>
-                @if (seasonalGames.Length > 0 && players != null)
+                @if (seasonalGames.Length > 0 && players != null && players.Length > 0 )
                 {
                     @foreach (var game in seasonalGames)
                     {
@@ -165,21 +165,19 @@
 
     @* Add Player to season button *@
     <div class="col-auto">
-        @if (allPlayers == null )
+        @if (allPlayers == null || allPlayers.Count == 0 )
         {
             <div class="dropdown">
-                <button class="btn dropdown-toggle"  style="width:auto">
-                    No Players Found
+                <button class="btn dropdown-toggle disabled"  style="width:auto">
+                    No Players To Add
                 </button>
             </div>
         }else{
             <div class="dropdown">
-                <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton" style="top:-@AddPlayerListHeight.ToString()px">
                     @foreach (var player in allPlayers)
                     {
-                        if (!containsPlayerId(players, player.Id)){
-                            <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
-                        }
+                        <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
                     }
                 </div>
                 <button class="btn btn-secondary dropdown-toggle" @onclick="toggleAddPlayerList" style="width:auto">
@@ -205,7 +203,7 @@
 </Modal>
 <!-- Game a Player --> 
 <Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshPage">
-    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" dateTimeValue="@DateTime.Parse(game.TimePlayed).AddHours(5.0)" season="selectedSeason">
+    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" participants="@players" dateTimeValue="@DateTime.Parse(game.TimePlayed).AddHours(5.0)" season="selectedSeason">
     </RegisterGame>
 </Modal>
 
@@ -228,6 +226,7 @@
     public Player p1 = new Player() ;
     public Player p2 = new Player();
     private string displayAddPlayerList = "";
+    private int AddPlayerListHeight = 16;
     private string displaySeasonList = "";
 
     // Season the screen is displaying
@@ -267,8 +266,10 @@
                 if (seasonsList.Length != 0 && seasonsList != null)
                 {
                     players =    await Request.postParticitpants(selectedSeason.ID);
-
+                    
                     allPlayers = await Request.getAllPlayersList();
+                    allPlayers = PlayersNotInList(players, allPlayers.ToArray());
+                    Console.WriteLine("All players count"+allPlayers.Count);
                 
                     seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
                     Array.Sort(seasonalGames, (game1,game2) => game2.TimePlayed.CompareTo(game1.TimePlayed));
@@ -300,7 +301,11 @@
         
         players = null;
         players = await Request.postParticitpants(seasonId);
+
         selectedSeason = getSeasonByID(seasonId, seasonsList);
+        
+        allPlayers = await Request.getAllPlayersList();
+        allPlayers = PlayersNotInList(players, allPlayers.ToArray());
 
         if(displayGamesView){
             seasonalGames = await Request.getSeasonGames(seasonId);
@@ -380,6 +385,7 @@
         }
         // Update standings list
         await Request.postParticitpants(selectedSeason.ID);
+
         StateHasChanged();
     }
     
@@ -410,5 +416,19 @@
     }
     public void refreshPage(){
         StateHasChanged();
+    }
+
+    public List<Player> PlayersNotInList(PlayerStats[] excludeList, Player[] includeList){
+        List<Player> returnList = new List<Player>();
+         foreach (var player in includeList)
+        {
+            if (!containsPlayerId(excludeList, player.Id)){
+                returnList.Add(player);
+            }
+        }
+
+        AddPlayerListHeight = 14 + returnList.Count * 36;
+
+        return returnList;
     }
 }

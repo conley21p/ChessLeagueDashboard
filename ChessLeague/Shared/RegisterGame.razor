@@ -4,43 +4,70 @@
 @inject HttpClient Http
 
 
+
 <div class="" style="@(liveGame ? "display:block;" : "display:none;")">
+    <div style="display: @(pickPlayerView?"flex":"none")">
+        @if (participants != null && participants.Length > 0)
+        {
+            <select @bind="p1.Name">
+                <option value="">-- Select Player 1 --</option>
+                @foreach (var player in participants)
+                {
+                    <option value="@player.Player">@player.Player.Name</option>
+                }
+            </select>
 
-    <div class="container" >
-    
-    <div class="row justify-content-center">
+            <select @bind="p2.Name">
+                <option value="">-- Select Player 2 --</option>
+                @foreach (var player in participants?.Where(p => p?.Player?.Id != p1?.Id))
+                {
+                    <option value="@player?.Player">@player?.Player?.Name</option>
+                }
+            </select>
 
-        <button type="submit" class="Winner-btn @((game.Light == p1.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@p1.Name Wins!</button>
+            @if (p1?.Id == p2?.Id)
+            {
+                <p>The same player cannot be selected in both fields.</p>
+            }
 
-        <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p2.Id ? (uint)1 : (uint)2))">@p2.Name  Wins!</button>
-
-
+            <button @onclick="togglePickPlayerView" class="btn btn-primary">Next Page</button>
+        }
     </div>
-    
-    <div class="row justify-content-center">
-        <textarea class="Desc-field" @bind="game.Desc" placeholder="Enter games description here" />
-        <textarea class="Desc-field" @bind="game.PGN" placeholder="Paste PGN Here" />
-    </div>
+    <div style="display: @(pickPlayerView?"none":"flex")">
+        <div class="container" >
+        
+        <div class="row justify-content-center">
+            <button type="submit" class="Winner-btn @((game.Light == p1.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@p1.Name Wins!</button>
 
-    <div class="row justify-content-center">
+            <button type="submit" class="Winner-btn @((game.Light == p2.Id ? "light" : "dark"))" @onclick="(() => CreateGame(game.Light == p2.Id ? (uint)1 : (uint)2))">@p2.Name  Wins!</button>
 
-        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(3))" >Draw</button>
-    </div>
-    
-    <div class="row justify-content-center">
-        <input class="datetime-local" type="datetime-local" @bind="dateTimeValue">
-        <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
-    </div>
-    
-    </div>
-    <div class="modal-footer justify-content-center" style="border:none;">
-        <label>
-            <input type="checkbox" @bind=isExhibition />
-            Exhibition game
-        </label>
-        <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
-        @* <button type="button" class="btn btn-primary" @onclick="RandomColors">Random Colors</button> *@
-        <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
+        </div>
+        
+        <div class="row justify-content-center">
+            <textarea class="Desc-field" @bind="game.Desc" placeholder="Enter games description here" />
+            <textarea class="Desc-field" @bind="game.PGN" placeholder="Paste PGN Here" />
+        </div>
+
+        <div class="row justify-content-center">
+
+            <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(3))" >Draw</button>
+        </div>
+        
+        <div class="row justify-content-center">
+            <input class="datetime-local" type="datetime-local" @bind="dateTimeValue">
+            <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
+        </div>
+        
+        </div>
+        <div class="modal-footer justify-content-center" style="border:none;">
+            <label>
+                <input type="checkbox" @bind=isExhibition />
+                Exhibition game
+            </label>
+            <button type="button" class="btn btn-primary" @onclick="SwitchColors">Switch Colors</button>
+            @* <button type="button" class="btn btn-primary" @onclick="RandomColors">Random Colors</button> *@
+            <button type="button" class="btn btn-primary" @onclick="modal.Close">Cancel</button>
+        </div>
     </div>
 </div>
 
@@ -59,6 +86,10 @@
     public Player? p2 {get; set;}
     [Parameter]
     public DateTime dateTimeValue {get; set;}
+    [Parameter]
+    public PlayerStats[]? participants {get; set;}
+    
+    public bool pickPlayerView {get; set;} = true;
 
 
     /*  */
@@ -84,7 +115,7 @@
                 game.SeasonId = season.ID;
             }
             game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-00:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
-Console.WriteLine("gameID:" + game.ID);
+
             if(game.ID == 0){
                 string temp =await Request.SendPostRequest("game", JsonSerializer.Serialize(game));
             }else{
@@ -135,4 +166,11 @@ Console.WriteLine("gameID:" + game.ID);
             StateHasChanged();
         }
     } *@
+    public void togglePickPlayerView(){
+        Console.WriteLine(p1.Id);
+        Console.WriteLine(p2.Id);
+        if (p1 != null && p1.Id != 0 && p2 != null && p2.Id != 0 ){
+            pickPlayerView = pickPlayerView ? false : true;
+        }
+    }
 }
