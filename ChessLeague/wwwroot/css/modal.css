@@ -41,7 +41,9 @@
     }
     button.Draw-btn,
     button.Create-Game-btn,
-    input.datetime-local
+    button.next-page-btn,
+    input.datetime-local,
+    select.player-picker
     {
         width: 40%;
         border-radius: 10px;
@@ -50,6 +52,10 @@
         border: none;
         box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
         font-size: x-large;
+    }
+    select.player-picker
+    {
+        width: 400px;
     }
     textarea.Desc-field
     {

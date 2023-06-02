@@ -25,16 +25,16 @@
                         @selectedSeason.Name
                     </button>
                     <div class="dropdown-menu @displaySeasonList" aria-labelledby="dropdownMenuButton">
-                        
+
                         @foreach (var season in seasonsList)
                         {
                             <button class="dropdown-item" value="@season.ID" @onclick="(() => changeSeason(season.ID))"  >@season.Name</button>
                         }
                         <button class="dropdown-item btn-primary" @onclick="modalCreateSeason.Show">Add New Season</button>
                     </div>
-                    
+
                 </div>
-                
+
             }
     </div>
 </div>
@@ -115,7 +115,7 @@
         </div>
     </div>
     <div class="col games-view" style="display: @(displayGamesView ? "none" : "block")">
-        
+
         <div class="games-view-wrapper" id="scrollableDiv">
         @if (seasonalGames == null || seasonalGames.Length == 0)
             {
@@ -196,18 +196,18 @@
     </div>
 </div>
 
-<!-- Register a Player --> 
+<!-- Register a Player -->
 <Modal @ref="modalPlayer" ModalTitle="Register a Player" OnOkCacncelClick="refreshPage">
     <RegisterPlayer modal="@modalPlayer">
     </RegisterPlayer>
 </Modal>
-<!-- Game a Player --> 
-<Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshPage">
-    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" participants="@players" dateTimeValue="@DateTime.Parse(game.TimePlayed).AddHours(5.0)" season="selectedSeason">
+<!-- Game a Player -->
+<Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshGameObject">
+    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" participants="@players" dateTimeValue="@DateTime.Parse(game.TimePlayed).AddHours(5.0)" season="selectedSeason" pickPlayerView="true">
     </RegisterGame>
 </Modal>
 
-<!-- Game a Player --> 
+<!-- Game a Player -->
 <Modal @ref="modalCreateSeason" ModalTitle="Create Season" OnOkCacncelClick="refreshPage">
     <CreateSeason modal="@modalCreateSeason" >
     </CreateSeason>
@@ -219,8 +219,8 @@
     // List of players for standings
     public PlayerStats[]? players = null;
     public Season[]? seasonsList =  null;
-    public Season selectedSeason = new Season(); 
-    public Game[] seasonalGames ; 
+    public Season selectedSeason = new Season();
+    public Game[] seasonalGames ;
     private Game game = new Game();
 
     public Player p1 = new Player() ;
@@ -245,16 +245,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
+
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        
-        
+
+
         @* StateHasChanged();  *@
         if (firstRender)
         {
-            
+
             await JSRuntime.InvokeVoidAsync("handleMouseIdle");
 
             try
@@ -266,15 +266,15 @@
                 if (seasonsList.Length != 0 && seasonsList != null)
                 {
                     players =    await Request.postParticitpants(selectedSeason.ID);
-                    
+
                     allPlayers = await Request.getAllPlayersList();
                     allPlayers = PlayersNotInList(players, allPlayers.ToArray());
                     Console.WriteLine("All players count"+allPlayers.Count);
-                
+
                     seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
                     Array.Sort(seasonalGames, (game1,game2) => game2.TimePlayed.CompareTo(game1.TimePlayed));
                 }
-                
+
             }
             catch (HttpRequestException ex)
             {
@@ -298,12 +298,12 @@
     }
 
     private async void changeSeason(uint seasonId){
-        
+
         players = null;
         players = await Request.postParticitpants(seasonId);
 
         selectedSeason = getSeasonByID(seasonId, seasonsList);
-        
+
         allPlayers = await Request.getAllPlayersList();
         allPlayers = PlayersNotInList(players, allPlayers.ToArray());
 
@@ -341,7 +341,7 @@
         modalGame.Show();
     }
     private bool containsPlayerId(PlayerStats[] playerList, uint id){
-        if (playerList != null ){   
+        if (playerList != null ){
             foreach (PlayerStats ps in playerList)
             {
                 if (ps.Player.Id == id)
@@ -353,7 +353,7 @@
         return false;
     }
     private Player getPlayerByID(PlayerStats[] playerList, uint id){
-        if (playerList != null ){   
+        if (playerList != null ){
             foreach (PlayerStats ps in playerList)
             {
                 if (ps.Player.Id == id)
@@ -377,7 +377,7 @@
     }
     public async void addPlayerToSeason(MouseEventArgs e, uint playerId){
         // Send request to add player to season
-        await Request.SendPostRequest("season/" + selectedSeason.ID + ":addPlayer?player_id=" + playerId, "");    
+        await Request.SendPostRequest("season/" + selectedSeason.ID + ":addPlayer?player_id=" + playerId, "");
         // Hide the add player to season drop down
         if (displayAddPlayerList == "show")
         {
@@ -388,10 +388,10 @@
 
         StateHasChanged();
     }
-    
+
     private async void toggleGameView(){
         displayGamesView = displayGamesView ? false : true;
-        if (displayGamesView 
+        if (displayGamesView
         && seasonalGames == null){
             seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
         }
@@ -416,6 +416,11 @@
     }
     public void refreshPage(){
         StateHasChanged();
+    }
+    public void refreshGameObject(){
+        game = new Game();
+        p1 = new Player() ;
+        p2 = new Player();
     }
 
     public List<Player> PlayersNotInList(PlayerStats[] excludeList, Player[] includeList){
