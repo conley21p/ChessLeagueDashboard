@@ -13,5 +13,4 @@ public class Game
     public String PGN               { get; set; }   = "";
     public String Desc               { get; set; }   ="";
     public String TimePlayed         { get; set; }   = DateTime.UtcNow.AddHours(-5.00).ToString();
-
 }

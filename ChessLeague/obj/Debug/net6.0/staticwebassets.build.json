@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lkFzPUE8wrxe2C5S5GxTR0VVSKcvwPHM9QOLMQnyWY4=",
+  "Hash": "dxDSmZFc2Wgolhr0HA03/s9f56pEqzd3le9qLnDaKX0=",
   "Source": "ChessLeague",
   "BasePath": "_content/ChessLeague",
   "Mode": "Default",
@@ -408,12 +408,12 @@
       "OriginalItemSpec": "wwwroot\\js\\scroll.js"
     },
     {
-      "Identity": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown.svg",
+      "Identity": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown-black.svg",
       "SourceId": "ChessLeague",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\",
       "BasePath": "_content/ChessLeague",
-      "RelativePath": "svg/crown.svg",
+      "RelativePath": "svg/crown-black.svg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -422,7 +422,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\svg\\crown.svg"
+      "OriginalItemSpec": "wwwroot\\svg\\crown-black.svg"
+    },
+    {
+      "Identity": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown-white.svg",
+      "SourceId": "ChessLeague",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\",
+      "BasePath": "_content/ChessLeague",
+      "RelativePath": "svg/crown-white.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\svg\\crown-white.svg"
     }
   ]
 }

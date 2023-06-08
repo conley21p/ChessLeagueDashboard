@@ -17,6 +17,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out ./
 
+# Set the timezone to Central Time (America/Chicago)
+ENV TZ=America/Chicago
+
 # Expose the port used by the application
 EXPOSE 80
 

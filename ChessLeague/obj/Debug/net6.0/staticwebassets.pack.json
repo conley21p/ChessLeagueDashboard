@@ -89,8 +89,12 @@
       "PackagePath": "staticwebassets\\js\\scroll.js"
     },
     {
-      "Id": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown.svg",
-      "PackagePath": "staticwebassets\\svg\\crown.svg"
+      "Id": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown-black.svg",
+      "PackagePath": "staticwebassets\\svg\\crown-black.svg"
+    },
+    {
+      "Id": "C:\\work\\ChessLeagueDashboard\\ChessLeague\\wwwroot\\svg\\crown-white.svg",
+      "PackagePath": "staticwebassets\\svg\\crown-white.svg"
     },
     {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.ChessLeague.Microsoft.AspNetCore.StaticWebAssets.props",

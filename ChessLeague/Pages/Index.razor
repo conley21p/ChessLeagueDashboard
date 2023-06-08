@@ -14,8 +14,12 @@
         @* <h2>All Time Stats</h2> *@
     </div>
     <div class="col text-center" id="season-header">
-            @if (seasonsList == null || seasonsList.Length == 0)
+            @if (seasonsList == null)
             {
+                <div class="dropdown"  id="header-dropdown" >
+                    <button class="dropdown-item rbtn btn-primay dropdown-toggle" style="margin-bottom:20px;">Loading</button>
+                </div>
+            }else if ( seasonsList.Length == 0){
                 <div class="dropdown"  id="header-dropdown" >
                     <button class="dropdown-item rbtn btn-primay dropdown-toggle" style="margin-bottom:20px;" @onclick="modalCreateSeason.Show">Add New Season</button>
                 </div>
@@ -68,12 +72,21 @@
                     Losses
                 </div>
                 <div class="col record-col">
+                    Total
+                </div>
+                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
                     Draws
                 </div>
             </div>
 
-            @if (players == null || players.Length == 0)
+            @if (players == null)
             {
+                <div class="row">
+                    <div class="col">
+                        Loading Players ...
+                    </div>
+                </div>
+            }else if ( players.Length == 0){
                 <div class="row">
                     <div class="col">
                         No Players Found
@@ -104,6 +117,9 @@
                             @player.Stats.Losses
                         </div>
                         <div class="col record-col">
+                            @(player.Stats.Wins + player.Stats.Losses)
+                        </div>
+                        <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
                             @player.Stats.Draws
                         </div>
                         @* <div class="col-auto float-right"  style="margin-left: auto;" id="start-game-btn">
@@ -116,43 +132,12 @@
     </div>
     <div class="col games-view" style="display: @(displayGamesView ? "none" : "block")">
 
+                <object data="../svg/crown-black.svg" style="display:none;"> 
+                </object>
+                <object data="../svg/crown-white.svg" style="display:none;"> 
+                </object>
         <div class="games-view-wrapper" id="scrollableDiv">
-        @if (seasonalGames == null || seasonalGames.Length == 0)
-            {
-                <div class="row">
-                    <div class="col">
-                        No Games Found
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="row table-heading">
-                    <div class="col" style="text-align:center;">
-                        Games List
-                    </div>
-                </div>
-                @if (seasonalGames.Length > 0 && players != null && players.Length > 0 )
-                {
-                    @foreach (var game in seasonalGames)
-                    {
-                        <a class="row row-games-list" @onclick="@(()=>StartGame(@game))">
-                            <div class="col-auto col-game-light" id="@(game.State == 1 ? "winner" : "")">
-                                <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
-                                @getPlayerByID(players, game.Light).Name
-                            </div>
-                            <div class="col-auto col-game-date" >
-                                @game.TimePlayed.Substring(5,5)<br>@game.TimePlayed.Substring(11,5)
-                            </div>
-                            <div class="col-auto col-game-dark float-right" id="@(game.State == 2 ? "winner" : "")">
-                                <object id="crown" data="../svg/crown.svg" width="30" height="30"> </object>
-                                @getPlayerByID(players, game.Dark).Name
-                            </div>
-                        </a>
-                    }
-
-                }
-            }
+        @((MarkupString)createGameList())
         </div>
     </div>
 </div>
@@ -203,7 +188,7 @@
 </Modal>
 <!-- Game a Player -->
 <Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshGameObject">
-    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" participants="@players" dateTimeValue="@DateTime.Parse(game.TimePlayed).AddHours(5.0)" season="selectedSeason" pickPlayerView="true">
+    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" participants="@players" dateTimeValue="@DateTime.Parse(game.TimePlayed)" season="selectedSeason" pickPlayerView="true">
     </RegisterGame>
 </Modal>
 
@@ -272,7 +257,6 @@
                     Console.WriteLine("All players count"+allPlayers.Count);
 
                     seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
-                    Array.Sort(seasonalGames, (game1,game2) => game2.TimePlayed.CompareTo(game1.TimePlayed));
                 }
 
             }
@@ -435,5 +419,116 @@
         AddPlayerListHeight = 14 + returnList.Count * 36;
 
         return returnList;
+    }
+    public string createGameList(){
+        if (seasonalGames != null){
+            Array.Sort(seasonalGames, (game1,game2) => game2.TimePlayed.CompareTo(game1.TimePlayed));
+            string scheduledGamesList = "";
+            string htmlList = "";
+            if (seasonalGames == null || seasonalGames.Length == 0)
+            {
+                htmlList += "<div class=\"row\">";
+                    htmlList += "<div class=\"col\">";
+                        htmlList += "No Games Found";
+                    htmlList += "</div>";
+                htmlList += "</div>";
+            }
+            else
+            {
+                htmlList += "<div class=\"row table-heading\">";
+                    htmlList += "<div class=\"col\" style=\"text-align:center;\">";
+                        htmlList += "Games List";
+                    htmlList += "</div>";
+                htmlList += "</div>";
+                if (seasonalGames.Length > 0 && players != null && players.Length > 0 )
+                {
+                    string lastMonth = "";
+                    foreach (var game in seasonalGames)
+                    {
+                        string date = displayDateFormat(game.TimePlayed);
+
+                        if (game.State == 4)
+                        {
+                            scheduledGamesList += "<a class=\"row row-games-list\" @onclick=\"@(()=>StartGame(@game))\">";
+                                scheduledGamesList += "<div class=\"col-auto col-game-light\" id=\"@(game.State == 1 ? \"winner\" : \"\")\">";
+                                    scheduledGamesList += "<object id=\"crown\" data=\"../svg/crown-black.svg\" width=\"30\" height=\"30\"> </object>";
+                                    scheduledGamesList += getPlayerByID(players, game.Light).Name;
+                                scheduledGamesList += "</div>";
+                                scheduledGamesList += "<div class=\"col-auto col-game-date\" >";
+                                    scheduledGamesList += date.Substring(4,date.Length-4);
+                                scheduledGamesList += "</div>";
+                                scheduledGamesList += "<div class=\"col-auto col-game-dark float-right\" id=\"@(game.State == 2 ? \"winner\" : \"\")\">";
+                                    scheduledGamesList += "<object id=\"crown\" data=\"../svg/crown-white.svg\" width=\"30\" height=\"30\"> </object>";
+                                    scheduledGamesList += getPlayerByID(players, game.Dark).Name;
+                                scheduledGamesList += "</div>";
+                            scheduledGamesList += "</a>";
+                        }else{
+                            if (date.Substring(0,3).CompareTo(lastMonth)!= 0){
+                                lastMonth = date.Substring(0,3);
+                                htmlList += "<h3 class=\"month-label\">" + lastMonth + "</h3>";
+                            }
+                            htmlList += "<a class=\"row row-games-list\" @onclick=\"@(()=>StartGame(@game))\">";
+                                htmlList += "<div class=\"col-auto col-game-light\"  id=\"" + (game.State==1?"winner":"") + "\">";
+                                    htmlList += "<object id=\"crown\" data=\"../svg/crown-black.svg\" width=\"30\" height=\"30\"> </object>";
+                                    htmlList += getPlayerByID(players, game.Light).Name;
+                                htmlList += "</div>";
+                                htmlList += "<div class=\"col-auto col-game-date\" >";
+                                    htmlList +=  "<h3 class=\"month-date\">" + GetDayWithSuffix(DateTime.Parse(game.TimePlayed)) + "</h3>";
+                                htmlList += "</div>";
+                                htmlList += "<div class=\"col-auto col-game-dark float-right\" id=\"" + (game.State==2?"winner":"") + "\">";
+                                    htmlList += "<object id=\"crown\" data=\"../svg/crown-white.svg\" width=\"30\" height=\"30\"> </object>";
+                                    htmlList += getPlayerByID(players, game.Dark).Name;
+                                htmlList += "</div>";
+                            htmlList += "</a>";
+                        }
+                        
+                    }
+                }
+            }
+            if (scheduledGamesList != ""){
+                scheduledGamesList = "<h3 class=\"month-label\">Scheduled</h3>" + scheduledGamesList;
+            }
+            return scheduledGamesList + htmlList;
+        }else{
+            return "loading...";
+        }
+        
+    }
+    public string displayDateFormat(string dateString){
+        DateTime time = DateTime.Parse(dateString);
+
+        return time.ToString("MMMM d")  + "<br>" + time.ToString("h:mmtt");
+    }
+    public string GetDayWithSuffix(DateTime date)
+    {
+        int day = date.Day;
+        string suffix;
+
+        if (day >= 11 && day <= 13)
+        {
+            suffix = "th";
+        }
+        else
+        {
+            int lastDigit = day % 10;
+
+            switch (lastDigit)
+            {
+                case 1:
+                    suffix = "st";
+                    break;
+                case 2:
+                    suffix = "nd";
+                    break;
+                case 3:
+                    suffix = "rd";
+                    break;
+                default:
+                    suffix = "th";
+                    break;
+            }
+        }
+
+        return $"{day}{suffix}";
     }
 }

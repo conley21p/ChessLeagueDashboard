@@ -53,7 +53,7 @@
                 @if (participants != null && participants.Length > 0)
                 {
                     <div class="row justify-content-center">
-                        <button type="submit" class="Winner-btn light))" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@getPlayerByID(participants, game.Light)?.Name</button>
+                        <button type="submit" class="Winner-btn light" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@getPlayerByID(participants, game.Light)?.Name</button>
 
                         <button type="submit" class="Winner-btn dark" @onclick="(() => CreateGame(game.Light == p2.Id ? (uint)1 : (uint)2))">@getPlayerByID(participants, game.Dark)?.Name</button>
 
