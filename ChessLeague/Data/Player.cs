@@ -16,4 +16,14 @@ public class Player
 
     [JsonPropertyName("Name")]
     public string? Name { get; set; }
+
+    // Constructor
+    public Player(uint id, string? createdAt, string? updatedAt, string? deletedAt, string? name)
+    {
+        Id = id;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        DeletedAt = deletedAt;
+        Name = name;
+    }
 }

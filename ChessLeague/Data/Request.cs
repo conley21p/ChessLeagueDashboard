@@ -100,31 +100,38 @@ public class Request
     {
         List<Player> playerList = new List<Player>();
 
-        int nextPage = 0;
-        while (true)
-        {
-            string responseContent = await SendGetRequest($"players?with_deleted=false&page_id={nextPage}&page_size=999");
-            allPlayersResponse? response = JsonSerializer.Deserialize<allPlayersResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        playerList.Add(new Player(123,null,null,null,"Conley"));
+        playerList.Add(new Player(1234,null,null,null,"Alex"));
+        playerList.Add(new Player(1235,null,null,null,"Chris"));
+        playerList.Add(new Player(1236,null,null,null,"David"));
+        playerList.Add(new Player(1237,null,null,null,"Spencer"));
+        playerList.Add(new Player(1238,null,null,null,"Mike"));
 
-            if (response == null)
-            {
-                break;
-            }
-            if (response.Items == null
-            ||  response.Items.Length == 0)
-            {
-                break;
-            }
+        // int nextPage = 0;
+        // while (true)
+        // {
+        //     string responseContent = await SendGetRequest($"players?with_deleted=false&page_id={nextPage}&page_size=999");
+        //     allPlayersResponse? response = JsonSerializer.Deserialize<allPlayersResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            playerList.AddRange(response.Items);
+        //     if (response == null)
+        //     {
+        //         break;
+        //     }
+        //     if (response.Items == null
+        //     ||  response.Items.Length == 0)
+        //     {
+        //         break;
+        //     }
 
-            if (response.NextPage == 0)
-            {
-                break;
-            }
+        //     playerList.AddRange(response.Items);
 
-            nextPage = response.NextPage;
-        }
+        //     if (response.NextPage == 0)
+        //     {
+        //         break;
+        //     }
+
+        //     nextPage = response.NextPage;
+        // }
 
         return playerList;
     }
