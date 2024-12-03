@@ -49,13 +49,17 @@
             }
         </div>
         <div style="display: @(pickPlayerView?"none":"")">
+            
+            <div class="container" >
+                <p>Select White or Black Box To Choose Winner.</p>
+            </div>
             <div class="container" >
                 @if (participants != null && participants.Length > 0)
                 {
                     <div class="row justify-content-center">
-                        <button type="submit" class="Winner-btn light" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@getPlayerByID(participants, game.Light)?.Name</button>
+                        <button type="submit" title="Request cannot be made, Database is none longer active."  class="Winner-btn light" @onclick="(() => CreateGame(game.Light == p1.Id ? (uint)1 : (uint)2))" >@getPlayerByID(participants, game.Light)?.Name</button>
 
-                        <button type="submit" class="Winner-btn dark" @onclick="(() => CreateGame(game.Light == p2.Id ? (uint)1 : (uint)2))">@getPlayerByID(participants, game.Dark)?.Name</button>
+                        <button type="submit" title="Request cannot be made, Database is none longer active."  class="Winner-btn dark" @onclick="(() => CreateGame(game.Light == p2.Id ? (uint)1 : (uint)2))">@getPlayerByID(participants, game.Dark)?.Name</button>
 
                     </div>
                 }
@@ -67,12 +71,12 @@
 
                 <div class="row justify-content-center">
 
-                    <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(3))" >Draw</button>
+                    <button type="submit" title="Request cannot be made, Database is none longer active." class="Create-Game-btn btn btn-primary disable" @onclick="(() => CreateGame(3))" >Draw (Database inactive)</button>
                 </div>
 
                 <div class="row justify-content-center">
                     <input class="datetime-local" type="datetime-local" @bind="dateTimeValue">
-                    <button type="submit" class="Create-Game-btn btn btn-primary" @onclick="(() => CreateGame(4))" >Submit Scheduled Game</button>
+                    <button type="submit" title="Request cannot be made, Database is none longer active." class="Create-Game-btn btn btn-primary disable" @onclick="(() => CreateGame(4))" >Submit Scheduled Game (Database inactive)</button>
                 </div>
 
                 <div class="modal-footer justify-content-center" style="border:none;">
@@ -121,39 +125,7 @@
 
     public async Task CreateGame(uint State)
     {
-        dateTimeValue.AddHours(5.0);
-        if ((dateTimeValue.CompareTo(season?.StartDate) <= 0
-        ||  dateTimeValue.CompareTo(season?.EndDate) >= 0)
-        &&  !isExhibition)
-        {
-            @* modal.ModalTitle = "***Game Date must be within Season start and end Date***"; *@
-            dateTimeValue = DateTime.UtcNow.AddHours(-5.0);
-        }else {
-            game.State = State;
-
-
-            if (isExhibition){
-                game.SeasonId = 0;
-            }else{
-                game.SeasonId = season.ID;
-            }
-            game.TimePlayed = dateTimeValue.ToString("yyyy-MM-ddTHH:mm:ss") + ".000-00:00";//2023-05-01T03:01:33.262-05:00  = yyyy-MM-ddTHH:mm:ss.fffzzz
-
-            if(game.ID == 0){
-                string temp =await Request.SendPostRequest("game", JsonSerializer.Serialize(game));
-            }else{
-                string temp =await Request.SendUpdateRequest("/game/" + game.ID, JsonSerializer.Serialize(game));
-            }
-
-            // IF not a scheduled Game Make a rquest to update ratings
-            if (!isExhibition){
-                // Update Season Request
-                Console.WriteLine("Updating Ratings");
-                await Request.SendPostRequest("season/" + season.ID.ToString() + ":updateRatings", "");
-            }
-            modal.Close();
-        }
-
+        modal.Close();
     }
 
     private void SwitchColors(){

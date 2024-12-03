@@ -69,30 +69,30 @@ public class Request
         List<Season> seasonList = new List<Season>();
 
         int nextPage = 0;
-        while (true)
-        {
-            string responseContent = await SendGetRequest($"seasons?with_deleted=false&page_id={nextPage}&page_size=999" );
+        //while (true)
+        //{
+            string responseContent = File.ReadAllText("c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\StaticJsonResponses\\getSeasonList.json");;
             SeasonsResponse? response = JsonSerializer.Deserialize<SeasonsResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (response == null)
-            {
-                break;
-            }
-            if (response.Items == null
-            ||  response.Items.Length == 0)
-            {
-                break;
-            }
+            // if (response == null)
+            // {
+            //     break;
+            // }
+            // if (response.Items == null
+            // ||  response.Items.Length == 0)
+            // {
+            //     break;
+            // }
 
             seasonList.AddRange(response.Items);
 
-            if (response.NextPage == 0)
-            {
-                break;
-            }
+            // if (response.NextPage == 0)
+            // {
+            //     break;
+            // }
 
-            nextPage = response.NextPage;
-        }
+            // nextPage = response.NextPage;
+        //}
 
         return seasonList.ToArray();
     }
@@ -100,30 +100,23 @@ public class Request
     {
         List<Player> playerList = new List<Player>();
 
-        playerList.Add(new Player(123,null,null,null,"Conley"));
-        playerList.Add(new Player(1234,null,null,null,"Alex"));
-        playerList.Add(new Player(1235,null,null,null,"Chris"));
-        playerList.Add(new Player(1236,null,null,null,"David"));
-        playerList.Add(new Player(1237,null,null,null,"Spencer"));
-        playerList.Add(new Player(1238,null,null,null,"Mike"));
-
         // int nextPage = 0;
         // while (true)
         // {
-        //     string responseContent = await SendGetRequest($"players?with_deleted=false&page_id={nextPage}&page_size=999");
-        //     allPlayersResponse? response = JsonSerializer.Deserialize<allPlayersResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            string responseContent = File.ReadAllText("c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\StaticJsonResponses\\getAllPlayersList.json");
+            allPlayersResponse? response = JsonSerializer.Deserialize<allPlayersResponse>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-        //     if (response == null)
-        //     {
-        //         break;
-        //     }
+            // if (response == null)
+            // {
+            //     break;
+            // }
         //     if (response.Items == null
         //     ||  response.Items.Length == 0)
         //     {
         //         break;
         //     }
 
-        //     playerList.AddRange(response.Items);
+            playerList.AddRange(response.Items);
 
         //     if (response.NextPage == 0)
         //     {
@@ -137,17 +130,14 @@ public class Request
     }
     public static async Task<Game[]> getSeasonGames(uint seasonId)
     {
-        List<Game> gameList = new List<Game>();
-
-        string responseContent = await SendPostRequest($"/season/" + seasonId + ":getGames","");
+        string responseContent = File.ReadAllText("c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\StaticJsonResponses\\getGames.json");
         return JsonSerializer.Deserialize<Game[]>(responseContent, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
 
     public static async Task<PlayerStats[]>? postParticitpants(uint seasonId)
     {
-        List<Season> seasonList = new List<Season>();
-
-        return JsonSerializer.Deserialize<PlayerStats[]>(await Request.SendPostRequest("season/" + seasonId + ":getParticipants", ""),
+        string responseContent = File.ReadAllText("c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\StaticJsonResponses\\getParticipants.json");
+        return JsonSerializer.Deserialize<PlayerStats[]>(responseContent,
                                                             new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
     public static async Task<PlayerStats[]> postUpdateRatings(uint seasonId)

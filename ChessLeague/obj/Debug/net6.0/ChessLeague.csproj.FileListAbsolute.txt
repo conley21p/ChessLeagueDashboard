@@ -62,3 +62,7 @@ C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ChessLeague.pdb
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ChessLeague.genruntimeconfig.cache
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ref\ChessLeague.dll
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getAllPlayersList.json
+c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getSeasonList.json
+c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getParticipants.json
+c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getGames.json

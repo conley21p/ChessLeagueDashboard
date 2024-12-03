@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj": {}
+    "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj": {}
   },
   "projects": {
-    "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj": {
+    "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj",
+        "projectUniqueName": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj",
         "projectName": "ChessLeague",
-        "projectPath": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj",
+        "projectPath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\ChessLeague.csproj",
         "packagesPath": "C:\\Users\\conle\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\obj\\",
+        "outputPath": "c:\\Users\\conle\\Documents\\Software\\ChessLeagueDashboard\\ChessLeague\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\conle\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -53,24 +53,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.36, 6.0.36]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

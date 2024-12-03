@@ -53,6 +53,11 @@
         box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
         font-size: x-large;
     }
+    button.disable
+    {
+        background-color:  #073e8f;
+        color: grey;
+    }
     select.player-picker
     {
         width: 400px;

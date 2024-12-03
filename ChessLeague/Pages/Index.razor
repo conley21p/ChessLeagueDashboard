@@ -53,12 +53,6 @@
                 <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
                     Player ID
                 </div>
-                <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
-                    Rating
-                </div>
-                <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    Highest Rating
-                </div>
                 <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
                     Win Streak
                 </div>
@@ -74,8 +68,8 @@
                 <div class="col record-col">
                     Total
                 </div>
-                <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                    Draws
+                <div class="col record-col">
+                    Rating
                 </div>
             </div>
 
@@ -104,12 +98,6 @@
                         <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
                             @player.Player.Id
                         </div>
-                        <div class="col-auto rating-col" style="display: @((advancedView ? "block;" : "none;"))">
-                            @player.Stats.Rating
-                        </div>
-                        <div class="col rating-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                            @player.Stats.HighestRating
-                        </div>
                         <div class="col record-col">
                             @player.Stats.Wins
                         </div>
@@ -119,12 +107,9 @@
                         <div class="col record-col">
                             @(player.Stats.Wins + player.Stats.Losses)
                         </div>
-                        <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
-                            @player.Stats.Draws
+                        <div class="col record-col">
+                            @player.Stats.Rating
                         </div>
-                        @* <div class="col-auto float-right"  style="margin-left: auto;" id="start-game-btn">
-                            <button @onclick="(() => StartGame(player.Player))" class="btn btn-primary" >@((game.Light != 0 ?  game.Light == player.Player.Id ? "End Game" : "Player 2" : "Start Game"))</button>
-                        </div> *@
                     </div>
                 }
             }

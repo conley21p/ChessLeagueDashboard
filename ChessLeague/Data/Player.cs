@@ -18,12 +18,12 @@ public class Player
     public string? Name { get; set; }
 
     // Constructor
-    public Player(uint id, string? createdAt, string? updatedAt, string? deletedAt, string? name)
-    {
-        Id = id;
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
-        DeletedAt = deletedAt;
-        Name = name;
-    }
+    // public Player(uint id, string? createdAt, string? updatedAt, string? deletedAt, string? name)
+    // {
+    //     Id = id;
+    //     CreatedAt = createdAt;
+    //     UpdatedAt = updatedAt;
+    //     DeletedAt = deletedAt;
+    //     Name = name;
+    // }
 }
