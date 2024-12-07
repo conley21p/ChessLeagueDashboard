@@ -1,30 +1,17 @@
-# How to run docker file
-#  docker buildx build -t chessleaguedash .
-
-# Stage 1: Build the application
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 
-# Copy the project file and restore dependencies
-COPY *.csproj ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["ChessLeague.csproj", "."]
+RUN dotnet restore "ChessLeague.csproj"
+COPY . .
+RUN dotnet build "ChessLeague.csproj" -c Release -o /app/build
 
-# Copy the remaining source code
-COPY . ./
+FROM build AS publish
+RUN dotnet publish "ChessLeague.csproj" -c Release -o /app/publish
 
-# Build the application
-RUN dotnet publish -c Release -o out
-
-# Stage 2: Create the runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out ./
-
-# Set the timezone to Central Time (America/Chicago)
-ENV TZ=America/Chicago
-
-# Expose the port used by the application
-EXPOSE 80
-
-# Start the application
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ChessLeague.dll"]

@@ -1,0 +1,531 @@
+﻿@page "/ChessDash"
+@using System.Net.Http
+@using System.Text.Json
+@using System.Threading.Tasks
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.JSInterop;
+@inject HttpClient Http
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
+
+<div class="ChessBody">
+<div style="backdrop-filter: blur(10px); height:100vh">
+    <div class="row header">
+        <div class="col-auto">
+            @* <h2>All Time Stats</h2> *@
+        </div>
+        <div class="col text-center" id="season-header">
+                @if (seasonsList == null)
+                {
+                    <div class="dropdown"  id="header-dropdown" >
+                        <button class="dropdown-item rbtn btn-primay dropdown-toggle" style="margin-bottom:20px;">Loading</button>
+                    </div>
+                }else if ( seasonsList.Length == 0){
+                    <div class="dropdown"  id="header-dropdown" >
+                        <button class="dropdown-item rbtn btn-primay dropdown-toggle" style="margin-bottom:20px;" @onclick="modalCreateSeason.Show">Add New Season</button>
+                    </div>
+                }else{
+                    <div class="dropdown">
+                        <button class="btn-secondary dropdown-toggle" id="header-dropdown" @onclick="toggleSeasonList" style="width:auto">
+                            @selectedSeason.Name
+                        </button>
+                        <div class="dropdown-menu @displaySeasonList" aria-labelledby="dropdownMenuButton">
+
+                            @foreach (var season in seasonsList)
+                            {
+                                <button class="dropdown-item" value="@season.ID" @onclick="(() => changeSeason(season.ID))"  >@season.Name</button>
+                            }
+                            <button class="dropdown-item btn-primary" @onclick="modalCreateSeason.Show">Add New Season</button>
+                        </div>
+
+                    </div>
+
+                }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col standing-view">
+            <div class="standings-wrapper">
+                <div class="row table-heading">
+                    <div class="col name-col">
+                        Player
+                    </div>
+                    <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                        Player ID
+                    </div>
+                    <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                        Win Streak
+                    </div>
+                    <div class="col record-col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                        Highest Win Streak
+                    </div>
+                    <div class="col record-col">
+                        Wins
+                    </div>
+                    <div class="col record-col">
+                        Losses
+                    </div>
+                    <div class="col record-col">
+                        Total
+                    </div>
+                    <div class="col record-col">
+                        Rating
+                    </div>
+                </div>
+
+                @if (players == null)
+                {
+                    <div class="row">
+                        <div class="col">
+                            Loading Players ...
+                        </div>
+                    </div>
+                }else if ( players.Length == 0){
+                    <div class="row">
+                        <div class="col">
+                            No Players Found
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var player in players)
+                    {
+                        <div class="row">
+                            <div class="col name-col">
+                                @player.Player.Name
+                            </div>
+                            <div class="col"  style="display: @((advancedView ? "block;" : "none;"))" >
+                                @player.Player.Id
+                            </div>
+                            <div class="col record-col">
+                                @player.Stats.Wins
+                            </div>
+                            <div class="col record-col">
+                                @player.Stats.Losses
+                            </div>
+                            <div class="col record-col">
+                                @(player.Stats.Wins + player.Stats.Losses)
+                            </div>
+                            <div class="col record-col">
+                                @player.Stats.Rating
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col games-view" style="display: @(displayGamesView ? "none" : "block")">
+
+                    <object data="../svg/crown-black.svg" style="display:none;"> 
+                    </object>
+                    <object data="../svg/crown-white.svg" style="display:none;"> 
+                    </object>
+            <div class="games-view-wrapper" id="scrollableDiv">
+            @((MarkupString)createGameList())
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="buttons-menu">
+        @* Register Player button *@
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="modalPlayer.Show">Register New Player</button>
+        </div>
+
+        @* Add Player to season button *@
+        <div class="col-auto">
+            @if (allPlayers == null || allPlayers.Count == 0 )
+            {
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle disabled"  style="width:auto">
+                        No Players To Add
+                    </button>
+                </div>
+            }else{
+                <div class="dropdown">
+                    <div class="dropdown-menu @displayAddPlayerList" aria-labelledby="dropdownMenuButton" style="top:-@AddPlayerListHeight.ToString()px">
+                        @foreach (var player in allPlayers)
+                        {
+                            <button class="dropdown-item" value="@player.Id" @onclick="(e) => addPlayerToSeason(e, player.Id)">@player.Name</button>
+                        }
+                    </div>
+                    <button class="btn btn-secondary dropdown-toggle" @onclick="toggleAddPlayerList" style="width:auto">
+                        Add Player to Season
+                    </button>
+                </div>
+            }
+        </div>
+
+        @* Toggle Game list display *@
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="toggleGameView">Toggle Game</button>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="modalGame.Show">Start Game</button>
+        </div>
+    <div class="col-auto">
+        <button class="btn btn-primary" @onclick="NavigateToResume">Back to Resume</button>
+    </div>
+</div>
+
+<!-- Register a Player -->
+<Modal @ref="modalPlayer" ModalTitle="Register a Player" OnOkCacncelClick="refreshPage">
+    <RegisterPlayer modal="@modalPlayer">
+    </RegisterPlayer>
+</Modal>
+<!-- Game a Player -->
+<Modal @ref="modalGame" ModalTitle="Register Game" OnOkCacncelClick="refreshGameObject">
+    <RegisterGame modal="@modalGame" game="@game" p1="@p1" p2="@p2" participants="@players" dateTimeValue="@DateTime.Parse(game.TimePlayed)" season="selectedSeason" pickPlayerView="true">
+    </RegisterGame>
+</Modal>
+
+<!-- Game a Player -->
+<Modal @ref="modalCreateSeason" ModalTitle="Create Season" OnOkCacncelClick="refreshPage">
+    <CreateSeason modal="@modalCreateSeason" >
+    </CreateSeason>
+</Modal>
+
+<!-- Live Game -->
+
+</div>
+</div>
+@code {
+    // List of players for standings
+    public PlayerStats[]? players = null;
+    public Season[]? seasonsList =  null;
+    public Season selectedSeason = new Season();
+    public Game[] seasonalGames ;
+    private Game game = new Game();
+
+    public Player p1 = new Player() ;
+    public Player p2 = new Player();
+    private string displayAddPlayerList = "";
+    private int AddPlayerListHeight = 16;
+    private string displaySeasonList = "";
+
+    // Season the screen is displaying
+    private string errorMessage = string.Empty;
+    private bool advancedView   = false;
+    /* Sign Up Variables*/
+    private Modal modalPlayer = new Modal();
+    public Modal modalGame = new Modal();
+    private Modal modalCreateSeason = new Modal();
+
+    // List of all players, for add player to season list
+    private List<Player> allPlayers = null;
+
+    private bool displayGamesView = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+
+        @* StateHasChanged();  *@
+        if (firstRender)
+        {
+
+            await JSRuntime.InvokeVoidAsync("handleMouseIdle");
+
+            try
+            {
+                seasonsList = await Request.getSeasonsList();
+
+                selectedSeason = seasonsList[seasonsList.Length-1];
+                // If there are seasons get the list of players for the season
+                if (seasonsList.Length != 0 && seasonsList != null)
+                {
+                    players =    await Request.postParticitpants(selectedSeason.ID);
+
+                    allPlayers = await Request.getAllPlayersList();
+                    allPlayers = PlayersNotInList(players, allPlayers.ToArray());
+                    Console.WriteLine("All players count"+allPlayers.Count);
+
+                    seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
+                }
+
+            }
+            catch (HttpRequestException ex)
+            {
+                errorMessage = "Error retrieving players. Please try again later.";
+                // log or display the error message as needed
+            }
+            catch (JsonException ex)
+            {
+                errorMessage = "Error parsing player data. Please try again later.";
+                // log or display the error message as needed
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                errorMessage = "No Seasons";
+                // log or display the error message as needed
+            }
+            StateHasChanged();
+            @* await JSRuntime.InvokeVoidAsync("eval", "import('/js/scroll.js')");
+            await JSRuntime.InvokeVoidAsync("addMouseIdleEventListener"); *@
+        }
+    }
+
+    private async void changeSeason(uint seasonId){
+
+        players = null;
+        players = await Request.postParticitpants(seasonId);
+
+        selectedSeason = getSeasonByID(seasonId, seasonsList);
+
+        allPlayers = await Request.getAllPlayersList();
+        allPlayers = PlayersNotInList(players, allPlayers.ToArray());
+
+        if(displayGamesView){
+            seasonalGames = await Request.getSeasonGames(seasonId);
+        }
+
+
+        toggleSeasonList();
+    }
+    private void openGame(){
+        //Open Game view
+
+    }
+    private void StartGame(Player player){
+        // Player has been click twice, then close end game
+        if (game.Light == player.Id){
+            game.Light = 0;
+        }else
+        // First Player has not been chosen
+        if (game.Light == 0){
+            game.Light = player.Id;
+            p1 = player;
+        }else {
+            p2 = player;
+            game.Dark = player.Id;
+            modalGame.Show();
+        }
+    }
+    private async void StartGame(Game gameParam){
+        game = gameParam;
+        p1 = getPlayerByID(players, game.Light);
+        p2 = getPlayerByID(players, game.Dark);
+        Console.WriteLine("**timePlayed: " + gameParam.TimePlayed);
+        modalGame.Show();
+    }
+    private bool containsPlayerId(PlayerStats[] playerList, uint id){
+        if (playerList != null ){
+            foreach (PlayerStats ps in playerList)
+            {
+                if (ps.Player.Id == id)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private Player getPlayerByID(PlayerStats[] playerList, uint id){
+        if (playerList != null ){
+            foreach (PlayerStats ps in playerList)
+            {
+                if (ps.Player.Id == id)
+                {
+                    return ps.Player;
+                }
+            }
+        }
+        return null;
+    }
+    private Season getSeasonByID(uint ID, Season[] seasonList){
+        if (seasonList != null){
+            foreach (var season in seasonList)
+            {
+                if (season.ID == ID ){
+                    return season;
+                }
+            }
+        }
+        return null;
+    }
+    public async void addPlayerToSeason(MouseEventArgs e, uint playerId){
+        // Send request to add player to season
+        await Request.SendPostRequest("season/" + selectedSeason.ID + ":addPlayer?player_id=" + playerId, "");
+        // Hide the add player to season drop down
+        if (displayAddPlayerList == "show")
+        {
+            displayAddPlayerList = "";
+        }
+        // Update standings list
+        await Request.postParticitpants(selectedSeason.ID);
+
+        StateHasChanged();
+    }
+
+    private async void toggleGameView(){
+        displayGamesView = displayGamesView ? false : true;
+        if (displayGamesView
+        && seasonalGames == null){
+            seasonalGames = await Request.getSeasonGames(selectedSeason.ID);
+        }
+    }
+    private void toggleAddPlayerList(){
+        if (displayAddPlayerList == "")
+        {
+            displayAddPlayerList = "show";
+        }else
+        {
+            displayAddPlayerList = "";
+        }
+    }
+    private void toggleSeasonList(){
+        if (displaySeasonList == "")
+        {
+            displaySeasonList = "show";
+        }else
+        {
+            displaySeasonList = "";
+        }
+    }
+    public void refreshPage(){
+        StateHasChanged();
+    }
+    public void refreshGameObject(){
+        game = new Game();
+        p1 = new Player() ;
+        p2 = new Player();
+    }
+
+    public List<Player> PlayersNotInList(PlayerStats[] excludeList, Player[] includeList){
+        List<Player> returnList = new List<Player>();
+         foreach (var player in includeList)
+        {
+            if (!containsPlayerId(excludeList, player.Id)){
+                returnList.Add(player);
+            }
+        }
+
+        AddPlayerListHeight = 14 + returnList.Count * 36;
+
+        return returnList;
+    }
+    public string createGameList(){
+        if (seasonalGames != null){
+            Array.Sort(seasonalGames, (game1,game2) => game2.TimePlayed.CompareTo(game1.TimePlayed));
+            string scheduledGamesList = "";
+            string htmlList = "";
+            if (seasonalGames == null || seasonalGames.Length == 0)
+            {
+                htmlList += "<div class=\"row\">";
+                    htmlList += "<div class=\"col\">";
+                        htmlList += "No Games Found";
+                    htmlList += "</div>";
+                htmlList += "</div>";
+            }
+            else
+            {
+                htmlList += "<div class=\"row table-heading\">";
+                    htmlList += "<div class=\"col\" style=\"text-align:center;\">";
+                        htmlList += "Games List";
+                    htmlList += "</div>";
+                htmlList += "</div>";
+                if (seasonalGames.Length > 0 && players != null && players.Length > 0 )
+                {
+                    string lastMonth = "";
+                    foreach (var game in seasonalGames)
+                    {
+                        string date = displayDateFormat(game.TimePlayed);
+
+                        if (game.State == 4)
+                        {
+                            scheduledGamesList += "<a class=\"row row-games-list\" @onclick=\"@(()=>StartGame(@game))\">";
+                                scheduledGamesList += "<div class=\"col-auto col-game-light\" id=\"@(game.State == 1 ? \"winner\" : \"\")\">";
+                                    scheduledGamesList += "<object id=\"crown\" data=\"../svg/crown-black.svg\" width=\"30\" height=\"30\"> </object>";
+                                    scheduledGamesList += getPlayerByID(players, game.Light).Name;
+                                scheduledGamesList += "</div>";
+                                scheduledGamesList += "<div class=\"col-auto col-game-date\" >";
+                                    scheduledGamesList += date.Substring(4,date.Length-4);
+                                scheduledGamesList += "</div>";
+                                scheduledGamesList += "<div class=\"col-auto col-game-dark float-right\" id=\"@(game.State == 2 ? \"winner\" : \"\")\">";
+                                    scheduledGamesList += "<object id=\"crown\" data=\"../svg/crown-white.svg\" width=\"30\" height=\"30\"> </object>";
+                                    scheduledGamesList += getPlayerByID(players, game.Dark).Name;
+                                scheduledGamesList += "</div>";
+                            scheduledGamesList += "</a>";
+                        }else{
+                            if (date.Substring(0,3).CompareTo(lastMonth)!= 0){
+                                lastMonth = date.Substring(0,3);
+                                htmlList += "<h3 class=\"month-label\">" + lastMonth + "</h3>";
+                            }
+                            htmlList += "<a class=\"row row-games-list\" @onclick=\"@(()=>StartGame(@game))\">";
+                                htmlList += "<div class=\"col-auto col-game-light\"  id=\"" + (game.State==1?"winner":"") + "\">";
+                                    htmlList += "<object id=\"crown\" data=\"../svg/crown-black.svg\" width=\"30\" height=\"30\"> </object>";
+                                    htmlList += getPlayerByID(players, game.Light).Name;
+                                htmlList += "</div>";
+                                htmlList += "<div class=\"col-auto col-game-date\" >";
+                                    htmlList +=  "<h3 class=\"month-date\">" + GetDayWithSuffix(DateTime.Parse(game.TimePlayed)) + "</h3>";
+                                htmlList += "</div>";
+                                htmlList += "<div class=\"col-auto col-game-dark float-right\" id=\"" + (game.State==2?"winner":"") + "\">";
+                                    htmlList += "<object id=\"crown\" data=\"../svg/crown-white.svg\" width=\"30\" height=\"30\"> </object>";
+                                    htmlList += getPlayerByID(players, game.Dark).Name;
+                                htmlList += "</div>";
+                            htmlList += "</a>";
+                        }
+                        
+                    }
+                }
+            }
+            if (scheduledGamesList != ""){
+                scheduledGamesList = "<h3 class=\"month-label\">Scheduled</h3>" + scheduledGamesList;
+            }
+            return scheduledGamesList + htmlList;
+        }else{
+            return "loading...";
+        }
+        
+    }
+    public string displayDateFormat(string dateString){
+        DateTime time = DateTime.Parse(dateString);
+
+        return time.ToString("MMMM d")  + "<br>" + time.ToString("h:mmtt");
+    }
+    public string GetDayWithSuffix(DateTime date)
+    {
+        int day = date.Day;
+        string suffix;
+
+        if (day >= 11 && day <= 13)
+        {
+            suffix = "th";
+        }
+        else
+        {
+            int lastDigit = day % 10;
+
+            switch (lastDigit)
+            {
+                case 1:
+                    suffix = "st";
+                    break;
+                case 2:
+                    suffix = "nd";
+                    break;
+                case 3:
+                    suffix = "rd";
+                    break;
+                default:
+                    suffix = "th";
+                    break;
+            }
+        }
+
+        return $"{day}{suffix}";
+    }
+    
+    private void NavigateToResume()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

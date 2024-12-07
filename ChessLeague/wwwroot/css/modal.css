@@ -9,11 +9,11 @@
 
 .modal-content{
     color: rgb(202, 202, 202);
-    background:rgba(70, 70, 70, 0.705);
+    background:rgba(146, 146, 146, 0.842);
     border: none;
     border-radius: 0px;
     box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(50px);
     height: 100vh;
     padding-top: 5vh;
 }

@@ -37,17 +37,18 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: white;
+    background-image: linear-gradient(rgb(41, 41, 41), rgb(11, 11, 11));
 }
-body{
+.ChessBody{
     background-image: url('../images/background-stand-alone-BW.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
+    width: 99vw;
 }
+
 .page{
-    height: 100vh;
-    background-image: linear-gradient(rgb(6 6 6 / 75%), rgb(11 11 11 / 81%));
-    backdrop-filter: blur(4px);
+    backdrop-filter: opacity(0);
 }
 
 h1:focus {
@@ -93,9 +94,9 @@ a, .btn-link {
     background: rgba(128, 128, 128, 0.453);
 }
 
-.content {
+/* .content {
     padding-top: 1.1rem;
-}
+} */
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
@@ -140,13 +141,13 @@ a, .btn-link {
 
 /* Main Content */
     /* Standings */
-    .stadnings-view,
+    .standing-view,
     .games-view
     {
         overflow: overlay;
-        height: 86vh;
+        height: 85vh;
     }
-    .stadnings-view
+    .standing-view
     {
         min-width: 720px;
     }
@@ -158,14 +159,96 @@ a, .btn-link {
     {
         height: 80vh;
         overflow: auto;
+        padding:0px 40px;
+    }
+    .resume-header-wrapper
+    {
+        padding:15px 10%;
+        margin-top: 10px;
+    }
+    .resume-highlights-wrapper
+    {
+        padding: 5px 30% 5px 15%;
+        font-size: 1.25rem;
+        margin-top:25px;
+        margin-bottom:25px;
+    }
+    .resume-highlights-wrapper .row
+    {
+        margin-left:0;
+    }
+    .resume-highlights-wrapper .col
+    {
+        padding: 20px;
+    }
+    .resume-highlights-wrapper .col-list
+    {
+        background: rgba(122, 122, 122, 0.178);
+        border-radius: 10px;
+        width:40%;
+        padding-right:15%;
+        padding-left:40px;
+        background:rgba(0, 113, 193, 0.534);
+        backdrop-filter: blur(10px);
+    }
+    .resume-highlights-wrapper .dash-img
+    {
+        background-image: url(https://private-user-images.githubusercontent.com/71302026/243239976-ec501d1e-d9e9-49bf-a8ec-4b1c6d0dc778.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzM1NDQyNjMsIm5iZiI6MTczMzU0Mzk2MywicGF0aCI6Ii83MTMwMjAyNi8yNDMyMzk5NzYtZWM1MDFkMWUtZDllOS00OWJmLWE4ZWMtNGIxYzZkMGRjNzc4LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDEyMDclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMjA3VDAzNTkyM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTU4YzBjNGRkZmI1N2M4ZTRhOGUwYjNiMzYyZDViZWNmODZjZDQ5NzUxMWI2YzVjMTQyYzBmZjU0MmRmYjQ2YjcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Tveyat5T0otPiqT3uxi9isILT0lc5Pw7ZkkIPHTif0I);
+        position:fixed;
+        right:19%;
+        width:357px;
+        height:200px;
+        border-radius: 10px 10px 0px 0px;
+        background-size:contain;
+        background-repeat: no-repeat;
+    }
+    .resume-highlights-wrapper .dash-img button
+    {
+        position:relative;
+        top:100%;
+        width:100%;
+        border-radius: 0px 0px 10px 10px;
+        border:none;
+        color: white;
+        background:rgba(0, 0, 0, 0.534);
+        backdrop-filter: blur(10px);
+        padding: 10px;
+    }
+    .resume-highlights-wrapper .dash-img button:hover
+    {
+        background:rgba(43, 43, 43, 0.534);
+    }
+    .list-item
+    {
+        list-style-position: inside;
+        text-indent: -28px;
+        padding-left: 30px; 
+        margin-bottom:0px;
+        font-size: large;
+    }
+    .resume-body-wrapper,
+    .resume-more-wrapper
+    {
+        margin: 10px 10%;
+        padding: 20px 40px;
+        background: rgba(122, 122, 122, 0.178);
+        /* backdrop-filter: blur(5px); */
+        border-radius: 10px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+    .resume-more-wrapper
+    {
+        background: rgba(0, 113, 193, 0.534);
     }
     .standings-wrapper .row,
+    .resume-header-wrapper .row,
     .games-view-wrapper .row,
     .row-games-list
     {
+        margin:0;
         padding: 4px 10px;
-        margin: 0px 10px 3px 10px;
-        background: rgba(66, 66, 66, 0.178);
+        background: rgba(122, 122, 122, 0.178);
         /* backdrop-filter: blur(5px); */
         border-radius: 10px;
         /* border-bottom: 1px solid rgba(66, 66, 66, 0.278); */
@@ -192,8 +275,8 @@ a, .btn-link {
     }
     .standings-wrapper .row .name-col
     {
-        max-width: 220px;
-        min-width: 220px;
+        max-width: 190px;
+        min-width: 190px;
     }
     .standings-wrapper .row .record-col
     {
@@ -248,6 +331,18 @@ a, .btn-link {
     {
         background: #0a09099c;
     }
+    .resume-header-name
+    {
+        align-content: center;
+        padding: 5px 20px;
+        font-size: 2rem;
+    }
+    .resume-contacts
+    {
+        align-content: center;
+        padding: 5px 20px;
+        font-size: 1.25rem;
+    }
     .row-games-list #winner
     {
         /* box-shadow: 0px 0px 4px 5px hsl(50deg 100% 50% / 48%); */
@@ -263,4 +358,11 @@ a, .btn-link {
     {
         display: inline-block;
     }
-    
+    #buttons-menu 
+    {
+        padding-left: 40px;
+    }
+    .no-background
+    {
+        background: transparent;
+    }
