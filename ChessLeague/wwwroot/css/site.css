@@ -202,6 +202,11 @@ a, .btn-link {
         background-size:contain;
         background-repeat: no-repeat;
     }
+    
+    .resume-highlights-wrapper .dash-img:hover
+    {
+        transform: scale(1.1)
+    }
     .resume-highlights-wrapper .dash-img button
     {
         position:relative;
@@ -361,6 +366,18 @@ a, .btn-link {
     #buttons-menu 
     {
         padding-left: 40px;
+    }
+    .ext-link
+    {
+        background: none;
+        border:none;
+        position:relative;
+        top: 3px;
+    }
+    .ext-link:hover
+    {
+        background: #5555555d;
+        border-radius: 10px;
     }
     .no-background
     {

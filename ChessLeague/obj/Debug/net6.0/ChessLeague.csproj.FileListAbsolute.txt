@@ -32,6 +32,12 @@ C:\work\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ChessLeague.genruntime
 C:\work\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ref\ChessLeague.dll
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\appsettings.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\App\obj\DotNet.Docker.csproj.nuget.dgspec.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\App\obj\project.assets.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getAllPlayersList.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getGames.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getParticipants.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getSeasonList.json
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\ChessLeague.staticwebassets.runtime.json
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\ChessLeague.exe
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\ChessLeague.deps.json
@@ -62,7 +68,3 @@ C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ChessLeague.pdb
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ChessLeague.genruntimeconfig.cache
 C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\obj\Debug\net6.0\ref\ChessLeague.dll
-C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getAllPlayersList.json
-c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getSeasonList.json
-c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getParticipants.json
-c:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\StaticJsonResponses\getGames.json

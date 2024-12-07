@@ -20,6 +20,17 @@
                         Conley Price
                     </div>
                     <div class="col col-auto resume-contacts">
+                        <button @onclick="NavigateToGithub" class="ext-link">
+                            <img src="../svg/github.svg" style="display:block;pointer-events: none;width:31px;">
+                        </button>
+                    </div>
+                    
+                    <div class="col col-auto resume-contacts">
+                        <button @onclick="NavigateToLL" class="ext-link">
+                            <img src="../svg/LinkedIn.svg" style="display:block;pointer-events: none;width:40px;">
+                        </button>
+                    </div>
+                    <div class="col col-auto resume-contacts">
                         CJP6810@Gmail.com
                     </div>
                     <div class="col col-auto resume-contacts">
@@ -180,11 +191,22 @@
             </div>
         </div>
     </div>
+
 </div>
 
 @code {
     private void NavigateToDashboard()
     {
         NavigationManager.NavigateTo("/ChessDash");
+    } 
+    private void NavigateToGithub()
+    {
+        NavigationManager.NavigateTo("https://github.com/conley21p");
     }
+
+    private void NavigateToLL()
+    {
+        NavigationManager.NavigateTo("https://www.linkedin.com/in/conleyprice/", false, false);
+    }
+
 }
