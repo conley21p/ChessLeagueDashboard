@@ -1,0 +1,15 @@
+{
+  "items": 
+  [
+    {
+      "id": 1,
+      "name": "Opening Season",
+      "startDate": "2023-11-19T00:00:00Z",
+      "endDate": "2023-12-31T00:00:00Z",
+      "createdAt": "2023-11-18T20:18:00Z",
+      "updatedAt": "2023-11-18T20:18:00Z",
+      "deletedAt": null
+    }
+  ],
+    "nextPage": 1
+  }

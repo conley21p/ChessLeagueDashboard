@@ -1,0 +1,134 @@
+[
+  {
+      "Player": {
+        "id": 1,
+        "name": "Conley",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      "Stats": {
+        "ID": 1,
+        "CreatedAt": "2023-11-28T09:07:55Z",
+        "UpdatedAt": "2023-11-28T09:07:55Z",
+        "DeletedAt": null,
+        "SeasonId": 2023,
+        "PlayerId": 1,
+        "Rating": 1850,
+        "Wins": 20,
+        "Losses": 10,
+        "Draws": 5,
+        "HighestRating": 1900
+      }
+  },
+  {
+      "Player": {
+        "id": 2,
+        "name": "David",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      "Stats": {
+        "ID": 2,
+        "CreatedAt": "2023-11-28T09:07:55Z",
+        "UpdatedAt": "2023-11-28T09:07:55Z",
+        "DeletedAt": null,
+        "SeasonId": 2023,
+        "PlayerId": 2,
+        "Rating": 1920,
+        "Wins": 25,
+        "Losses": 8,
+        "Draws": 2,
+        "HighestRating": 1950
+      }
+  },
+  {
+      "Player": {
+        "id": 3,
+        "name": "Alex",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": "2023-11-28T09:07:55Z"
+      },
+      "Stats": {
+        "ID": 3,
+        "CreatedAt": "2023-11-28T09:07:55Z",
+        "UpdatedAt": "2023-11-28T09:07:55Z",
+        "DeletedAt": null,
+        "SeasonId": 2023,
+        "PlayerId": 3,
+        "Rating": 1780,
+        "Wins": 15,
+        "Losses": 12,
+        "Draws": 3,
+        "HighestRating": 1820
+      }
+  },
+  {
+      "Player": {
+        "id": 4,
+        "name": "Chris",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      "Stats": {
+        "ID": 4,
+        "CreatedAt": "2023-11-28T09:07:55Z",
+        "UpdatedAt": "2023-11-28T09:07:55Z",
+        "DeletedAt": null,
+        "SeasonId": 2023,
+        "PlayerId": 4,
+        "Rating": 1880,
+        "Wins": 22,
+        "Losses": 9,
+        "Draws": 4,
+        "HighestRating": 1930
+      }
+  },
+  {
+      "Player": {
+        "id": 5,
+        "name": "Spencer",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      "Stats": {
+        "ID": 5,
+        "CreatedAt": "2023-11-28T09:07:55Z",
+        "UpdatedAt": "2023-11-28T09:07:55Z",
+        "DeletedAt": null,
+        "SeasonId": 2023,
+        "PlayerId": 5,
+        "Rating": 1820,
+        "Wins": 18,
+        "Losses": 11,
+        "Draws": 1,
+        "HighestRating": 1870
+      }
+  },
+  {
+      "Player": {
+        "id": 6,
+        "name": "Mike",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      "Stats": {
+        "ID": 6,
+        "CreatedAt": "2023-11-28T09:07:55Z",
+        "UpdatedAt": "2023-11-28T09:07:55Z",
+        "DeletedAt": null,
+        "SeasonId": 2023,
+        "PlayerId": 6,
+        "Rating": 1840,
+        "Wins": 19,
+        "Losses": 11,
+        "Draws": 4,
+        "HighestRating": 1890
+      }
+  }
+]

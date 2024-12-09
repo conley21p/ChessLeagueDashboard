@@ -1,0 +1,167 @@
+[
+  {
+      "ID": 1,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 1,
+      "Dark": 2,
+      "State": 1,
+      "PGN": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 ...",
+      "Desc": "Conley vs. David",
+      "TimePlayed": "2023-11-28T10:00:00Z"
+  },
+  {
+      "ID": 2,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 3,
+      "Dark": 4,
+      "State": 2,
+      "PGN": "",
+      "Desc": "Alex vs. Chris",
+      "TimePlayed": "2023-11-29T12:30:00Z"
+  },
+  {
+      "ID": 3,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 5,
+      "Dark": 6,
+      "State": 1,
+      "PGN": "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 ...",
+      "Desc": "Spencer vs. Mike",
+      "TimePlayed": "2023-11-28T11:15:00Z"
+  },
+  {
+      "ID": 4,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 1,
+      "Dark": 3,
+      "State": 1,
+      "PGN": "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 Nc6 ...",
+      "Desc": "Conley vs. Alex",
+      "TimePlayed": "2023-11-30T14:00:00Z"
+  },
+  {
+      "ID": 5,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 2,
+      "Dark": 4,
+      "State": 1,
+      "PGN": "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 ...",
+      "Desc": "David vs. Chris",
+      "TimePlayed": "2023-11-29T10:45:00Z"
+  },
+  {
+      "ID": 6,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 5,
+      "Dark": 6,
+      "State": 1,
+      "PGN": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 ...",
+      "Desc": "Spencer vs. Mike",
+      "TimePlayed": "2023-12-01T13:30:00Z"
+  },
+  {
+      "ID": 7,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 1,
+      "Dark": 4,
+      "State": 2,
+      "PGN": "",
+      "Desc": "Conley vs. Chris",
+      "TimePlayed": "2023-12-02T15:15:00Z"
+  },
+  {
+      "ID": 8,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 2,
+      "Dark": 3,
+      "State": 1,
+      "PGN": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 ...",
+      "Desc": "David vs. Alex",
+      "TimePlayed": "2023-11-30T11:00:00Z"
+  },
+  {
+      "ID": 9,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 5,
+      "Dark": 1,
+      "State": 1,
+      "PGN": "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 ...",
+      "Desc": "Spencer vs. Conley",
+      "TimePlayed": "2023-11-28T13:45:00Z"
+  },
+  {
+      "ID": 10,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 6,
+      "Dark": 2,
+      "State": 2,
+      "PGN": "",
+      "Desc": "Mike vs. David",
+      "TimePlayed": "2023-12-02T17:00:00Z"
+  },
+  {
+      "ID": 11,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 3,
+      "Dark": 5,
+      "State": 1,
+      "PGN": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 ...",
+      "Desc": "Alex vs. Spencer",
+      "TimePlayed": "2023-11-29T13:15:00Z"
+  },
+  {
+      "ID": 12,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 4,
+      "Dark": 6,
+      "State": 1,
+      "PGN": "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 ...",
+      "Desc": "Chris vs. Mike",
+      "TimePlayed": "2023-11-30T15:30:00Z"
+  },
+  {
+      "ID": 13,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 1,
+      "Dark": 5,
+      "State": 2,
+      "PGN": "",
+      "Desc": "Conley vs. Spencer",
+      "TimePlayed": "2023-12-03T10:00:00Z"
+  },
+  {
+      "ID": 14,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 2,
+      "Dark": 6,
+      "State": 1,
+      "PGN": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 ...",
+      "Desc": "David vs. Mike",
+      "TimePlayed": "2023-11-28T14:30:00Z"
+  },
+  {
+      "ID": 15,
+      "SeasonId": 1,
+      "TournamentId": 1,
+      "Light": 3,
+      "Dark": 4,
+      "State": 1,
+      "PGN": "1. d4 d5 2. c4 e6 3. Nc3 Nf6 4. Bg5 Be7 ...",
+      "Desc": "Alex vs. Chris",
+      "TimePlayed": "2023-11-30T16:00:00Z"
+  }
+]

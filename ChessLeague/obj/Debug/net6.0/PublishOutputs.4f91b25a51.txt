@@ -1,0 +1,14 @@
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\ChessLeague.exe
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\appsettings.Development.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\appsettings.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\App\obj\DotNet.Docker.csproj.nuget.dgspec.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\App\obj\project.assets.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\StaticJsonResponses\getAllPlayersList.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\StaticJsonResponses\getGames.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\StaticJsonResponses\getParticipants.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\StaticJsonResponses\getSeasonList.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\staticwebappconfig.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\ChessLeague.dll
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\ChessLeague.deps.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\ChessLeague.runtimeconfig.json
+C:\Users\conle\Documents\Software\ChessLeagueDashboard\ChessLeague\bin\Debug\net6.0\publish\ChessLeague.pdb

@@ -1,0 +1,47 @@
+{
+    "items": [
+      {
+        "id": 1,
+        "name": "Conley",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      {
+        "id": 2,
+        "name": "David",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      {
+        "id": 3,
+        "name": "Alex",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": "2023-11-28T09:07:55Z"
+      },
+      {
+        "id": 4,
+        "name": "Chris",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      {
+        "id": 5,
+        "name": "Spencer",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      },
+      {
+        "id": 6,
+        "name": "Mike",
+        "createdAt": "2023-11-28T09:07:55Z",
+        "updatedAt": "2023-11-28T09:07:55Z",
+        "deletedAt": null
+      }
+    ],
+    "nextPage": 7
+  }

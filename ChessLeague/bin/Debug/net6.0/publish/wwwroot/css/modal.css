@@ -1,0 +1,100 @@
+
+/* Dialog styling */
+.live-game-dialog{
+    height: 100vh;
+    width:  100vw;
+    /* margin: 4rem auto; */
+    text-align: center;
+}
+
+.modal-content{
+    color: rgb(202, 202, 202);
+    background:rgba(146, 146, 146, 0.842);
+    border: none;
+    border-radius: 0px;
+    box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+    backdrop-filter: blur(50px);
+    height: 100vh;
+    padding-top: 5vh;
+}
+    /* Live Game Dialog */
+    button.Winner-btn
+    {
+        width: 40%;
+        height: 40vh;
+        margin: 0px 10px;
+        border-radius: 10px;
+        border: none;
+        background: whtie;
+        color: black;
+        box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+        font-size: xx-large;
+    }
+    button.Winner-btn:hover
+    {
+        box-shadow: 5.0px 10.0px 10.0px hsl(0deg 0% 0% / 0.38);
+    }
+    button.dark
+    {
+        background: black;
+        color:      white;
+    }
+    button.Draw-btn,
+    button.Create-Game-btn,
+    button.next-page-btn,
+    input.datetime-local,
+    select.player-picker
+    {
+        width: 40%;
+        border-radius: 10px;
+        margin: 0px 10px;
+        margin-top: 20px;
+        border: none;
+        box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+        font-size: x-large;
+    }
+    button.disable
+    {
+        background-color:  #073e8f;
+        color: grey;
+    }
+    select.player-picker
+    {
+        width: 400px;
+    }
+    textarea.Desc-field
+    {
+        width: 40%;
+        min-height: 10vh;
+        max-height: 20vh;
+        text-align: center;
+        border-radius: 10px;
+        margin: 0px 10px;
+        margin-top: 20px;
+        border: none;
+        box-shadow: 4.0px 8.0px 8.0px hsl(0deg 0% 0% / 0.38);
+        font-size: x-large;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    /* Signup Dialog */
+    #signUpForm input
+    {
+        border: 1px solid #9c9c9ca8;
+        border-radius: 5px;
+    }
+    #signUpForm div.row
+    {
+        margin: 2px 0px;
+    }
+
+    form .numberfield
+    {
+        width: 60px;
+        text-align: center;
+    }
+    form .threeDigits
+    {
+        width: 50px;
+    }
